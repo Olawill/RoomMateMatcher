@@ -32,11 +32,13 @@ Our App will be called: **Roommate Match**
 * listings
   - id, title, description, number_of_rooms, number_of_roommates, preference, status, price, postal_code, city, country, image_url, user_id, created_at, updated_at
 * messages
-  - id, sender_id, recipient_id, message, read, created_at, read_at
+  - id, sender_id, recipient_id, message, read, created_at, read_at, chatroom_id
 * favourites
   - id, user_id, listing_id, isFavourite (True/False)
 * reviews
   - id, user_id, listing_id, review, rating, created_at
+* chatrooms
+  - id, user1_id, user2_id, created_at
 
 
 ### ROUTES
