@@ -3,16 +3,27 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import LoginButton from './components/LoginButton'
+import LogoutButton from './components/LogoutButton'
+import Profile from './components/Profile'
+
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+      <main>
+        <h1>Auth0 Login</h1>
+        <LoginButton />
+        <LogoutButton />
+        <Profile />
+      </main>
+      
       <div>
-        <a href="https://vitejs.dev" target="_blank">
+        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
+        <a href="https://react.dev" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
