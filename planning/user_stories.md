@@ -24,19 +24,29 @@ Our App will be called: **Roommate Match**
   * Implement Google Maps API integration so that users can see where each listing is located.
   * A user should be able to receive notifications for new listings in their area (when notification is on)
   * A user can see how many views each listing they posted have
+  * Add theme selection for the app
+  * **EXTRA**
+    * ___Add a payment system such as Stripe so that renters can pay landlords directly through the app___
+
 
 
 ### TABLES
 * users
-  - id, username, first_name, last_name, email, password_digest, isDeleted
+  - id, username, first_name, last_name, email, sub, isDeleted (True/False)
 * listings
-  - id, title, description, number_of_rooms, number_of_roommates, preference, status, price, postal_code, city, country, image_url, user_id, created_at, updated_at
+  - id, title, description, number_of_rooms, number_of_roommates
+   - preference (All, Male, Female, Other), status (Available, Not Available)
+   - price, postal_code, city, country, image_url, user_id, created_at, updated_at
 * messages
-  - id, sender_id, recipient_id, message, read, created_at, read_at
+  - id, message, checked (True/False), checked_at, created_at, chatroom_id, user_id
+* chatrooms
+  - id, name, created_at
+* users_chatroom
+  - user_id, chatroom_id
 * favourites
   - id, user_id, listing_id, isFavourite (True/False)
 * reviews
-  - id, user_id, listing_id, review, rating, created_at
+  - id, user_id, listing_id, review, rating (1-5), created_at
 
 
 ### ROUTES
