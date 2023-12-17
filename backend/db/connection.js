@@ -11,6 +11,8 @@ const dbParams = {
 
 const db = new Pool(dbParams);
 
-db.connect();
+db
+  .connect()
+  .catch(e => console.log(`Error connecting to Postgre server:\n${e}`))
 
 module.exports = db;
