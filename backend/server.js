@@ -1,19 +1,59 @@
-const Express = require('express');
-const App = Express();
-const BodyParser = require('body-parser');
+require('dotenv').config()
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8003;
+const http = require('http');
+const socketIo = require('socket.io');
+const { getAllMessages, savedMessage } = require('./db/queries/chatrooms');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: "*"
+  }
+});
 
 // Express Configuration
-App.use(BodyParser.urlencoded({ extended: false }));
-App.use(BodyParser.json());
-App.use(Express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static('public'));
+app.use(cors());
+
 
 // Sample GET route
-App.get('/api/data', (req, res) => res.json({
+app.get('/api/data', (req, res) => res.json({
   message: "Seems to work!",
 }));
 
-App.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`App listening on port ${PORT} so that's pretty good 👍`);
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Handle when a user sends a message
+  socket.on('message', async (data) => {
+    console.log('this is the message', data.content)
+
+    const message = await savedMessage(data);
+    console.log('Message saved to the database:', message);
+    
+    // Broadcast the message to the recipient
+    io.to(data.room).emit('message', data.content);
+
+  });
+
+  // Handle when a user joins a room
+  socket.on('join', (room) => {
+    socket.join(room);
+    console.log(`User joined room: ${room}`);
+  });
+
+  // Handle disconnection
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
+server.listen(PORT, () => {
+  console.log(`App listening on port ${PORT} 👍`);
 });

@@ -8,7 +8,7 @@ const dbParams = {
   password: process.env.DB_PASS,
   database: process.env.DB_NAME
 };
-
+console.log(process.env.DB_PASS)
 const db = new Pool(dbParams);
 
 db.connect();
