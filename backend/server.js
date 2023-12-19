@@ -47,8 +47,8 @@ app.get('/api/data', (req, res) => res.json({
   message: "Seems to work!",
 }));
 
-app.use('/api', userRoutes(db));
-app.use('/api', listingRoutes(db));
+app.use('/api/users', userRoutes(db));
+app.use('/api/listings', listingRoutes(db));
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console

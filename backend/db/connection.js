@@ -1,4 +1,6 @@
 // PG database client/connection setup
+require('dotenv').config(); // Install dotenv to tell connection where to find the .env file
+
 const { Pool } = require('pg');
 
 const dbParams = {
@@ -8,6 +10,7 @@ const dbParams = {
   password: process.env.DB_PASS,
   database: process.env.DB_NAME
 };
+console.log(dbParams);
 
 const db = new Pool(dbParams);
 
