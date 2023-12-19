@@ -1,4 +1,6 @@
 // PG database client/connection setup
+require('dotenv').config(); // Install dotenv to tell connection where to find the .env file
+
 const { Pool } = require('pg');
 
 const dbParams = {
@@ -8,9 +10,11 @@ const dbParams = {
   password: process.env.DB_PASS,
   database: process.env.DB_NAME
 };
-console.log(process.env.DB_PASS)
+
 const db = new Pool(dbParams);
 
-db.connect();
+db
+  .connect()
+  .catch(e => console.log(`Error connecting to Postgre server:\n${e}`))
 
 module.exports = db;
