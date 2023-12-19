@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import io from "socket.io-client";
 
 const Chat = () => {
@@ -8,13 +9,14 @@ const Chat = () => {
   const [room, setRoom] = useState("privateRoom");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const { user, isAuthenticated } = useAuth0();
+  console.log('this is user', user)
 
   useEffect(() => {
     const newSocket = io("http://localhost:8003");
     setSocket(newSocket);
-
-    const user = prompt("Enter your name:");
-    setSender(user);
+    // const user = prompt("Enter your name:");
+    setSender(user?.nickname);
 
     const otherUser = prompt("Enter the recipient name:");
     setRecipient(otherUser);
@@ -26,12 +28,12 @@ const Chat = () => {
     return () => {
       newSocket.disconnect();
     };
-  }, [room]);
+  }, [room, user]);
 
   // sending messages
   const sendMessage = () => {
     const content = prompt("Enter your message:");
-    socket.emit("message", { sender, recipient, content, room });
+    socket.emit("message", { senderId : user.sub, recipient, content, room });
   };
 
   // receiving messages

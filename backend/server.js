@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8003;
 const http = require('http');
 const socketIo = require('socket.io');
+const db = require('./db/connection');
 const { getAllMessages, savedMessage } = require('./db/queries/chatrooms');
 
 const app = express();
@@ -21,6 +22,9 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(cors());
 
+const userRoutes = require('./routes/userRoutes');
+app.use('/api', userRoutes(db));
+
 
 // Sample GET route
 app.get('/api/data', (req, res) => res.json({
@@ -32,7 +36,8 @@ io.on('connection', (socket) => {
 
   // Handle when a user sends a message
     socket.on('message', async (data) => {
-    console.log('this is the message', data.content);
+    console.log('this is the message', data);
+    savedMessage(data);
   
     // Broadcast the complete message object to the recipient
     io.to(data.room).emit('message', {

@@ -20,6 +20,8 @@ const savedMessage = async (data) => {
     VALUES($1, $2, $3, $4, $5, $6, $7)
     RETURNING *;
   `;
+  const createdAt = Date.now()
+  console.log('this is createat', createdAt)
 
   const values = [
     data.senderId,
@@ -27,7 +29,7 @@ const savedMessage = async (data) => {
     data.chatroomId,
     data.content,
     data.checked,
-    data.createdAt,
+    createdAt,
     data.readAt,
   ];
 
