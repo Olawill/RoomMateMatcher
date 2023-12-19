@@ -22,7 +22,7 @@ const io = socketIo(server, {
 const db = require('./db/connection');
 
 // ROUTES
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/userAuthRoutes');
 const listingRoutes = require('./routes/listingRoutes');
 
 // express Configuration
@@ -92,7 +92,7 @@ app.get('/api/data', (req, res) => res.json({
   message: "Seems to work!",
 }));
 
-app.use('/api/users', userRoutes(db));
+app.use('/api/user', userRoutes);
 app.use('/api/listings', listingRoutes(db));
 
 server.listen(PORT, () => {

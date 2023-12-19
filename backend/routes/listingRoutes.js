@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const io = require('socket.io-client');
+// const io = require('socket.io');
 
-const socket = io('http://localhost:8003');
+// const socket = io('http://localhost:8003');
 
 module.exports = db => {
 
@@ -69,7 +69,7 @@ module.exports = db => {
     const notificationMessage = `Someone viewed your listing and wants to match with you.`;
 
     // Emit the notification event to the specified user
-    socket.emit('notification', { to: listingUserId, from: req.body.user_id, message: notificationMessage });
+    // socket.emit('notification', { to: listingUserId, from: req.body.user_id, message: notificationMessage });
 
     res.status(200).json({ status: 'Ok', message: notificationMessage, meta: `messgae from ${req.body.user_id} to ${listingUserId}` });
   });
