@@ -37,6 +37,22 @@ app.use(express.static('public'));
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
 
+
+  // initiate privatchat
+  socket.on('privateChatRequest', ({ recipientId, recipientName }) => {
+    const roomId = createPrivateRoomId(socket.id, recipientId);
+    socket.join(roomId);
+    io.to(roomId).emit('privateChatInitiated', { roomId, recipientName });
+  });
+
+  //Accepts privatechat
+  socket.on('privateChatAccept', ({ senderId, senderName, roomId }) => {
+    socket.join(roomId);
+    io.to(roomId).emit('privateChatJoined', { roomId, senderName });
+  });
+
+
+
   // Handle the notification event when the client emits it
   socket.on('notification', (data) => {
     console.log('Notification data received:', data);
@@ -47,7 +63,8 @@ io.on('connection', (socket) => {
   
   // Handle when a user sends a message
   socket.on('message', async (data) => {
-    console.log('this is the message', data.content);
+    console.log('this is the message', data);
+    savedMessage(data);
     
     // Broadcast the complete message object to the recipient
     io.to(data.room).emit('message', {

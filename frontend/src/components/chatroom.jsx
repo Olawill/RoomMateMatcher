@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import io from "socket.io-client";
 
 const Chat = () => {
@@ -8,33 +9,69 @@ const Chat = () => {
   const [room, setRoom] = useState("privateRoom");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [isReplying, setIsReplying] = useState(false);
+  const { user } = useAuth0();
+  console.log('this is user', user)
 
   useEffect(() => {
     const newSocket = io("http://localhost:8003");
     setSocket(newSocket);
 
-    const user = prompt("Enter your name:");
-    setSender(user);
-
-    const otherUser = prompt("Enter the recipient name:");
-    setRecipient(otherUser);
+    setSender(user?.nickname);
 
     // Join the room
     newSocket.emit("join", room);
 
-    // component unmount
+    // Component unmount
     return () => {
       newSocket.disconnect();
     };
-  }, [room]);
+  }, [room, user]);
 
-  // sending messages
+  // Sending a private chat request
+  const sendPrivateChatRequest = () => {
+    socket.emit('privateChatRequest', { recipientId, recipientName });
+  };
+
+  // Accepting a private chat request
+  const acceptPrivateChatRequest = () => {
+    socket.emit('privateChatAccept', { senderId, senderName, roomId });
+  };
+
+  // Sending a private chat message
+  const sendPrivateChatMessage = () => {
+    socket.emit('privateChatMessage', { roomId, content });
+  };
+
+  // Receiving a private chat message
+  useEffect(() => {
+    if (socket) {
+      socket.on('privateChatMessage', ({ roomId, senderName, content }) => {
+        io.to(roomId).emit('privateChatMessage', { senderName, content });
+      });
+    }
+  }, [socket]);
+
+  // Sending messages
   const sendMessage = () => {
     const content = prompt("Enter your message:");
     socket.emit("message", { sender, recipient, content, room });
   };
 
-  // receiving messages
+  // Replying to messages
+  const startReplying = () => {
+    setIsReplying(true);
+    const otherUser = prompt("Enter the recipient name:");
+    setRecipient(otherUser);
+  };
+
+  const replyToMessage = () => {
+    socket.emit("message", { sender, recipient, content: newMessage, room });
+    setNewMessage("");
+    setIsReplying(false);
+  };
+
+  // Receiving messages
   useEffect(() => {
     if (socket) {
       socket.on("message", (data) => {
@@ -44,15 +81,9 @@ const Chat = () => {
     }
   }, [socket]);
 
-  // handling message input
+  // Handling message input
   const handleNewMessageChange = (e) => {
     setNewMessage(e.target.value);
-  };
-
-  // replying to messages
-  const replyToMessage = () => {
-    socket.emit("message", { sender, recipient, content: newMessage, room });
-    setNewMessage("");
   };
 
   return (
@@ -67,6 +98,16 @@ const Chat = () => {
           ))}
         </ul>
       </div>
+      {isReplying && (
+        <>
+          <input
+            type="text"
+            placeholder="Enter recipient name"
+            value={recipient}
+            disabled
+          />
+        </>
+      )}
       <input
         type="text"
         placeholder="Type your message"
@@ -74,7 +115,8 @@ const Chat = () => {
         onChange={handleNewMessageChange}
       />
       <button onClick={sendMessage}>Send Message</button>
-      <button onClick={replyToMessage}>Reply to Message</button>
+      <button onClick={startReplying}>Reply to Message</button>
+      {isReplying && <button onClick={replyToMessage}>Send Reply</button>}
     </div>
   );
 };
