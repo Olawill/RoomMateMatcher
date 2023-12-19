@@ -31,15 +31,14 @@ io.on('connection', (socket) => {
   console.log('A user connected');
 
   // Handle when a user sends a message
-  socket.on('message', async (data) => {
-    console.log('this is the message', data.content)
-
-    const message = await savedMessage(data);
-    console.log('Message saved to the database:', message);
-    
-    // Broadcast the message to the recipient
-    io.to(data.room).emit('message', data.content);
-
+    socket.on('message', async (data) => {
+    console.log('this is the message', data.content);
+  
+    // Broadcast the complete message object to the recipient
+    io.to(data.room).emit('message', {
+      sender: data.sender,
+      content: data.content,
+    });
   });
 
   // Handle when a user joins a room
