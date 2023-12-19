@@ -13,7 +13,9 @@ module.exports = db => {
       })
     })
     .catch(e => console.log(e));
-  })
+  });
+
+  
 
   return router;
 }
