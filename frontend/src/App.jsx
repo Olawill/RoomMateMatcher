@@ -6,6 +6,7 @@ import './App.css'
 import LoginButton from './components/LoginButton'
 import LogoutButton from './components/LogoutButton'
 import Profile from './components/Profile'
+import Chat from './components/chatroom'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,6 +18,7 @@ function App() {
         <LoginButton />
         <LogoutButton />
         <Profile />
+        <Chat/>
       </main>
       
       <div>

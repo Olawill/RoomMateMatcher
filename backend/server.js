@@ -1,13 +1,23 @@
-
 require('dotenv').config();
+
 const express = require('express');
 const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const helmet = require("helmet");
 const cors = require("cors");
+
 const PORT = process.env.PORT || 8003;
+const http = require('http');
+const socketIo = require('socket.io');
+const { getAllMessages, savedMessage } = require('./db/queries/chatrooms');
+
+
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: "*"
+  }
+});
 
 const db = require('./db/connection');
 
@@ -34,13 +44,31 @@ io.on('connection', (socket) => {
     const {listingUserId, userId, message} = data;
     io.to(listingUserId).emit('notification', { from: userId, message: message });
   });
+  
+  // Handle when a user sends a message
+  socket.on('message', async (data) => {
+    console.log('this is the message', data.content);
+    
+    // Broadcast the complete message object to the recipient
+    io.to(data.room).emit('message', {
+      sender: data.sender,
+      content: data.content,
+    });
+  });
+  
+  // Handle when a user joins a room
+  socket.on('join', (room) => {
+    socket.join(room);
+    console.log(`User joined room: ${room}`);
+  });
 
   // Handle disconnecting from socekt.io
   socket.on('disconnect', () => {
-    console.log('User disconnected');
+    console.log('A User disconnected');
   });
 
 });
+
 
 // Sample GET route
 app.get('/api/data', (req, res) => res.json({
@@ -50,7 +78,8 @@ app.get('/api/data', (req, res) => res.json({
 app.use('/api/users', userRoutes(db));
 app.use('/api/listings', listingRoutes(db));
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`app listening on port ${PORT} so that's pretty good 👍`);
+  console.log(`App listening on port ${PORT} so that's pretty good 👍`);
 });
+
