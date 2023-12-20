@@ -2,7 +2,7 @@ const Express = require('express');
 const router = Express.Router();
 const db = require('../db/connection');
 
-// POST /api/users - user authentication
+// POST /api/user - user authentication
 router.post('/', async (req, res) => {
   const { user } = req.body;
 
