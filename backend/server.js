@@ -83,7 +83,6 @@ io.on('connection', (socket) => {
 });
 
 // ROUTES
-const userAuthRoutes = require('./routes/userAuthRoutes');
 const userRoutes = require('./routes/userRoutes');
 const listingRoutes = require('./routes/listingRoutes');
 
@@ -93,7 +92,6 @@ app.get('/api/data', (req, res) => res.json({
 }));
 
 app.use('/api/user', userRoutes(db));
-app.use('/api/user', userAuthRoutes);
 app.use('/api/listings', listingRoutes(db));
 
 server.listen(PORT, () => {
