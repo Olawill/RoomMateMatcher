@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 module.exports = db => {
   // GET /api/users - get all users
-  router.get('/users', (req, res) => {
+  router.get('/', (req, res) => {
     db.query(
       `SELECT * FROM users ORDER BY id ASC`,
     ).then(response => {

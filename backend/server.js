@@ -21,10 +21,6 @@ const io = socketIo(server, {
 
 const db = require('./db/connection');
 
-// ROUTES
-const userAuthRoutes = require('./routes/userAuthRoutes');
-const listingRoutes = require('./routes/listingRoutes');
-
 // express Configuration
 app.use(cors());
 app.use(helmet())
@@ -86,12 +82,17 @@ io.on('connection', (socket) => {
 
 });
 
+// ROUTES
+const userAuthRoutes = require('./routes/userAuthRoutes');
+const userRoutes = require('./routes/userRoutes');
+const listingRoutes = require('./routes/listingRoutes');
 
 // Sample GET route
 app.get('/api/data', (req, res) => res.json({
   message: "Seems to work!",
 }));
 
+app.use('/api/user', userRoutes(db));
 app.use('/api/user', userAuthRoutes);
 app.use('/api/listings', listingRoutes(db));
 

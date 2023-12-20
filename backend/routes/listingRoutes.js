@@ -6,7 +6,7 @@ const router = require('express').Router();
 module.exports = db => {
 
   // GET /api/listings
-  router.get(`/listings`, (req, res) => {
+  router.get(`/`, (req, res) => {
     const queryParams = req.query.q;
     let queryString = 'SELECT * FROM listings';
 
@@ -57,7 +57,7 @@ module.exports = db => {
 
   // POST NOTIFICATIONS TO USERS
   // req.body should contain a user_id
-  router.post('/listings/:listing_id/notifications/:listing_user_id', (req, res) => {
+  router.post('/:listing_id/notifications/:listing_user_id', (req, res) => {
 
     // Check if user is logged in
     if (!req.body.user_id ) {
@@ -71,7 +71,7 @@ module.exports = db => {
     // Emit the notification event to the specified user
     // socket.emit('notification', { to: listingUserId, from: req.body.user_id, message: notificationMessage });
 
-    res.status(200).json({ status: 'Ok', message: notificationMessage, meta: `messgae from ${req.body.user_id} to ${listingUserId}` });
+    res.status(200).json({ status: 'Ok', message: notificationMessage, meta: `message from ${req.body.user_id} to ${listingUserId}` });
   });
 
 
