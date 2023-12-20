@@ -7,7 +7,9 @@ module.exports = db => {
 
   // GET /api/listings
   router.get(`/`, (req, res) => {
+    // Check if filter exists
     const queryParams = req.query.q;
+    // Base query
     let queryString = 'SELECT * FROM listings';
 
     if (!queryParams) {
@@ -16,10 +18,13 @@ module.exports = db => {
       }
     } else {
       // FILTER FOR CITY, PRICE< NUMBER OF BEDROOMS
+      // Example of filter: city:calgary,price:100-500,bedroom:2
       const filters = queryParams.split(',');
   
       const whereString = filters.map(filter => {
+        // Split each filter by column
         const [key, value] = filter.split(':');
+        // Check if key and value exist
         if (key && value) {
           if (key === 'price') {
             const [min, max] = value.split('-');

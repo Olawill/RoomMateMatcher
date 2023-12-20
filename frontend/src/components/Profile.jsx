@@ -13,6 +13,7 @@ const Profile = () => {
         axios.post('/api/user', { user })
           .then(response => {
             console.log("User profile updated:", response.data);
+            window.sessionStorage.setItem("userId", response.data.id);
             setUpdatedUser(response.data);
           })
           .catch(error => {
@@ -23,7 +24,8 @@ const Profile = () => {
 
     updateUserProfile();
   }, [isAuthenticated, user]);
-
+  console.log(window.sessionStorage.getItem("userId"));
+  
   return (
     updatedUser && (
       <article>

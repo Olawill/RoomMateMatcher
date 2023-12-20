@@ -83,7 +83,6 @@ io.on('connection', (socket) => {
 });
 
 // ROUTES
-const userAuthRoutes = require('./routes/userAuthRoutes');
 const userRoutes = require('./routes/userRoutes');
 const listingRoutes = require('./routes/listingRoutes');
 
@@ -92,12 +91,10 @@ app.get('/api/data', (req, res) => res.json({
   message: "Seems to work!",
 }));
 
-app.use('/api/users', userRoutes(db));
-app.use('/api/user', userAuthRoutes);
+app.use('/api/user', userRoutes(db));
 app.use('/api/listings', listingRoutes(db));
 
 server.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`App listening on port ${PORT} so that's pretty good 👍`);
 });
-
