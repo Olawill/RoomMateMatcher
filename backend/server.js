@@ -92,7 +92,7 @@ app.get('/api/data', (req, res) => res.json({
   message: "Seems to work!",
 }));
 
-app.use('/api/user', userRoutes(db));
+app.use('/api/users', userRoutes(db));
 app.use('/api/user', userAuthRoutes);
 app.use('/api/listings', listingRoutes(db));
 
