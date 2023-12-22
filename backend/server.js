@@ -15,7 +15,9 @@ const { getAllMessages, savedMessage } = require('./db/queries/chatrooms');
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "*"
+    origin: "*",
+    methods: ["GET", "POST"],
+
   }
 });
 
@@ -28,26 +30,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-// SOCKET.IO
 // Socket.io connection
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
-
-
-  // initiate privatchat
-  socket.on('privateChatRequest', ({ recipientId, recipientName }) => {
-    const roomId = createPrivateRoomId(socket.id, recipientId);
-    socket.join(roomId);
-    io.to(roomId).emit('privateChatInitiated', { roomId, recipientName });
-  });
-
-  //Accepts privatechat
-  socket.on('privateChatAccept', ({ senderId, senderName, roomId }) => {
-    socket.join(roomId);
-    io.to(roomId).emit('privateChatJoined', { roomId, senderName });
-  });
-
-
 
   // Handle the notification event when the client emits it
   socket.on('notification', (data) => {
@@ -57,23 +42,16 @@ io.on('connection', (socket) => {
     io.to(listingUserId).emit('notification', { from: userId, message: message });
   });
   
-  // Handle when a user sends a message
-  socket.on('message', async (data) => {
-    console.log('this is the message', data);
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);
+    console.log('send message',data)
     savedMessage(data);
-    
-    // Broadcast the complete message object to the recipient
-    io.to(data.room).emit('message', {
-      sender: data.sender,
-      content: data.content,
-    });
   });
   
-  // Handle when a user joins a room
-  socket.on('join', (room) => {
-    socket.join(room);
-    console.log(`User joined room: ${room}`);
+  socket.on("join_room", (data) => {
+    socket.join(data);
   });
+
 
   // Handle disconnecting from socekt.io
   socket.on('disconnect', () => {
