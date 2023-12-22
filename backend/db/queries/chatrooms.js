@@ -34,7 +34,7 @@ const savedMessage = async (data) => {
     senderId,
     recipientId,
     chatroomId,
-    data.content,
+    data.message,
     checked,
     createdAt,
     readAt
