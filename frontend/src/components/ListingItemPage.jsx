@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, Row, Col, Card, Alert } from "react-bootstrap";
+import { Container, Row, Col, Card, Alert, Button } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -73,6 +73,7 @@ const ListingItemPage = () => {
                 <Card.Text>We are looking for {listingDetails.number_of_roommates} roommates.</Card.Text>
                 <Card.Text>Status: {listingDetails.status}</Card.Text>
               </Card.Body>
+              <Button type='submit'>Interested</Button>
             </Card>
           </Col>
         </Row>
