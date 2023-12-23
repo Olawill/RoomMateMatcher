@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Row, Col, Card, Alert } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import ReviewForm from "./ReviewForm";
@@ -13,6 +14,7 @@ const ListingItemPage = () => {
   const [listingDetails, setListingDetails] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [reviewNotification, setReviewNotification] = useState(null);
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   useEffect(() => {
     const fetchListingDetails = async () => {
@@ -30,7 +32,14 @@ const ListingItemPage = () => {
   }, [listing_id]);
 
   const handleReviewFormSubmit = async (reviewData) => {
+    if (!isAuthenticated) {
+      alert('Please login first');
+      loginWithRedirect();
+      return;
+    }
+    
     try {
+      // Post the review to backend database
       await axios.post(`/api/listings/${listing_id}/reviews`, reviewData);
       // Refetch all reviews after posting a new review
       const response = await axios.get(`/api/listings/${listing_id}`);
