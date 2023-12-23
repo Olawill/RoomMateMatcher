@@ -4,7 +4,7 @@ const LogoutButton = () => {
   const { logout, isAuthenticated } = useAuth0();
 
   const userLogout = () => {
-    window.sessionStorage.removeItem("userId");
+    window.sessionStorage.removeItem("userData");
     logout();
   }
   

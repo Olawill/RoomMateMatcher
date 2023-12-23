@@ -4,8 +4,8 @@ import './App.css'
 import LoginButton from './components/LoginButton'
 import LogoutButton from './components/LogoutButton'
 import Profile from './components/Profile'
-import NewChat from './components/newChat'
 import Listings from './components/Listings'
+import MyMessage from './components/myMessages'
 
 
 function App() {
@@ -18,8 +18,8 @@ function App() {
         <LoginButton />
         <LogoutButton />
         <Profile />
-        <NewChat />
         <Listings />
+        <MyMessage />
       </main>
       
     </>
