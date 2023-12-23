@@ -80,5 +80,53 @@ module.exports = db => {
   });
 
 
+  // Detail page for one specific listing item
+  // GET /api/listings/:listing_id
+  router.get('/:listing_id', async (req, res) => {
+    try {
+      const listingId = req.params.listing_id;
+
+      // Fetch listing item details
+      const listing = await db.query('SELECT * FROM listings WHERE id = $1', [listingId]);
+      console.log("This is a listing:", listing.rows);
+      // Fetch reviews for the listing
+      const reviews = await db.query('SELECT * FROM reviews WHERE listing_id = $1', [listingId]);
+      console.log("This is the reviews:", reviews.rows);
+      // Combine listing details and reviews in the response
+      const result = {
+        listing: listing.rows[0],
+        reviews: reviews.rows
+      };
+
+      console.log(result);
+      res.json(result);
+    } catch (error) {
+      console.error('Error fetching listing and reviews:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+
+  // POST a new review for a specific listing
+  // POST /api/listings/:listing_id/reviews
+  router.post('/:listing_id/reviews', async (req, res) => {
+    try {
+      const listingId = req.params.listing_id;
+      const { user_id, review, rating } = req.body;
+
+      // Insert the new review into db
+      await db.query('INSERT INTO reviews (listing_id, user_id, review, rating) VALUES ($1, $2, $3, $4)', [listingId, user_id, review, rating]);
+
+      // Fetch all reviews for the listing, including the newly added one
+      const reviews = await db.query('SELECT * FROM reviews WHERE listing_id = $1', [listingId]);
+
+      res.status(201).json({ message: 'Review posted!', reviews: reviews });
+    } catch (error) {
+      console.error('Error adding review:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+
   return router;
 }
