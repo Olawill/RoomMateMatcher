@@ -11,7 +11,7 @@ const ListingItem = (props) => {
       <Card.Body>
         <Card.Title>{listing.title}</Card.Title>
         <Card.Text>{listing.city} {listing.country}</Card.Text>
-        <Card.Text>${listing.price} CAD per night</Card.Text>
+        <Card.Text>${listing.price} CAD per month</Card.Text>
       </Card.Body>
     </Card>
   );
