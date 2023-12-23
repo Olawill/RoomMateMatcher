@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import ScrollToBottom from "react-scroll-to-bottom";
 
 function Message({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
-  const sendMessage = async () => {
-    if (currentMessage !== "") {
-      const messageData = {
-        room: room,
-        author: username,
-        message: currentMessage,
-        time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes(),
-      };
-
-      await socket.emit("send_message", messageData);
-      setMessageList((list) => [...list, messageData]);
-      setCurrentMessage("");
-    }
-  };
-
   useEffect(() => {
+    // Fetch old messages for the chatroom from the server when the component mounts
+    axios.get(`/api/chatrooms/${room}/messages`)
+      .then(response => {
+        const messagesArray = response.data?.data || [];
+        setMessageList(messagesArray);
+      })
+      .catch(error => {
+        console.error("Error fetching messages:", error);
+      });
 
+    // Listen for new messages and update the message list
     function onReceiveMessage(data) {
       setMessageList((list) => [...list, data]);
     }
@@ -32,9 +25,35 @@ function Message({ socket, username, room }) {
     socket.on("receive_message", onReceiveMessage);
 
     return () => {
-      socket.off("receive_message", onReceiveMessage) 
+      // Clean up the socket event listener when the component unmounts
+      socket.off("receive_message", onReceiveMessage);
     };
-  }, []);
+  }, [socket, room]);
+
+  const sendMessage = async () => {
+    if (currentMessage.trim() !== "") {
+      const userData = sessionStorage.getItem("userData");
+      const userInfo = JSON.parse(userData);
+      const messageData = {
+        sender_id: userInfo.userId,
+        recipient_id: 2, 
+        chatroom_id: room,
+        content: currentMessage,
+        checked: true,
+        time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+        author: userInfo.username,
+      };
+
+      // Emit 'send_message' event to the server
+      socket.emit("send_message", messageData);
+
+      // Update the message list with the new message
+      setMessageList((list) => [...list, messageData]);
+
+
+      setCurrentMessage("");
+    }
+  };
 
   return (
     <div className="chat-window">
@@ -43,24 +62,23 @@ function Message({ socket, username, room }) {
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {messageList.map((messageContent) => {
-            return (
-              <div
-                className="message"
-                id={username === messageContent.author ? "you" : "other"}
-              >
-                <div>
-                  <div className="message-content">
-                    <p>{messageContent.message}</p>
-                  </div>
-                  <div className="message-meta">
-                    <p id="time">{messageContent.time}</p>
-                    <p id="author">{messageContent.author}</p>
-                  </div>
+          {messageList.map((messageContent) => (
+            <div
+              className="message"
+              key={messageContent.id}
+              id={username === messageContent.author ? "you" : "other"}
+            >
+              <div>
+                <div className="message-content">
+                  <p>{messageContent.content}</p>
+                </div>
+                <div className="message-meta">
+                  <p id="time">{messageContent.time}</p>
+                  <p id="author">{messageContent.author}</p>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </ScrollToBottom>
       </div>
       <div className="chat-footer">

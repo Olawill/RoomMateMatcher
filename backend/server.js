@@ -44,8 +44,9 @@ io.on('connection', (socket) => {
   
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("receive_message", data);
-    console.log('send message',data)
     savedMessage(data);
+    console.log('send message',data)
+ 
   });
   
   socket.on("join_room", (data) => {
@@ -63,6 +64,7 @@ io.on('connection', (socket) => {
 // ROUTES
 const userRoutes = require('./routes/userRoutes');
 const listingRoutes = require('./routes/listingRoutes');
+const chatRoomRoutes = require('./routes/chatRoomRoutes');
 
 // Sample GET route
 app.get('/api/data', (req, res) => res.json({
@@ -71,6 +73,7 @@ app.get('/api/data', (req, res) => res.json({
 
 app.use('/api/user', userRoutes(db));
 app.use('/api/listings', listingRoutes(db));
+app.use('/api/chatrooms', chatRoomRoutes(db));
 
 server.listen(PORT, () => {
   // eslint-disable-next-line no-console
