@@ -3,6 +3,7 @@ import axios from "axios";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 
 import ListingItem from "./ListingItem";
 
@@ -30,7 +31,9 @@ const Listings = () => {
       <Row>
         {listings.map((listing) => (
           <Col md key={listing.id}>
-            <ListingItem listing={listing} />
+            <Link to={`/${listing.id}`}>
+              <ListingItem listing={listing} />
+            </Link>
           </Col>
         ))}
       </Row>
