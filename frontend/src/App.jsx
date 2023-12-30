@@ -1,11 +1,10 @@
-import { useState } from "react";
-import "./App.css";
 
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginButton from "./components/LoginButton";
 import LogoutButton from "./components/LogoutButton";
 import Profile from "./components/Profile";
-import NewChat from "./components/newChat";
+import MyMessage from './components/myMessages'
 import Listings from "./components/Listings";
 import ListingItemPage from "./components/ListingItemPage";
 
@@ -23,8 +22,8 @@ function App() {
               <LoginButton />
               <LogoutButton />
               <Profile />
-              <NewChat />
-              <Listings />
+               <MyMessage />
+             <Listings />
             </div>
           }
         />

@@ -14,28 +14,22 @@ const getAllMessages = async () => {
   }
 };
 
-const savedMessage = async (data) => {
+const savedMessage = async (messageData) => {
   const insertQuery = `
     INSERT INTO messages(sender_id, recipient_id, chatroom_id, content, checked, created_at, read_at)
     VALUES($1, $2, $3, $4, $5, to_timestamp($6 / 1000.0), to_timestamp($7 / 1000.0))
     RETURNING *;
   `;
   const createdAt = Math.floor(Date.now() / 1000);
- const senderId =1
-    const recipientId = 2
-    const chatroomId = 1
-
-    const checked =true
-
     const readAt = Math.floor(Date.now() / 1000);
 
 
   const values = [
-    senderId,
-    recipientId,
-    chatroomId,
-    data.message,
-    checked,
+    messageData.sender_id,
+    messageData.recipient_id,
+    messageData.chatroom_id,
+    messageData.content,
+    messageData.checked,
     createdAt,
     readAt
   ];
