@@ -1,0 +1,24 @@
+.custom-navbar {
+  height: 60px; /* 设置高度为 100px */
+  width: 100%;
+  background-color: rgba(0, 140, 255, 0.861);
+  background-position: center;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: fixed;
+  top: 0; 
+  z-index: 1000; 
+}
+
+.custom-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  bottom: 0.8rem;
+}
