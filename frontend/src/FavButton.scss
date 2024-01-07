@@ -1,0 +1,19 @@
+.listing__fav-icon {
+  position: relative;
+  top: 8px;
+  right: -8px;
+  cursor: pointer;
+  margin-bottom: -30px;
+  border-width: 0.1px;
+  background-color: #EEEEEE;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border-radius: 100%;
+}
+
+.listing__fav-icon-svg {
+  padding: 3px;
+  top: 2px;
+  margin-left: 2px;
+}
