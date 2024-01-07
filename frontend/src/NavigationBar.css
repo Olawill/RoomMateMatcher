@@ -1,13 +1,13 @@
 .custom-navbar {
-  height: 60px; /* 设置高度为 100px */
+  height: 90px;
   width: 100%;
-  background-color: rgba(0, 140, 255, 0.861);
+  background-color: rgba(84, 158, 236, 0.693);
   background-position: center;
   background-size: 100% auto;
   background-repeat: no-repeat;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0; 
   z-index: 1000; 
@@ -20,5 +20,15 @@
   position: absolute;
   top: 2rem;
   right: 2rem;
-  bottom: 0.8rem;
+  bottom: 1.2rem;
+}
+
+.logo-container {
+  padding-left: 3rem;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  border-radius: 50%;
 }

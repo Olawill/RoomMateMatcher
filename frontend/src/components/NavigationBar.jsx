@@ -5,8 +5,13 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 
 const NavigationBar = () => {
+  const logoImgPath = import.meta.env.BASE_URL + 'logo.png';
+
   return (
     <Navbar className="custom-navbar">
+      <div className="logo-container">
+        <img src={logoImgPath} alt="logo-image" className="logo" />
+      </div>
       <div className="custom-nav">
         <Nav className="custom-nav-link">
           <Nav.Link href="#home">Home</Nav.Link>
