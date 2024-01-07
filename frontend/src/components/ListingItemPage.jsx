@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import NavigationBar from "./NavigationBar";
 import ReviewForm from "./ReviewForm";
 import Reviews from "./Reviews";
+import FavButton from "./FavButton";
 
 const ListingItemPage = () => {
   const { listing_id } = useParams();
@@ -61,10 +62,11 @@ const ListingItemPage = () => {
       <NavigationBar />
       <Container>
         {listingDetails && (
-          <Row>
+          <Row style={{ margin: '5.65rem auto 0' }}>
             <Col>
               <Card>
-                <Card.Img variant="top" src={listingDetails.image_url} style={{  width: '65rem', margin: '5.5rem auto 0' }} />
+                <FavButton />
+                <Card.Img variant="top" src={listingDetails.image_url} />
                 <Card.Body>
                   <Card.Title>{listingDetails.title}</Card.Title>
                   <Card.Text>
