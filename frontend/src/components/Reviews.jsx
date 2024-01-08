@@ -17,7 +17,7 @@ const Reviews = ({ reviews }) => {
 
   return (
     <Row>
-      <Col>
+      <Col> 
         <h2>Reviews</h2>
         <Row>
           <Col>

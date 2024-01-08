@@ -60,35 +60,7 @@ function ChatroomList() {
         .catch(error => {
           console.error("Error fetching messages:", error);
         });
-    } else {
-      // The chatroom doesn't exist, so create a new one
-      const userData = sessionStorage.getItem("userData");
-      const userInfo = JSON.parse(userData);
-  
-      axios.post("/api/chatrooms", { listing_id: chatroom.listing_id })
-        .then(response => {
-          const newChatroom = response.data.data;
-  
-          // Associate the current user with the chatroom
-          axios.post(`/api/chatrooms/${newChatroom.id}/users`, { user_id: userInfo.userId })
-            .then(() => {
-              // Associate the other user with the chatroom (replace 'otherUserId' with the actual user ID)
-              axios.post(`/api/chatrooms/${newChatroom.id}/users`, { user_id: 1 })
-                .then(() => {
-                  setSelectedChatroom(newChatroom);
-                })
-                .catch(error => {
-                  console.error("Error associating other user with chatroom:", error);
-                });
-            })
-            .catch(error => {
-              console.error("Error associating user with chatroom:", error);
-            });
-        })
-        .catch(error => {
-          console.error("Error creating chatroom:", error);
-        });
-    }
+    } 
   };
   
 

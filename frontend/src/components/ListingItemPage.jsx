@@ -18,11 +18,13 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   const [reviewNotification, setReviewNotification] = useState(null);
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
+  const userData = sessionStorage.getItem("userData");
+  const userInfo = JSON.parse(userData);
+
   useEffect(() => {
     const fetchListingDetails = async () => {
       try {
         const response = await axios.get(`/api/listings/${listing_id}`);
-        console.log(response);
         setListingDetails(response.data.listing);
         setReviews(response.data.reviews);
       } catch (error) {
@@ -32,6 +34,33 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
 
     fetchListingDetails();
   }, [listing_id]);
+
+  const handleInterestedButtonClick = async () => {
+
+    // Ensure the user is logged in
+    if (!isAuthenticated) {
+      alert("Please login first");
+      loginWithRedirect();
+      return;
+    }
+    const senderUserId = userInfo.userId
+    const recipientUserId = listingDetails.user_id;
+
+    axios.post('/api/chatrooms/create', { senderId: senderUserId, recipientId: recipientUserId, name :listingDetails.title })
+  .then(response => {
+    // Assuming the response contains information about the created chat room
+    const chatRoomId = response.data.data.id;
+    console.log('this is chatroomid', response, chatRoomId)
+
+    // Redirect to the chat room page
+    navigate(`/chat/${chatRoomId}`);
+  })
+  .catch(error => {
+    // Handle errors
+    console.error('Error creating private chat room:', error);
+  });
+  }
+
 
   const handleReviewFormSubmit = async (reviewData) => {
     if (!isAuthenticated) {
@@ -91,6 +120,35 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
             </Col>
           </Row>
         )}
+    <Container>
+      {listingDetails && (
+        <Row>
+          <Col>
+            <Card>
+              <Card.Img variant="top" src={listingDetails.image_url} />
+              <Card.Body>
+                <Card.Title>{listingDetails.title}</Card.Title>
+                <Card.Text>
+                  {listingDetails.city} {listingDetails.country}
+                </Card.Text>
+                <Card.Text>${listingDetails.price} CAD per month</Card.Text>
+                <Card.Text>{listingDetails.description}</Card.Text>
+                <Card.Text>
+                  We have {listingDetails.number_of_rooms} bedrooms.
+                </Card.Text>
+                <Card.Text>
+                  We are looking for {listingDetails.number_of_roommates}{" "}
+                  roommates.
+                </Card.Text>
+                <Card.Text>Status: {listingDetails.status}</Card.Text>
+              </Card.Body>
+              <Button type="submit" onClick={handleInterestedButtonClick}>
+                Interested
+              </Button>
+            </Card>
+          </Col>
+        </Row>
+      )}
 
         {reviews.length > 0 && <Reviews reviews={reviews} />}
 
@@ -113,3 +171,4 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
 };
 
 export default ListingItemPage;
+
