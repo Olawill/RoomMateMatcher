@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 import ListingItem from "./ListingItem";
 
-const Listings = () => {
+const Listings = ({ likedListings, onFavButtonClick }) => {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
@@ -32,7 +32,11 @@ const Listings = () => {
         {listings.map((listing) => (
           <Col md key={listing.id}>
             <Link to={`/${listing.id}`}>
-              <ListingItem listing={listing} />
+              <ListingItem 
+                listing={listing}
+                isFavIconActive={likedListings.includes(listing.id)}
+                onFavButtonClick={onFavButtonClick}      
+              />
             </Link>
           </Col>
         ))}

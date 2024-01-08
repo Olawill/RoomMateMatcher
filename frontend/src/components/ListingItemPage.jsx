@@ -5,10 +5,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import NavigationBar from "./NavigationBar";
 import ReviewForm from "./ReviewForm";
 import Reviews from "./Reviews";
+import FavButton from "./FavButton";
 
-const ListingItemPage = () => {
+const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   const { listing_id } = useParams();
   const navigate = useNavigate();
   const [listingDetails, setListingDetails] = useState(null);
@@ -85,6 +87,39 @@ const ListingItemPage = () => {
   };
 
   return (
+    <>
+      <NavigationBar />
+      <Container style={{ width: "60%" }}>
+        {listingDetails && (
+          <Row style={{ margin: "5.65rem auto 0" }}>
+            <Col>
+              <Card>
+                <FavButton
+                  isFavIconActive={likedListings.includes(listingDetails.id)}
+                  onFavButtonClick={() => onFavButtonClick(listingDetails.id)}
+                />
+                <Card.Img variant="top" src={listingDetails.image_url} />
+                <Card.Body>
+                  <Card.Title>{listingDetails.title}</Card.Title>
+                  <Card.Text>
+                    {listingDetails.city} {listingDetails.country}
+                  </Card.Text>
+                  <Card.Text>${listingDetails.price} CAD per month</Card.Text>
+                  <Card.Text>{listingDetails.description}</Card.Text>
+                  <Card.Text>
+                    We have {listingDetails.number_of_rooms} bedrooms.
+                  </Card.Text>
+                  <Card.Text>
+                    We are looking for {listingDetails.number_of_roommates}{" "}
+                    roommates.
+                  </Card.Text>
+                  <Card.Text>Status: {listingDetails.status}</Card.Text>
+                </Card.Body>
+                <Button type="submit">Interested</Button>
+              </Card>
+            </Col>
+          </Row>
+        )}
     <Container>
       {listingDetails && (
         <Row>
@@ -115,23 +150,25 @@ const ListingItemPage = () => {
         </Row>
       )}
 
-      {reviews.length > 0 && <Reviews reviews={reviews} />}
+        {reviews.length > 0 && <Reviews reviews={reviews} />}
 
-      {reviewNotification && (
+        {reviewNotification && (
+          <Row>
+            <Col>
+              <Alert variant="success">{reviewNotification}</Alert>
+            </Col>
+          </Row>
+        )}
+
         <Row>
           <Col>
-            <Alert variant="success">{reviewNotification}</Alert>
+            <ReviewForm handleReviewFormSubmit={handleReviewFormSubmit} />
           </Col>
         </Row>
-      )}
-
-      <Row>
-        <Col>
-          <ReviewForm handleReviewFormSubmit={handleReviewFormSubmit} />
-        </Col>
-      </Row>
-    </Container>
+      </Container>
+    </>
   );
 };
 
 export default ListingItemPage;
+

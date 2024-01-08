@@ -1,15 +1,18 @@
-
-import { useState } from "react";
+import "./App.css";
+import "./NavigationBar.css";
+import "./Header.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginButton from "./components/LoginButton";
-import LogoutButton from "./components/LogoutButton";
 import Profile from "./components/Profile";
-import MyMessage from './components/myMessages'
+import MyMessage from "./components/myMessages";
 import Listings from "./components/Listings";
 import ListingItemPage from "./components/ListingItemPage";
+import NavigationBar from "./components/NavigationBar";
+import Header from "./components/Header";
+
+import useApplicationData from "./hooks/useApplicationData";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { state, onFavButtonClick } = useApplicationData();
 
   return (
     <Router>
@@ -18,16 +21,26 @@ function App() {
           path="/"
           element={
             <div>
-              <h1>Auth0 Login</h1>
-              <LoginButton />
-              <LogoutButton />
-              <Profile />
-               <MyMessage />
-             <Listings />
+              <NavigationBar />
+              <Header />
+              {/* <Profile /> */}
+               {/* <MyMessage /> */}
+              <Listings
+                likedListings={state.likedListings}
+                onFavButtonClick={onFavButtonClick}
+              />
             </div>
           }
         />
-        <Route path="/:listing_id" element={<ListingItemPage />} />
+        <Route
+          path="/:listing_id"
+          element={
+            <ListingItemPage
+              likedListings={state.likedListings}
+              onFavButtonClick={onFavButtonClick}
+            />
+          }
+        />
       </Routes>
     </Router>
   );
