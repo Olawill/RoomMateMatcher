@@ -9,6 +9,8 @@ import Profile from "./Profile";
 import SignupButton from "./Buttons/SignupButton";
 import MyMessage from "./myMessages";
 
+import { Link } from 'react-router-dom';
+
 const NavigationBar = ({ handleTheme }) => {
   const logoImgPath = import.meta.env.BASE_URL + 'logo.png';
   const { user, isAuthenticated } = useAuth0();
@@ -26,8 +28,8 @@ const NavigationBar = ({ handleTheme }) => {
       </div>
       <div className="custom-nav">
         <Nav className="custom-nav-link">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="#link">About</Nav.Link>
+          <Nav.Link as={Link} to="/">Home</Nav.Link>
+          <Nav.Link as={Link} to="#link">About</Nav.Link>
         </Nav>
         <Nav className="auth-buttons">
           {
@@ -83,9 +85,6 @@ const NavigationBar = ({ handleTheme }) => {
                                 </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#action/3.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
-                      <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                    </svg>
                     <LogoutButton />
                   </NavDropdown.Item>
                 </NavDropdown>
