@@ -20,16 +20,11 @@ function App() {
         <Route
           path="/"
           element={
-            <div>
-              <NavigationBar />
-              <Header />
-              {/* <Profile /> */}
-               {/* <MyMessage /> */}
+
               <Listings
                 likedListings={state.likedListings}
                 onFavButtonClick={onFavButtonClick}
               />
-            </div>
           }
         />
         <Route

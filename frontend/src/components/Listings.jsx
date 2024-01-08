@@ -29,8 +29,8 @@ const Listings = ({ likedListings, onFavButtonClick }) => {
 
   return (
     <PageLayout>
-      {({ getThemeAuto, theme })=> (
-        <Container>
+      {({ getThemeAuto, theme }) => (
+        <Container data-theme={theme === 'Auto' ? getThemeAuto() : theme}>
           <Row>
             {listings.map((listing) => (
               <Col md key={listing.id}>

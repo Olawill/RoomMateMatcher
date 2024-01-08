@@ -22,6 +22,7 @@ const PageLayout = ({ children }) => {
     setTheme(e.target.dataset.theme);
     window.sessionStorage.setItem('appTheme', e.target.dataset.theme);
   }
+  console.log(theme);
 
   return (
     <>

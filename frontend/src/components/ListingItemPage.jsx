@@ -9,6 +9,7 @@ import NavigationBar from "./NavigationBar";
 import ReviewForm from "./ReviewForm";
 import Reviews from "./Reviews";
 import FavButton from "./FavButton";
+import PageLayout from "./PageLayout/PageLayout";
 
 const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   const { listing_id } = useParams();
@@ -87,17 +88,47 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   };
 
   return (
-    <>
-      <NavigationBar />
-      <Container style={{ width: "60%" }}>
+    <PageLayout>
+      {({ theme, getThemeAuto }) => (
+        <>
+        <Container
+          data-theme={theme === 'Auto' ? getThemeAuto() : theme}
+          style={{ width: "60%" }}>
+          {listingDetails && (
+            <Row style={{ margin: "5.65rem auto 0" }}>
+              <Col>
+                <Card>
+                  <FavButton
+                    isFavIconActive={likedListings.includes(listingDetails.id)}
+                    onFavButtonClick={() => onFavButtonClick(listingDetails.id)}
+                  />
+                  <Card.Img variant="top" src={listingDetails.image_url} />
+                  <Card.Body>
+                    <Card.Title>{listingDetails.title}</Card.Title>
+                    <Card.Text>
+                      {listingDetails.city} {listingDetails.country}
+                    </Card.Text>
+                    <Card.Text>${listingDetails.price} CAD per month</Card.Text>
+                    <Card.Text>{listingDetails.description}</Card.Text>
+                    <Card.Text>
+                      We have {listingDetails.number_of_rooms} bedrooms.
+                    </Card.Text>
+                    <Card.Text>
+                      We are looking for {listingDetails.number_of_roommates}{" "}
+                      roommates.
+                    </Card.Text>
+                    <Card.Text>Status: {listingDetails.status}</Card.Text>
+                  </Card.Body>
+                  <Button type="submit">Interested</Button>
+                </Card>
+              </Col>
+            </Row>
+          )}
+        <Container>
         {listingDetails && (
-          <Row style={{ margin: "5.65rem auto 0" }}>
+          <Row>
             <Col>
               <Card>
-                <FavButton
-                  isFavIconActive={likedListings.includes(listingDetails.id)}
-                  onFavButtonClick={() => onFavButtonClick(listingDetails.id)}
-                />
                 <Card.Img variant="top" src={listingDetails.image_url} />
                 <Card.Body>
                   <Card.Title>{listingDetails.title}</Card.Title>
@@ -115,59 +146,34 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                   </Card.Text>
                   <Card.Text>Status: {listingDetails.status}</Card.Text>
                 </Card.Body>
-                <Button type="submit">Interested</Button>
+                <Button type="submit" onClick={handleInterestedButtonClick}>
+                  Interested
+                </Button>
               </Card>
             </Col>
           </Row>
         )}
-      <Container>
-      {listingDetails && (
-        <Row>
-          <Col>
-            <Card>
-              <Card.Img variant="top" src={listingDetails.image_url} />
-              <Card.Body>
-                <Card.Title>{listingDetails.title}</Card.Title>
-                <Card.Text>
-                  {listingDetails.city} {listingDetails.country}
-                </Card.Text>
-                <Card.Text>${listingDetails.price} CAD per month</Card.Text>
-                <Card.Text>{listingDetails.description}</Card.Text>
-                <Card.Text>
-                  We have {listingDetails.number_of_rooms} bedrooms.
-                </Card.Text>
-                <Card.Text>
-                  We are looking for {listingDetails.number_of_roommates}{" "}
-                  roommates.
-                </Card.Text>
-                <Card.Text>Status: {listingDetails.status}</Card.Text>
-              </Card.Body>
-              <Button type="submit" onClick={handleInterestedButtonClick}>
-                Interested
-              </Button>
-            </Card>
-          </Col>
-        </Row>
-      )}
 
-        {reviews.length > 0 && <Reviews reviews={reviews} />}
+          {reviews.length > 0 && <Reviews reviews={reviews} />}
 
-        {reviewNotification && (
+          {reviewNotification && (
+            <Row>
+              <Col>
+                <Alert variant="success">{reviewNotification}</Alert>
+              </Col>
+            </Row>
+          )}
+
           <Row>
             <Col>
-              <Alert variant="success">{reviewNotification}</Alert>
+              <ReviewForm handleReviewFormSubmit={handleReviewFormSubmit} />
             </Col>
           </Row>
-        )}
-
-        <Row>
-          <Col>
-            <ReviewForm handleReviewFormSubmit={handleReviewFormSubmit} />
-          </Col>
-        </Row>
+          </Container>
         </Container>
-      </Container>
-    </>
+        </>
+      )}
+    </PageLayout>
   );
 };
 
