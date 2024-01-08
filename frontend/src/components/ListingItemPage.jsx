@@ -146,12 +146,14 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                   <Card.Text>Status: {listingDetails.status}</Card.Text>
                 </Card.Body>
                 <Button type="submit" onClick={handleInterestedButtonClick}>
-                  Interested
-                </Button>
+                Interested
+              </Button>
               </Card>
             </Col>
           </Row>
         )}
+        </Container>
+    <Container>
 
           {reviews.length > 0 && <Reviews reviews={reviews} />}
 
