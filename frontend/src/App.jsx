@@ -6,6 +6,7 @@ import Listings from "./components/Listings";
 import ListingItemPage from "./components/ListingItemPage";
 import NavigationBar from "./components/NavigationBar";
 import Header from "./components/Header";
+import MyMessage from "./components/myMessages";
 
 import useApplicationData from "./hooks/useApplicationData";
 
