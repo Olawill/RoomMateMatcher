@@ -23,8 +23,7 @@ function App() {
             <div>
               <NavigationBar />
               <Header />
-              {/* <Profile /> */}
-               {/* <MyMessage /> */}
+              <Profile /> 
               <Listings
                 likedListings={state.likedListings}
                 onFavButtonClick={onFavButtonClick}
@@ -32,6 +31,10 @@ function App() {
             </div>
           }
         />
+          <Route
+                  path="/myMessages"
+                  element={<MyMessage />}
+                />
         <Route
           path="/:listing_id"
           element={
