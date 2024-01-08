@@ -6,6 +6,7 @@ import LoginButton from "./Buttons/LoginButton";
 import LogoutButton from "./Buttons/LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
+import { Link } from 'react-router-dom';
 
 const NavigationBar = ({ handleTheme }) => {
   const logoImgPath = import.meta.env.BASE_URL + 'logo.png';
