@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 
-const userData = JSON.parse(window.sessionStorage.getItem('userData'));
-const username = userData.username;
+const userData = sessionStorage.getItem("userData");
+const userInfo = JSON.parse(userData);
 
 const Reviews = ({ reviews }) => {
   const splitReviews = (reviews) => {
@@ -17,7 +17,7 @@ const Reviews = ({ reviews }) => {
 
   return (
     <Row>
-      <Col>
+      <Col> 
         <h2>Reviews</h2>
         <Row>
           <Col>
@@ -25,7 +25,7 @@ const Reviews = ({ reviews }) => {
               <Card key={review.id}>
                 <Card.Body>
                   <Card.Text>Rating: {review.rating}</Card.Text>
-                  <Card.Text>Written by: {username}</Card.Text>
+                  <Card.Text>Written by: {userInfo?.username}</Card.Text>
                   <Card.Text>{review.review}</Card.Text>
                 </Card.Body>
               </Card>
@@ -36,7 +36,7 @@ const Reviews = ({ reviews }) => {
               <Card key={review.id}>
                 <Card.Body>
                   <Card.Text>Rating: {review.rating}</Card.Text>
-                  <Card.Text>Written by: {username}</Card.Text>
+                  <Card.Text>Written by: {userInfo?.username}</Card.Text>
                   <Card.Text>{review.review}</Card.Text>
                 </Card.Body>
               </Card>

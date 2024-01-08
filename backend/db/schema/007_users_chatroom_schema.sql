@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS listings CASCADE;
+DROP TABLE IF EXISTS users_chatrooms CASCADE;
 
 CREATE TABLE users_chatrooms (
     user_id INTEGER REFERENCES users(id),
