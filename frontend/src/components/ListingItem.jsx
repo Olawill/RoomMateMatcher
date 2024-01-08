@@ -4,11 +4,10 @@ import { Card } from "react-bootstrap";
 import FavButton from "./FavButton";
 
 const ListingItem = (props) => {
-  const { listing, isFavIconActive, onFavButtonClick, onListingItemClick } = props;
-  // Callback functions code in the parent component need to be wriiten.
+  const { listing, isFavIconActive, onFavButtonClick } = props;
 
   return (
-    <Card className="mb-3" style={{ color: "#000" }} onClick={() => onListingItemClick(listing)}>
+    <Card className="mb-3" style={{ color: "#000" }}>
       <FavButton onFavButtonClick={() => onFavButtonClick(listing.id)} isFavIconActive={isFavIconActive} />
       <Card.Img variant="top" src={listing.image_url} />
       <Card.Body>

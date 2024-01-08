@@ -4,8 +4,8 @@ import "../FavButton.scss"
 
 const FavButton = ({ onFavButtonClick, listingId, isFavIconActive }) => {
   const handleonFavButtonClick = useCallback((e) => {
-    e.stopPropagation();
-    onFavButtonClick(photoId);
+    e.preventDefault();
+    onFavButtonClick(listingId);
   });
 
   return (
