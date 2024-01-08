@@ -115,40 +115,15 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                   </Card.Text>
                   <Card.Text>Status: {listingDetails.status}</Card.Text>
                 </Card.Body>
-                <Button type="submit">Interested</Button>
+                <Button type="submit" onClick={handleInterestedButtonClick}>
+                Interested
+              </Button>
               </Card>
             </Col>
           </Row>
         )}
+        </Container>
     <Container>
-      {listingDetails && (
-        <Row>
-          <Col>
-            <Card>
-              <Card.Img variant="top" src={listingDetails.image_url} />
-              <Card.Body>
-                <Card.Title>{listingDetails.title}</Card.Title>
-                <Card.Text>
-                  {listingDetails.city} {listingDetails.country}
-                </Card.Text>
-                <Card.Text>${listingDetails.price} CAD per month</Card.Text>
-                <Card.Text>{listingDetails.description}</Card.Text>
-                <Card.Text>
-                  We have {listingDetails.number_of_rooms} bedrooms.
-                </Card.Text>
-                <Card.Text>
-                  We are looking for {listingDetails.number_of_roommates}{" "}
-                  roommates.
-                </Card.Text>
-                <Card.Text>Status: {listingDetails.status}</Card.Text>
-              </Card.Body>
-              <Button type="submit" onClick={handleInterestedButtonClick}>
-                Interested
-              </Button>
-            </Card>
-          </Col>
-        </Row>
-      )}
 
         {reviews.length > 0 && <Reviews reviews={reviews} />}
 
