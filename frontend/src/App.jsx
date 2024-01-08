@@ -3,7 +3,6 @@ import "./NavigationBar.css";
 import "./Header.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Profile from "./components/Profile";
-import MyMessage from "./components/myMessages";
 import Listings from "./components/Listings";
 import ListingItemPage from "./components/ListingItemPage";
 import NavigationBar from "./components/NavigationBar";
@@ -23,8 +22,7 @@ function App() {
             <div>
               <NavigationBar />
               <Header />
-              {/* <Profile /> */}
-               {/* <MyMessage /> */}
+               <Profile />
               <Listings
                 likedListings={state.likedListings}
                 onFavButtonClick={onFavButtonClick}

@@ -1,14 +1,21 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown, ButtonGroup } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
-import Profile from "./Profile";
+import MyMessage from "./myMessages";
 
 const NavigationBar = () => {
   const logoImgPath = import.meta.env.BASE_URL + 'logo.png';
   const { user, isAuthenticated } = useAuth0();
+  const navigate = useNavigate();
+
+  const handleChatsClick = () => {
+    // Navigate to the ChatList component
+    navigate('/myMessages'); 
+  };
 
   // console.log(user);
   return (
@@ -18,7 +25,7 @@ const NavigationBar = () => {
       </div>
       <div className="custom-nav">
         <Nav className="custom-nav-link">
-          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link href="#Home">Home</Nav.Link>
           <Nav.Link href="#link">About</Nav.Link>
         </Nav>
         <Nav className="auth-buttons">
@@ -42,7 +49,7 @@ const NavigationBar = () => {
                     </div>
                   }
                 >
-                  <NavDropdown.Item>Chats</NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleChatsClick}>Chats</NavDropdown.Item>
                   <NavDropdown.Item>
                     Favourites
                   </NavDropdown.Item>
