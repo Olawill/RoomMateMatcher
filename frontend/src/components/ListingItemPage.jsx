@@ -50,7 +50,7 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   .then(response => {
     // Assuming the response contains information about the created chat room
     const chatRoomId = response.data.data.id;
-    console.log('this is chatroomid', response, chatRoomId)
+    // console.log('this is chatroomid', response, chatRoomId)
 
     // Redirect to the chat room page
     navigate(`/chat/${chatRoomId}`);
@@ -120,7 +120,7 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
             </Col>
           </Row>
         )}
-    <Container>
+      <Container>
       {listingDetails && (
         <Row>
           <Col>
@@ -165,6 +165,7 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
             <ReviewForm handleReviewFormSubmit={handleReviewFormSubmit} />
           </Col>
         </Row>
+        </Container>
       </Container>
     </>
   );
