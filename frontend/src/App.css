@@ -21,7 +21,17 @@
 
 .divider {
   border-right: 1px solid #ccc;
-  padding-inline: 10px; /* Adjust padding as needed */
-  margin-inline: 10px; /* Adjust margin as needed */
-  display: inline-block; /* Keeps elements inline */
+  padding-inline: 1rem;
+  margin-right: 2rem;
+  display: inline-block;
+}
+
+.divider-button {
+  margin-right: 1rem;
+  display: inline-block;
+}
+
+[data-theme="Dark"].container {
+  color: #eee;
+  background-color: #181818;
 }
