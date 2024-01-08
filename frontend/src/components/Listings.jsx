@@ -6,6 +6,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 
 import ListingItem from "./ListingItem";
+import PageLayout from "./PageLayout/PageLayout";
 
 const Listings = ({ likedListings, onFavButtonClick }) => {
   const [listings, setListings] = useState([]);
@@ -27,21 +28,26 @@ const Listings = ({ likedListings, onFavButtonClick }) => {
   }, []);
 
   return (
-    <Container>
-      <Row>
-        {listings.map((listing) => (
-          <Col md key={listing.id}>
-            <Link to={`/${listing.id}`}>
-              <ListingItem 
-                listing={listing}
-                isFavIconActive={likedListings.includes(listing.id)}
-                onFavButtonClick={onFavButtonClick}      
-              />
-            </Link>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <PageLayout>
+      {({ getThemeAuto, theme })=> (
+        <Container>
+          <Row>
+            {listings.map((listing) => (
+              <Col md key={listing.id}>
+                <Link to={`/${listing.id}`}>
+                  <ListingItem 
+                    listing={listing}
+                    isFavIconActive={likedListings.includes(listing.id)}
+                    onFavButtonClick={onFavButtonClick}      
+                  />
+                </Link>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      )}
+
+    </PageLayout>
   );
 };
 
