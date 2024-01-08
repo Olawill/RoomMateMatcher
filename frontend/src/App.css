@@ -7,3 +7,21 @@
 .card {
   padding: 1em;
 }
+
+.mb-3.card {
+  width: 18rem;
+}
+
+#basic-nav-dropdown {
+  width: 5rem;
+  margin-left: 8px;
+  display: flex;
+  align-items: center; 
+}
+
+.divider {
+  border-right: 1px solid #ccc;
+  padding-inline: 10px; /* Adjust padding as needed */
+  margin-inline: 10px; /* Adjust margin as needed */
+  display: inline-block; /* Keeps elements inline */
+}

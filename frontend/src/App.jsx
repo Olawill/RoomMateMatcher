@@ -22,8 +22,8 @@ function App() {
             <div>
               <NavigationBar />
               <Header />
-              <Profile />
-               <MyMessage />
+              {/* <Profile /> */}
+               {/* <MyMessage /> */}
              <Listings />
             </div>
           }

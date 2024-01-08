@@ -11,7 +11,14 @@ const LogoutButton = () => {
   
   return (
     isAuthenticated && (
-      <Button onClick={userLogout} variant="primary">
+      <Button
+        onClick={userLogout}
+        variant="outline-secondary"
+        size="sm"
+        style={{
+          border: 'none'
+        }}
+      >
         Sign Out
       </Button>
     )
