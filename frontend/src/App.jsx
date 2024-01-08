@@ -23,8 +23,8 @@ function App() {
             <div>
               <NavigationBar />
               <Header />
-              <Profile />
-              <MyMessage />
+              {/* <Profile /> */}
+               {/* <MyMessage /> */}
               <Listings
                 likedListings={state.likedListings}
                 onFavButtonClick={onFavButtonClick}

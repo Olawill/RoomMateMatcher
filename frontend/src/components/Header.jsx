@@ -4,7 +4,7 @@ const Header = () => {
   const imgPath = import.meta.env.BASE_URL + 'headerImg.png';
 
   return (
-    <header className="header">
+    <header className="header" style={{ marginBottom: '3rem' }}>
       <div className="header-background">
         <div className="image-with-gradient">
           <img src={imgPath} alt="header-image" />
