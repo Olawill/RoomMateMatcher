@@ -3,7 +3,7 @@ const router = require('express').Router();
 module.exports = (db, io) => {
 
   // GET /api/chatrooms
-  router.get('/', (req, res) => {
+  router.get('/myMessages', (req, res) => {
     db.query('SELECT * FROM chatrooms ORDER BY id ASC;')
       .then(response => {
         const data = response.rows;

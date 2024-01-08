@@ -5,7 +5,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import NavigationBar from "./NavigationBar";
 import ReviewForm from "./ReviewForm";
 import Reviews from "./Reviews";
 import FavButton from "./FavButton";

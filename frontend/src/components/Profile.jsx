@@ -28,11 +28,11 @@ const Profile = () => {
   return (
     updatedUser && (
       <article>
-        {updatedUser?.picture && <img src={updatedUser.picture} alt={updatedUser?.name} />}
+        {/* {updatedUser?.picture && <img src={updatedUser.picture} alt={updatedUser?.name} />}
         <h2>{updatedUser?.name}</h2>
         <ul>
           {Object.keys(updatedUser).map((objKey, i) => <li key={i}>{objKey}: {updatedUser[objKey]}</li>)}
-        </ul>
+        </ul> */}
       </article>
     )
   )
