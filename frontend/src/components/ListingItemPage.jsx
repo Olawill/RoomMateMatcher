@@ -10,7 +10,7 @@ import ReviewForm from "./ReviewForm";
 import Reviews from "./Reviews";
 import FavButton from "./FavButton";
 
-const ListingItemPage = () => {
+const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   const { listing_id } = useParams();
   const navigate = useNavigate();
   const [listingDetails, setListingDetails] = useState(null);
@@ -60,12 +60,15 @@ const ListingItemPage = () => {
   return (
     <>
       <NavigationBar />
-      <Container>
+      <Container style={{ width: "60%" }}>
         {listingDetails && (
-          <Row style={{ margin: '5.65rem auto 0' }}>
+          <Row style={{ margin: "5.65rem auto 0" }}>
             <Col>
               <Card>
-                <FavButton />
+                <FavButton
+                  isFavIconActive={likedListings.includes(listingDetails.id)}
+                  onFavButtonClick={() => onFavButtonClick(listingDetails.id)}
+                />
                 <Card.Img variant="top" src={listingDetails.image_url} />
                 <Card.Body>
                   <Card.Title>{listingDetails.title}</Card.Title>
