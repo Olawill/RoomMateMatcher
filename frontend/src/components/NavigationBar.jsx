@@ -8,13 +8,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
 import { Link } from 'react-router-dom';
 
-const NavigationBar = ({ handleTheme }) => {
+const NavigationBar = ({ handleTheme, theme }) => {
   const logoImgPath = import.meta.env.BASE_URL + 'logo.png';
   const { user, isAuthenticated } = useAuth0();
 
   // console.log(user);
+  const navbarClassName = theme === 'Dark' ? 'custom-navbar dark-theme' : 'custom-navbar';
   return (
-    <Navbar className="custom-navbar">
+    <Navbar className={navbarClassName}>
       <div className="logo-container">
         <img src={logoImgPath} alt="logo-image" className="logo" />
       </div>
