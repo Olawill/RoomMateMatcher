@@ -45,25 +45,18 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
     const senderUserId = userInfo.userId;
     const recipientUserId = listingDetails.user_id;
 
-    axios
-      .post("/api/chatrooms/create", {
-        senderId: senderUserId,
-        recipientId: recipientUserId,
-        name: listingDetails.title,
-      })
-      .then((response) => {
-        // Assuming the response contains information about the created chat room
-        const chatRoomId = response.data.data.id;
-        // console.log('this is chatroomid', response, chatRoomId)
+    axios.post('/api/chatrooms/create', { senderId: senderUserId, recipientId: recipientUserId, name :listingDetails.title })
+  .then(response => {
+    const chatRoomId = response.data.id;
+    navigate(`/myMessages`);
+  })
+  .catch(error => {
+    // Handle errors
+    console.error('Error creating private chat room:', error);
+  });
+  }
 
-        // Redirect to the chat room page
-        navigate(`/chat/${chatRoomId}`);
-      })
-      .catch((error) => {
-        // Handle errors
-        console.error("Error creating private chat room:", error);
-      });
-  };
+
 
   const handleReviewFormSubmit = async (reviewData) => {
     if (!isAuthenticated) {
