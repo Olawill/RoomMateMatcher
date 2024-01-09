@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ScrollToBottom from "react-scroll-to-bottom";
+import "../Message.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Message({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -93,7 +95,7 @@ function Message({ socket, username, room }) {
             event.key === "Enter" && sendMessage();
           }}
         />
-        <button onClick={sendMessage}>&#9658;</button>
+        <button id="message-button" onClick={sendMessage}>&#9658;</button>
       </div>
     </div>
   );
