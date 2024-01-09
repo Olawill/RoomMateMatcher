@@ -48,12 +48,8 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
 
     axios.post('/api/chatrooms/create', { senderId: senderUserId, recipientId: recipientUserId, name :listingDetails.title })
   .then(response => {
-    // Assuming the response contains information about the created chat room
-    const chatRoomId = response.data.data.id;
-    // console.log('this is chatroomid', response, chatRoomId)
-
-    // Redirect to the chat room page
-    navigate(`/chat/${chatRoomId}`);
+    const chatRoomId = response.data.id;
+    navigate(`/myMessages`);
   })
   .catch(error => {
     // Handle errors
