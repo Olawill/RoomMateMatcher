@@ -1,4 +1,3 @@
-
 import NavigationBar from '../NavigationBar'
 import Header from '../Header'
 import { useState } from 'react';
@@ -27,8 +26,9 @@ const PageLayout = ({ children }) => {
     <>
       <NavigationBar
         handleTheme={handleTheme}
+        theme={theme}
       />
-      <Header />
+      <Header darkModeEnabled={theme === 'Dark'} />
       {children({ getThemeAuto, theme })}
     </>
   )
