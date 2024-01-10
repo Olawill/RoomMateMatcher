@@ -1,7 +1,7 @@
 import React from "react";
 
 const Header = ({ darkModeEnabled }) => {
-  console.log('darkModeEnabled', darkModeEnabled);
+
   const imgPath = darkModeEnabled
     ? import.meta.env.BASE_URL + "headerImg-dark.png"
     : import.meta.env.BASE_URL + "headerImg.png";

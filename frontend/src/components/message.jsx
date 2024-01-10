@@ -58,7 +58,7 @@ function Message({ socket, username, room }) {
     }
   };
 
-  console.log(messageList);
+
   return (
     <div className="chat-window">
       <div className="chat-header">
