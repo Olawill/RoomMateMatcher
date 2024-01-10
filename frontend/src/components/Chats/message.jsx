@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import ScrollToBottom from "react-scroll-to-bottom";
-import "../Message.css";
+import "./Message.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import moment from 'moment';
 

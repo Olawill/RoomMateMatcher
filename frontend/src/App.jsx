@@ -1,12 +1,11 @@
-import "./App.css";
-import "./NavigationBar.css";
-import "./Header.css";
+import "../src/App.css";
+import "./components/Navigation/NavigationBar.css"
+import "./components/Navigation/Header.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Listings from "./components/Listings";
-import ListingItemPage from "./components/ListingItemPage";
-import NavigationBar from "./components/NavigationBar"; // Corrected import path
-import Profile from "./components/Profile";
-import MyMessage from "./components/myMessages";
+import Listings from "./components/Listing/Listings";
+import ListingItemPage from "./components/Listing/ListingItemPage";
+import Profile from "./components/Profile/Profile";
+import MyMessage from "./components/Chats/myMessages";
 
 import useApplicationData from "./hooks/useApplicationData";
 

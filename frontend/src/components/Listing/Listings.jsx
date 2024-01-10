@@ -6,7 +6,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 
 import ListingItem from "./ListingItem";
-import PageLayout from "./PageLayout/PageLayout";
+import PageLayout from "../PageLayout/PageLayout";
 
 const Listings = ({ likedListings, onFavButtonClick }) => {
   const [listings, setListings] = useState([]);

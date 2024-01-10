@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ChatroomList from "./chatroomList";
-import PageLayout from "./PageLayout/PageLayout";
+import PageLayout from "../PageLayout/PageLayout";
 
 function MyMessage() {
   const [setSelectedChatroom] = useState(null);

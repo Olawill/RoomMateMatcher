@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import io from "socket.io-client";
 import Message from "./message";
-import "../ChatroomListing.css";
+import "./ChatroomListing.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function ChatroomList() {

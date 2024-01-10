@@ -1,7 +1,7 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card } from "react-bootstrap";
-import FavButton from "./FavButton";
+import FavButton from "../Favourites/FavButton";
 
 const ListingItem = (props) => {
   const { listing, isFavIconActive, onFavButtonClick } = props;
