@@ -1,10 +1,13 @@
 import React from "react";
 
-const Header = () => {
-  const imgPath = import.meta.env.BASE_URL + 'headerImg.png';
+const Header = ({ darkModeEnabled }) => {
+  console.log('darkModeEnabled', darkModeEnabled);
+  const imgPath = darkModeEnabled
+    ? import.meta.env.BASE_URL + "headerImg-dark.png"
+    : import.meta.env.BASE_URL + "headerImg.png";
 
   return (
-    <header className="header" style={{ marginBottom: '3rem' }}>
+    <header className="header" style={{ marginBottom: "3rem" }}>
       <div className="header-background">
         <div className="image-with-gradient">
           <img src={imgPath} alt="header-image" />

@@ -1,5 +1,5 @@
 .custom-navbar {
-  height: 90px;
+  height: 95px;
   width: 100%;
   background-color: rgba(84, 158, 236, 0.693);
   background-position: center;
@@ -20,7 +20,7 @@
   position: absolute;
   top: 2rem;
   right: 2rem;
-  bottom: 1.2rem;
+  bottom: 1.4rem;
 }
 
 .logo-container {
@@ -28,12 +28,12 @@
 }
 
 .logo {
-  width: 120px;
+  width: 110px;
   height: auto;
   border-radius: 50%;
 }
 
-[data-theme="Dark"].container {
-  color: #eee;
-  background-color: #181818;
+.custom-navbar.dark-theme {
+  background-color: #222e0399; 
+  color: #fff;
 }
