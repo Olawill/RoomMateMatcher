@@ -3,6 +3,7 @@ import axios from "axios";
 import ScrollToBottom from "react-scroll-to-bottom";
 import "../Message.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import moment from 'moment';
 
 function Message({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -57,6 +58,7 @@ function Message({ socket, username, room }) {
     }
   };
 
+  console.log(messageList);
   return (
     <div className="chat-window">
       <div className="chat-header">
@@ -75,8 +77,8 @@ function Message({ socket, username, room }) {
                   <p>{messageContent.content}</p>
                 </div>
                 <div className="message-meta">
-                  <p id="time">{messageContent.time}</p>
-                  <p id="author">{messageContent.author}</p>
+                  <p id="author">{messageContent.sender_id}</p>
+                  <p id="time">{moment(messageContent.created_at).fromNow()}</p>
                 </div>
               </div>
             </div>

@@ -13,6 +13,10 @@
   z-index: 1000; 
 }
 
+.custom-navbar .nav-link {
+  font-weight: bolder;
+}
+
 .custom-nav {
   display: flex;
   flex-direction: row;
@@ -35,5 +39,9 @@
 
 .custom-navbar.dark-theme {
   background-color: #af8730b0; 
+  color: #fff;
+}
+
+.dark-theme .nav-link {
   color: #fff;
 }

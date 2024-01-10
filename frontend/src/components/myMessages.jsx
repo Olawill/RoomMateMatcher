@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ChatroomList from "./chatroomList";
+import PageLayout from "./PageLayout/PageLayout";
 
 function MyMessage() {
   const [setSelectedChatroom] = useState(null);
@@ -9,9 +10,16 @@ function MyMessage() {
   };
 
   return (
-    <div className="container">
-      <ChatroomList onSelectChatroom={handleChatroomSelect} />
-    </div>
+    <PageLayout>
+      {({ theme, getThemeAuto }) => (
+        <div
+          className="container"
+          data-theme={theme === "Auto" ? getThemeAuto() : theme}
+        >
+          <ChatroomList onSelectChatroom={handleChatroomSelect} />
+        </div>
+      )}
+    </PageLayout>
   );
 }
 

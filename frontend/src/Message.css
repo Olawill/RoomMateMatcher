@@ -47,11 +47,13 @@
   padding: 10px;
   border-radius: 8px;
   max-width: 70%;
+  text-align: left;
 }
 
 .message-meta {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-around; */
+  gap: 2em;
   margin-top: 5px;
 }
 

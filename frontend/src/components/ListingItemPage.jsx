@@ -16,6 +16,7 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   const [listingDetails, setListingDetails] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [reviewNotification, setReviewNotification] = useState(null);
+  const [roomExists, setRoomExists] = useState(false);
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   const userData = sessionStorage.getItem("userData");
@@ -34,6 +35,25 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
 
     fetchListingDetails();
   }, [listing_id]);
+
+  // CHANGE INTERESTED TO REDIRECT TO MESSAGES IF ALREADY CLICKED
+  useEffect(() => {
+
+    const listingClicked = async () => {
+      
+    const roomInfo = await axios.get(`/api/chatrooms/${userInfo?.userId}`);
+
+    const rooms = roomInfo.data.data;
+    const roomExists = rooms.some(room => room.name === listingDetails?.title);
+
+    setRoomExists(roomExists);
+    };
+
+    if (isAuthenticated) {
+      listingClicked();
+    }
+
+  }, [listingDetails, userInfo, isAuthenticated])
 
   const handleInterestedButtonClick = async () => {
     // Ensure the user is logged in
@@ -55,6 +75,30 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
     console.error('Error creating private chat room:', error);
   });
   }
+
+  // WHEN CHATROOM ALREADY EXIST
+  const handleChatButtonClick = () => {
+    chatredirect(listingDetails?.title);
+  };
+
+  // FUNCTION TO REDIRECT TO CHATS
+  const chatredirect = (roomName) => {
+
+    // Navigate to all chats
+    // navigate(`/chats/${listing_id}/chatroom-messages`);
+    navigate(`/myMessages`);
+
+    // FIND THE ELEMENT WITH THE NEW CHATROOM NAME AND CLICK IT
+    // Wait for a short time before attempting to click on the room name
+    setTimeout(() => {
+      // Trigger click on the room name (assuming you have a specific selector for the room name)
+      const roomNameElement = document.querySelector(`[data-chatroomname="${roomName}"]`);
+
+      if (roomNameElement) {
+        roomNameElement.click();
+      }
+    }, 500);
+  };
 
 
 
@@ -121,9 +165,20 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                       </Card.Text>
                       <Card.Text>Status: {listingDetails.status}</Card.Text>
                     </Card.Body>
-                    <Button type="submit" onClick={handleInterestedButtonClick}>
-                      Interested
-                    </Button>
+                    {
+                      !roomExists && (
+                      <Button type="submit" onClick={handleInterestedButtonClick}>
+                        Interested
+                      </Button>
+                      )
+                    }
+                    {
+                      roomExists && (
+                      <Button type="submit" onClick={handleChatButtonClick}>
+                        Messages
+                      </Button>
+                      )
+                    }
                   </Card>
                 </Col>
               </Row>
