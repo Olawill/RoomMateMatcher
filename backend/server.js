@@ -49,8 +49,10 @@ io.on('connection', (socket) => {
  
   });
   
-  socket.on("join_room", (data) => {
-    socket.join(data);
+  socket.on("join_room", (roomData) => {
+    const { roomId, userId } = roomData;
+    socket.join(roomId);
+ 
   });
 
 
