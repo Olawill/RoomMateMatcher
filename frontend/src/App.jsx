@@ -11,7 +11,7 @@ import MyMessage from "./components/myMessages";
 import useApplicationData from "./hooks/useApplicationData";
 
 function App() {
-  const { state, onFavButtonClick } = useApplicationData();
+  const { likedListings, onFavButtonClick } = useApplicationData();
 
   return (
     <Router>
@@ -20,7 +20,7 @@ function App() {
           path="/"
           element={
             <Listings
-              likedListings={state.likedListings}
+              likedListings={likedListings}
               onFavButtonClick={onFavButtonClick}
             />
           }
@@ -33,7 +33,7 @@ function App() {
           path="/:listing_id"
           element={
             <ListingItemPage
-              likedListings={state.likedListings}
+              likedListings={likedListings}
               onFavButtonClick={onFavButtonClick}
             />
           }

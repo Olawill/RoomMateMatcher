@@ -1,45 +1,38 @@
-import React, { useReducer, useEffect } from "react";
-
-const initialState = {
-  likedListings: [],
-};
-
-export const ACTIONS = {
-  LIKED_LISTING_ADDED: 'LIKED_LISTING_ADDED',
-  LIKED_LISTING_REMOVED: 'LIKED_LISTING_REMOVED',
-};
-
-const reducer = function (state, action) {
-  switch (action.type) {
-    case ACTIONS.LIKED_LISTING_ADDED:
-      return {
-        ...state,
-        likedListings: [...state.likedListings, action.payload.id],
-      };
-    case ACTIONS.LIKED_LISTING_REMOVED:
-      return {
-        ...state,
-        likedListings: state.likedListings.filter(id => id !== action.payload.id),
-      };
-  }
-};
+import React, { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 const useApplicationData = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [likedListings, setLikedListings] = useState([]);
+  const { isAuthenticated,loginWithRedirect, user } = useAuth0();
 
   const onFavButtonClick = (listingId) => {
-    if (state.likedListings.includes(listingId)) {
-      dispatch({ type: ACTIONS.LIKED_LISTING_REMOVED, payload: { id: listingId } });
-    } else {
-      dispatch({ type: ACTIONS.LIKED_LISTING_ADDED, payload: { id: listingId } });
+    if (!isAuthenticated) {
+      alert("Please login first");
+      loginWithRedirect();
+      return;
     }
+  
+    const isFavourite = likedListings.includes(listingId);
+    axios.post('/api/user/userId/favourites', {
+      userId: user.sub,
+      listingId: listingId,
+      isFavourite: !isFavourite
+    })
+    .then(() => {
+      if (isFavourite) {
+        setLikedListings(prev => prev.filter(id => id !== listingId));
+      } else {
+        setLikedListings(prev => [...prev, listingId]);
+      }
+    })
+    .catch(error => console.error(error));
   };
-
+  
   return {
-    state,
+    likedListings,
     onFavButtonClick,
   };
 };
 
 export default useApplicationData;
-
