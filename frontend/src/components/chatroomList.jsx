@@ -72,7 +72,10 @@ function ChatroomList() {
         <h2>Chatrooms</h2>
         <ul>
           {chatrooms.map((chatroom) => (
-            <li key={chatroom.id} onClick={() => handleChatroomSelect(chatroom)}>
+            <li
+              key={chatroom.id}
+              data-chatroomname={chatroom.name}
+              onClick={() => handleChatroomSelect(chatroom)}>
               {chatroom.name}
             </li>
           ))}
