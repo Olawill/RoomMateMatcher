@@ -13,11 +13,13 @@ function ChatroomList() {
   const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    const userData = sessionStorage.getItem("userData");
+  const userData = sessionStorage.getItem("userData");
+  const userInfo = JSON.parse(userData);
 
-    if (userData) {
-      const userInfo = JSON.parse(userData);
+  useEffect(() => {
+    
+
+    if (userInfo) { 
       if (userInfo.username) {
         setUsername(userInfo.username);
       }
@@ -58,6 +60,12 @@ function ChatroomList() {
           const messagesArray = response.data?.data || [];
           setMessages(messagesArray);
           setSelectedChatroom(chatroom);
+
+          const roomData = {
+            roomId: chatroom.id,
+            userId: userInfo.userId
+          }
+          socket.emit("join_room", roomData);
         })
         .catch(error => {
           console.error("Error fetching messages:", error);
