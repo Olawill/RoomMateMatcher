@@ -4,8 +4,8 @@ import "./Header.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Listings from "./components/Listings";
 import ListingItemPage from "./components/ListingItemPage";
-import NavigationBar from "./components/NavigationBar";
-import Header from "./components/Header";
+import NavigationBar from "./components/NavigationBar"; // Corrected import path
+import Profile from "./components/Profile";
 import MyMessage from "./components/myMessages";
 
 import useApplicationData from "./hooks/useApplicationData";
@@ -19,16 +19,16 @@ function App() {
         <Route
           path="/"
           element={
-              <Listings
-                likedListings={state.likedListings}
-                onFavButtonClick={onFavButtonClick}
-              />
+            <Listings
+              likedListings={state.likedListings}
+              onFavButtonClick={onFavButtonClick}
+            />
           }
         />
-          <Route
-                  path="/myMessages"
-                  element={<MyMessage />}
-                />
+        <Route
+          path="/myMessages"
+          element={<MyMessage />}
+        />
         <Route
           path="/:listing_id"
           element={
@@ -37,6 +37,10 @@ function App() {
               onFavButtonClick={onFavButtonClick}
             />
           }
+        />
+        <Route
+          path="/profile"
+          element={<Profile />}
         />
       </Routes>
     </Router>

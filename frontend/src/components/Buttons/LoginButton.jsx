@@ -3,8 +3,8 @@ import axios from "axios";
 import {Button} from "react-bootstrap";
 
 const LoginButton = () => {
-  const { isAuthenticated, loginWithRedirect, user } = useAuth0();
-
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+  
   if (isAuthenticated) {
     axios.post('/api/user', { user })
       .then(response => {

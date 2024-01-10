@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import io from "socket.io-client";
 import Message from "./message";
+import "../ChatroomListing.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function ChatroomList() {
   const [chatrooms, setChatrooms] = useState([]);
@@ -77,13 +79,22 @@ function ChatroomList() {
         </ul>
       </div>
 
-      {selectedChatroom && (
-        <Message
-          socket={socket}
-          username={username}
-          room={selectedChatroom.id}
-        />
-      )}
+      <div className="chat-main">
+        <div className="chat-header">
+          <h2>{selectedChatroom ? selectedChatroom.name : 'Select a Chatroom'}</h2>
+        </div>
+
+        <div className="chat-messages">
+          {selectedChatroom && (
+            <Message socket={socket} username={username} room={selectedChatroom.id} />
+          )}
+        </div>
+
+        <div className="chat-input">
+          {/* Your chat input component can go here */}
+          {/* Example: <ChatInput sendMessage={sendMessage} /> */}
+        </div>
+      </div>
     </div>
   );
 }
