@@ -43,14 +43,20 @@ io.on('connection', (socket) => {
   });
   
   socket.on("send_message", (data) => {
-    socket.to(data.room).emit("receive_message", data);
+    io.emit("receive_message", data, () => console.log('server receive message') );
     savedMessage(data);
     console.log('send message',data)
  
   });
+
+  // socket.on('receive_message', (data) => {
+  // io.emit("receive_message", data, () => console.log('server receive message') );
+  // } )
   
-  socket.on("join_room", (data) => {
-    socket.join(data);
+  socket.on("join_room", (roomData) => {
+    const { roomId, userId } = roomData;
+    socket.join(roomId);
+ 
   });
 
 
