@@ -49,7 +49,7 @@ const NavigationBar = ({ handleTheme, theme }) => {
                   <NavDropdown.Item>
                     Favourites
                   </NavDropdown.Item>
-                  <NavDropdown.Item>My Listings</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={`/${user?.nickname}-listings`}>My Listings</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item
                     className="d-flex"
