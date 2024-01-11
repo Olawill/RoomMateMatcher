@@ -225,9 +225,6 @@ const Profile = () => {
                     show={deleteUser}
                     onHide={handleClose}
                     centered
-                    style={{
-                      backgroundColor: '#f4b342',
-                    }}
                     animation={false}>
                     <Modal.Header closeButton>
                       <Modal.Title>Delete User Account</Modal.Title>
