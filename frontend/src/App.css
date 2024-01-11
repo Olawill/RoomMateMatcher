@@ -35,3 +35,41 @@
   color: #eee;
   background-color: #181818;
 }
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info span, .user-info p {
+  text-align: left;
+  width: 100%;
+}
+
+.user-info span {
+  color: #a09696;
+}
+
+.user-info p {
+  color: #413e3e;
+}
+
+.auth-item {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.auth-item .auth-prop {
+  flex: 1;
+}
+
+.auth-prop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.auth-prop span {
+  font-weight: bold;
+}
