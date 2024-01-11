@@ -7,6 +7,7 @@ import LogoutButton from "../Buttons/LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "../Profile/Profile";
 import { Link } from 'react-router-dom';
+import SignupButton from "../Buttons/SignupButton";
 
 const NavigationBar = ({ handleTheme, theme }) => {
   const logoImgPath = import.meta.env.BASE_URL + 'logo.png';
@@ -26,7 +27,8 @@ const NavigationBar = ({ handleTheme, theme }) => {
         </Nav>
         <Nav className="auth-buttons">
           <LoginButton />
-          {/* <LogoutButton /> */}
+          <div className="divider-button"></div>
+          <SignupButton />
           {
             isAuthenticated && (
               <>
@@ -38,7 +40,7 @@ const NavigationBar = ({ handleTheme, theme }) => {
                     <div className="d-flex">
                       {`${user?.nickname[0].toUpperCase()}${user?.nickname.slice(1)}`}
                       <img
-                        src={user?.picture} // replace with your image URL
+                        src={user?.picture}
                         alt="User Avatar"
                         style={{ marginLeft: '8px', borderRadius: '50%', width: '20px', height: '20px' }}
                       />
@@ -66,12 +68,12 @@ const NavigationBar = ({ handleTheme, theme }) => {
                   <div className="d-flex flex-column" style={{paddingLeft: '0.5rem'}}>
                       <div>{user?.name}</div>
                       <div>
-                        <Nav.Link href="#profile" style={{color: '#0dcaf0'}}>View Profile</Nav.Link>
+                        <Nav.Link as={Link} to="/profile" style={{color: '#0dcaf0'}}>View Profile</Nav.Link>
                       </div>
                     </div>
                                 </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.5">
+                  <NavDropdown.Item>
                     <LogoutButton />
                   </NavDropdown.Item>
                 </NavDropdown>
