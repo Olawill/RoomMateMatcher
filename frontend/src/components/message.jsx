@@ -5,60 +5,14 @@ import "../Message.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import moment from 'moment';
 
-function Message({ socket, username, room }) {
+function Message({ sendMessage, username, messageList }) {
   const [currentMessage, setCurrentMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
 
-  useEffect(() => {
-    // Fetch old messages for the chatroom from the server when the component mounts
-    axios.get(`/api/chatrooms/${room}/messages`)
-      .then(response => {
-        const messagesArray = response.data?.data || [];
-        setMessageList(messagesArray);
-      })
-      .catch(error => {
-        console.error("Error fetching messages:", error);
-      });
-
-    // Listen for new messages and update the message list
-    function onReceiveMessage(data) {
-      setMessageList((list) => [...list, data]);
-    }
-
-    socket.on("receive_message", onReceiveMessage);
-
-    return () => {
-      // Clean up the socket event listener when the component unmounts
-      socket.off("receive_message", onReceiveMessage);
-    };
-  }, [socket, room]);
-
-  const sendMessage = async () => {
-    if (currentMessage.trim() !== "") {
-      const userData = sessionStorage.getItem("userData");
-      const userInfo = JSON.parse(userData);
-      const messageData = {
-        sender_id: userInfo.userId,
-        recipient_id: 2, 
-        chatroom_id: room,
-        content: currentMessage,
-        checked: true,
-        time: `${new Date().getHours()}:${new Date().getMinutes()}`,
-        author: userInfo.username,
-      };
-
-      // Emit 'send_message' event to the server
-      socket.emit("send_message", messageData);
-
-      // Update the message list with the new message
-      setMessageList((list) => [...list, messageData]);
-
-
-      setCurrentMessage("");
-    }
-  };
-
-  console.log(messageList);
+  const submitMessage = (input) => {
+    sendMessage(input)
+    setCurrentMessage("")
+  }
+  
   return (
     <div className="chat-window">
       <div className="chat-header">
@@ -94,10 +48,10 @@ function Message({ socket, username, room }) {
             setCurrentMessage(event.target.value);
           }}
           onKeyDown={(event) => {
-            event.key === "Enter" && sendMessage();
+            event.key === "Enter" && submitMessage(currentMessage);
           }}
         />
-        <button id="message-button" onClick={sendMessage}>&#9658;</button>
+        <button id="message-button" onClick={ () => submitMessage(currentMessage)}>&#9658;</button>
       </div>
     </div>
   );

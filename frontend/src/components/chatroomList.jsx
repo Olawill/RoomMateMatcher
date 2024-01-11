@@ -12,12 +12,12 @@ function ChatroomList() {
   const [userId, setUserId] = useState("");
   const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
+  
 
   const userData = sessionStorage.getItem("userData");
   const userInfo = JSON.parse(userData);
 
   useEffect(() => {
-    
 
     if (userInfo) { 
       if (userInfo.username) {
@@ -31,10 +31,20 @@ function ChatroomList() {
 
   useEffect(() => {
     const newSocket = io.connect("http://localhost:8003");
+
+    // Listen for new messages and update the message list
+    function onReceiveMessage(data) {
+      console.log('received message', data)
+      setMessages((list) => [...list, data]);
+    }
+
+    newSocket.on("receive_message", onReceiveMessage);
+
     setSocket(newSocket);
 
     // Clean up the socket connection when the component unmounts
     return () => {
+      newSocket.off("receive_message", onReceiveMessage);
       newSocket.disconnect();
     };
   }, []);
@@ -44,6 +54,7 @@ function ChatroomList() {
     if (userId) {
       axios.get(`/api/chatrooms/${userId}`)
         .then(response => {
+          console.log('charoom response', response)
           const chatroomsArray = response.data?.data || [];
           setChatrooms(chatroomsArray);
         })
@@ -72,6 +83,25 @@ function ChatroomList() {
         });
     } 
   };
+
+  const sendMessage = async (currentMessage) => {
+    if (currentMessage.trim() !== "") {
+      const userData = sessionStorage.getItem("userData");
+      const userInfo = JSON.parse(userData);
+      const messageData = {
+        sender_id: userInfo.userId,
+        recipient_id: selectedChatroom.user1_id === userInfo.userId? selectedChatroom.user2_id : selectedChatroom.user1_id,
+        chatroom_id: selectedChatroom.id,
+        content: currentMessage,
+        checked: true,
+        time: `${new Date().getHours()}:${new Date().getMinutes()}`,
+        author: userInfo.username,
+      };
+
+      socket.emit("send_message", messageData);
+
+    }
+  };
   
 
   return (
@@ -97,13 +127,8 @@ function ChatroomList() {
 
         <div className="chat-messages">
           {selectedChatroom && (
-            <Message socket={socket} username={username} room={selectedChatroom.id} />
+            <Message sendMessage={sendMessage} username={username} room={selectedChatroom.id} messageList ={messages} />
           )}
-        </div>
-
-        <div className="chat-input">
-          {/* Your chat input component can go here */}
-          {/* Example: <ChatInput sendMessage={sendMessage} /> */}
         </div>
       </div>
     </div>
