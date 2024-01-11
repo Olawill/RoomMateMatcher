@@ -3,12 +3,13 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import PageLayout from "../PageLayout/PageLayout";
-import { Button, Container, Image } from "react-bootstrap";
+import { Button, Container, Image, Modal } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Profile = () => {
   const { user, isAuthenticated } = useAuth0();
   const [updatedUser, setUpdatedUser] = useState(null);
+  const [deleteUser, setDeleteUser] = useState(false);
 
   useEffect(() => {
     const updateUserProfile = () => {
@@ -26,6 +27,15 @@ const Profile = () => {
 
     updateUserProfile();
   }, [isAuthenticated, user]);
+
+  // TO DELETE USER PROFILE
+  const handleDelete = () => {
+    // Make a call to the api to change isDeleted to true for the user
+    // axios.put("/api/delete_user")
+    setDeleteUser(true);
+  };
+
+  const handleClose = () =>  setDeleteUser(false);
 
   
   return (
@@ -202,8 +212,38 @@ const Profile = () => {
               <p>
                 If you wish to delete your account.
               </p>
-              <Button variant="outline-danger" size="sm">Delete</Button>
+              <Button
+                variant="outline-danger"
+                onClick={handleDelete}
+                size="sm">
+                  Delete
+                </Button>
               </div>
+              {
+                deleteUser && (
+                  <Modal
+                    show={deleteUser}
+                    onHide={handleClose}
+                    centered
+                    style={{
+                      backgroundColor: '#f4b342',
+                    }}
+                    animation={false}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Delete User Account</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Are you sure you want to delete your accout?</Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose} autoFocus>
+                        Cancel
+                      </Button>
+                      <Button variant="primary" onClick={handleClose}>
+                        Confirm
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                )
+              }
           </Container>
         </Container>
       )}
