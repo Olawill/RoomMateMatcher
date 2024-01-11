@@ -156,7 +156,7 @@ function ChatroomList() {
             </h4>
           </div>
 
-          <div className="chat-messages">
+          <div className={`chat-messages ${!selectedChatroom ? "chat-none" : ""}`}>
             {selectedChatroom && (
               <Message sendMessage={sendMessage} username={username} room={selectedChatroom.id} messageList ={messages} />
             )}
