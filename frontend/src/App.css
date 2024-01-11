@@ -73,3 +73,8 @@
 .auth-prop span {
   font-weight: bold;
 }
+
+[data-theme="Dark"] .modal-content {
+  background-color: rgb(41, 40, 40);
+  color: white;
+}

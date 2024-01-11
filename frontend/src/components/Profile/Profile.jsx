@@ -37,7 +37,6 @@ const Profile = () => {
 
   const handleClose = () =>  setDeleteUser(false);
 
-  
   return (
     <PageLayout>
       {({ theme, getThemeAuto }) => (
@@ -224,6 +223,7 @@ const Profile = () => {
                   <Modal
                     show={deleteUser}
                     onHide={handleClose}
+                    data-theme={theme === "Auto" ? getThemeAuto() : theme}
                     centered
                     animation={false}>
                     <Modal.Header closeButton>
