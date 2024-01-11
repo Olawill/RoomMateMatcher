@@ -63,13 +63,13 @@ const NavigationBar = ({ handleTheme, theme }) => {
                         width: "40px", height: '40px',
                         borderRadius: '50%',
                       }}/>
-                  <div className="d-flex flex-column" style={{paddingLeft: '0.5rem'}}>
+                    <div className="d-flex flex-column" style={{paddingLeft: '0.5rem'}}>
                       <div>{user?.name}</div>
                       <div>
                         <Nav.Link as={Link} to="/profile" style={{color: '#0dcaf0'}}>View Profile</Nav.Link>
                       </div>
                     </div>
-                                </NavDropdown.Item>
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
                     <LogoutButton />
