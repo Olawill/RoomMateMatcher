@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const NoChatrooms = () => {
   return (
-    <Container>
+    <Container style={{paddingBlock: '3rem'}}>
       <h3>Messages</h3>
       <hr/>
       <TiMessages style={{
