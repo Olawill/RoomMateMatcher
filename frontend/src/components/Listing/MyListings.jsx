@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PageLayout from "../PageLayout/PageLayout";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Stack } from "react-bootstrap";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { IoPinSharp } from "react-icons/io5";
@@ -21,18 +21,23 @@ const MyListings = () => {
         {
           !myListings && (
             <Container style={{paddingBlock: '3rem'}}>
-              <h3>Your Listings</h3>
-              <hr/>
-              <Button
-                variant="outline-primary"
-                size="sm"
-                style={{
-                  width: '100%'
-                }}>
-                <GoPlus />
-                Add a New Listing
-              </Button>
-              <hr/>
+              <Stack
+                // gap={3}
+                style={{ marginLeft: '2rem', width: '100%' }}
+              >
+                <h3 style={{textAlign: 'left'}}>Your Listings</h3>
+                <hr/>
+                <Button
+                  variant="outline-primary"
+                  size="sm"
+                  style={{
+                    width: '10rem'
+                  }}>
+                  <GoPlus />
+                  Add a New Listing
+                </Button>
+
+              </Stack>
               <MdOutlineMapsHomeWork style={{
                 fontSize: '6rem'}}/>
               <IoPinSharp style={{
