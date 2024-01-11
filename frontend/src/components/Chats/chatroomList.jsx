@@ -4,6 +4,8 @@ import io from "socket.io-client";
 import Message from "./message";
 import "./ChatroomListing.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import NoChatrooms from "./NoChatrooms";
+
 
 function ChatroomList() {
   const [chatrooms, setChatrooms] = useState([]);
@@ -102,36 +104,71 @@ function ChatroomList() {
 
     }
   };
+
+  // DESELECT ALL ROOMS WHEN CLICKED
+  const handleHome = () => {
+    setSelectedChatroom(null);
+  };
   
 
   return (
-    <div className="chat-container">
-      <div className="sidebar">
-        <h2>Chatrooms</h2>
-        <ul>
-          {chatrooms.map((chatroom) => (
-            <li
-              key={chatroom.id}
-              data-chatroomname={chatroom.name}
-              onClick={() => handleChatroomSelect(chatroom)}>
-              {chatroom.name}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="chat-main">
-        <div className="chat-header">
-          <h2>{selectedChatroom ? selectedChatroom.name : 'Select a Chatroom'}</h2>
+    <>
+    {
+      chatrooms.length === 0 && (
+        <NoChatrooms />
+      )
+    }
+    {
+      chatrooms.length > 0 && (
+      <div className="chat-container">
+        <div className="sidebar">
+          <h4
+            onClick={handleHome}
+            style={{textTransform: 'uppercase'}}
+          >
+            Chatrooms
+          </h4>
+          <ul>
+            {chatrooms.map((chatroom) => (
+              <li
+                key={chatroom.id}
+                data-chatroomname={chatroom.name}
+                onClick={() => handleChatroomSelect(chatroom)}>
+                {chatroom.name}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className="chat-messages">
-          {selectedChatroom && (
-            <Message sendMessage={sendMessage} username={username} room={selectedChatroom.id} messageList ={messages} />
-          )}
+        <div className="chat-main">
+          <div className="chat-header">
+            <h4 style={{textAlign: "left"}}>
+            {
+                  selectedChatroom ? selectedChatroom.name : 
+                  <>
+                  <img src="logo.png" alt="Roommate Matcher" style={{
+                    height: "3rem",
+                    borderRadius: '50%',
+                  }}/>
+                {" Welcome to RooMMate Matcher"}
+                  </>
+                }
+            </h4>
+          </div>
+
+          <div className="chat-messages">
+            {selectedChatroom && (
+              <Message sendMessage={sendMessage} username={username} room={selectedChatroom.id} messageList ={messages} />
+            )}
+            {!selectedChatroom && (
+                <p className="no-room">Please select a chat room to start sending messages.</p>
+              )}
+          </div>
         </div>
       </div>
-    </div>
+      )
+    }
+    </>
   );
 }
 
