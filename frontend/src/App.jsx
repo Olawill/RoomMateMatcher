@@ -7,6 +7,7 @@ import ListingItemPage from "./components/ListingItemPage";
 import NavigationBar from "./components/NavigationBar"; // Corrected import path
 import Profile from "./components/Profile";
 import MyMessage from "./components/myMessages";
+import FavouriteListingsPage from "./components/FavouriteListingsPage";
 
 import useApplicationData from "./hooks/useApplicationData";
 
@@ -25,10 +26,7 @@ function App() {
             />
           }
         />
-        <Route
-          path="/myMessages"
-          element={<MyMessage />}
-        />
+        <Route path="/myMessages" element={<MyMessage />} />
         <Route
           path="/:listing_id"
           element={
@@ -38,9 +36,15 @@ function App() {
             />
           }
         />
+        <Route path="/profile" element={<Profile />} />
         <Route
-          path="/profile"
-          element={<Profile />}
+          path="/favourites"
+          element={
+            <FavouriteListingsPage
+              likedListings={likedListings}
+              onFavButtonClick={onFavButtonClick}
+            />
+          }
         />
       </Routes>
     </Router>
