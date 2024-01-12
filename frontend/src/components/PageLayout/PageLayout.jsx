@@ -1,5 +1,5 @@
-import NavigationBar from '../NavigationBar'
-import Header from '../Header'
+import NavigationBar from '../Navigation/NavigationBar'
+import Header from '../Navigation/Header'
 import { useState } from 'react';
 
 const PageLayout = ({ children }) => {

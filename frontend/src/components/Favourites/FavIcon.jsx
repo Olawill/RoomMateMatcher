@@ -1,4 +1,3 @@
-import React from "react";
 
 const FavIcon = ({ displayAlert, selected }) => {
   return (

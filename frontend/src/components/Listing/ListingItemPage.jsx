@@ -5,10 +5,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import ReviewForm from "./ReviewForm";
-import Reviews from "./Reviews";
-import FavButton from "./FavButton";
-import PageLayout from "./PageLayout/PageLayout";
+import ReviewForm from "../Review/ReviewForm";
+import Reviews from "../Review/Reviews";
+import FavButton from "../Favourites/FavButton";
+import PageLayout from "../PageLayout/PageLayout";
 
 const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   const { listing_id } = useParams();

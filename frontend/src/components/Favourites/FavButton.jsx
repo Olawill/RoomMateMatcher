@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import FavIcon from "./FavIcon";
-import "../FavButton.scss"
+import "./FavButton.scss";
 
 const FavButton = ({ onFavButtonClick, listingId, isFavIconActive }) => {
   const handleonFavButtonClick = useCallback((e) => {

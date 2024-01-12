@@ -1,12 +1,11 @@
-import React from "react";
+
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoginButton from "./Buttons/LoginButton";
-import LogoutButton from "./Buttons/LogoutButton";
+import LoginButton from "../Buttons/LoginButton";
+import LogoutButton from "../Buttons/LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
-import Profile from "./Profile";
 import { Link } from 'react-router-dom';
+import SignupButton from "../Buttons/SignupButton";
 
 const NavigationBar = ({ handleTheme, theme }) => {
   const logoImgPath = import.meta.env.BASE_URL + 'logo.png';
@@ -26,7 +25,8 @@ const NavigationBar = ({ handleTheme, theme }) => {
         </Nav>
         <Nav className="auth-buttons">
           <LoginButton />
-          {/* <LogoutButton /> */}
+          <div className="divider-button"></div>
+          <SignupButton />
           {
             isAuthenticated && (
               <>
@@ -38,7 +38,7 @@ const NavigationBar = ({ handleTheme, theme }) => {
                     <div className="d-flex">
                       {`${user?.nickname[0].toUpperCase()}${user?.nickname.slice(1)}`}
                       <img
-                        src={user?.picture} // replace with your image URL
+                        src={user?.picture}
                         alt="User Avatar"
                         style={{ marginLeft: '8px', borderRadius: '50%', width: '20px', height: '20px' }}
                       />
@@ -49,7 +49,7 @@ const NavigationBar = ({ handleTheme, theme }) => {
                   <NavDropdown.Item as={Link} to="/favourites">
                     Favourites
                   </NavDropdown.Item>
-                  <NavDropdown.Item>My Listings</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={`/${user?.nickname}-listings`}>My Listings</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item
                     className="d-flex"
@@ -63,15 +63,15 @@ const NavigationBar = ({ handleTheme, theme }) => {
                         width: "40px", height: '40px',
                         borderRadius: '50%',
                       }}/>
-                  <div className="d-flex flex-column" style={{paddingLeft: '0.5rem'}}>
+                    <div className="d-flex flex-column" style={{paddingLeft: '0.5rem'}}>
                       <div>{user?.name}</div>
                       <div>
-                        <Nav.Link href="#profile" style={{color: '#0dcaf0'}}>View Profile</Nav.Link>
+                        <Nav.Link as={Link} to="/profile" style={{color: '#0dcaf0'}}>View Profile</Nav.Link>
                       </div>
                     </div>
-                                </NavDropdown.Item>
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.5">
+                  <NavDropdown.Item>
                     <LogoutButton />
                   </NavDropdown.Item>
                 </NavDropdown>
