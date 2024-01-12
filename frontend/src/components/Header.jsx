@@ -2,7 +2,7 @@ import React from "react";
 
 const Header = ({ darkModeEnabled }) => {
   const imgPath = darkModeEnabled
-    ? import.meta.env.BASE_URL + "headerImgDark.png"
+    ? import.meta.env.BASE_URL + "headerImgDark2.png"
     : import.meta.env.BASE_URL + "headerImg.png";
 
   return (

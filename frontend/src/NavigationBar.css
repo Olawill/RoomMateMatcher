@@ -32,13 +32,13 @@
 }
 
 .logo {
-  width: 110px;
+  width: 115px;
   height: auto;
   border-radius: 50%;
 }
 
 .custom-navbar.dark-theme {
-  background-color: #af8730b0; 
+  background-color: #26408ab0; 
   color: #fff;
 }
 
