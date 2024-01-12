@@ -46,7 +46,7 @@ const NavigationBar = ({ handleTheme, theme }) => {
                   }
                 >
                   <NavDropdown.Item as={Link} to="/myMessages">Chats</NavDropdown.Item>
-                  <NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/favourites">
                     Favourites
                   </NavDropdown.Item>
                   <NavDropdown.Item as={Link} to={`/${user?.nickname}-listings`}>My Listings</NavDropdown.Item>
