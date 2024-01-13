@@ -49,7 +49,7 @@ const MyListings = () => {
               <small>{`Your Listings will live here`}</small>
               <br/><br/>
               <Button as={Link} to="/">
-                Browsing our Listings
+                Browse our Listings
               </Button>
             </Container>
           )

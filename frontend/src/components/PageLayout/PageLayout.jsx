@@ -15,7 +15,7 @@ const PageLayout = ({ children, requireAuthentication = false }) => {
   useEffect(() => {
     const root = document.getElementById('root');
     if (theme === 'Dark') {
-      root.style.backgroundColor = '#181818';
+      root.style.backgroundColor = 'rgb(41, 40, 40)';
     } else {
       root.style.backgroundColor = '#FFF';
     }
