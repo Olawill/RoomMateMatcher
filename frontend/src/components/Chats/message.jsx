@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./Message.css";
 import { BsFillSendFill } from 'react-icons/bs';
@@ -10,12 +10,15 @@ import moment from 'moment';
 import { Dropdown, DropdownButton, Stack } from "react-bootstrap";
 
 function Message({ sendMessage, username, messageList }) {
-  const { user, isAuthenticated } = useAuth0();
+
+  const messagesContainerRef = useRef(null);
 
   const [currentMessage, setCurrentMessage] = useState("");
 
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
+  
+  const currentTheme = window.sessionStorage.getItem('appTheme');
 
   const submitMessage = (input) => {
     sendMessage(input);
@@ -29,12 +32,19 @@ function Message({ sendMessage, username, messageList }) {
     setCurrentMessage((prev) => prev + res.emoji);
   };
 
-  const selectProfileImage = () => {
-    if (!isAuthenticated || !user?.picture) return;
-    return user?.picture;
-  }
+  // SCROLL TO THE LAST MESSAGE FOR EACH ROOM
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageList])
 
-  const currentTheme = window.sessionStorage.getItem('appTheme');
+
+  const scrollToBottom = () => {
+
+    if (messagesContainerRef.current) {
+      // messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      messagesContainerRef.current.scrollIntoView({behaviour: 'smooth'});
+    }
+  };
 
   return (
     <div className="chat-window">
@@ -70,7 +80,7 @@ function Message({ sendMessage, username, messageList }) {
                   }
                 </div>
               </div>
-              <div className="message-content">
+              <div ref={messagesContainerRef} className="message-content">
                 <p>{messageContent.content}</p>
                 <div className="message-meta">
                   <p id="author">{messageContent.author}</p>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import io from "socket.io-client";
 import Message from "./message";
@@ -14,6 +15,8 @@ function ChatroomList() {
   const [userId, setUserId] = useState("");
   const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
+
+  const { user } = useAuth0();
   
 
   const userData = sessionStorage.getItem("userData");
@@ -96,6 +99,7 @@ function ChatroomList() {
         checked: true,
         time: `${new Date().getHours()}:${new Date().getMinutes()}`,
         author: userInfo.username,
+        picture: user?.picture
       };
 
       socket.emit("send_message", messageData);
