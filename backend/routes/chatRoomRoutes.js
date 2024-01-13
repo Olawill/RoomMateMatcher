@@ -53,7 +53,12 @@ router.get('/:user_id', (req, res) => {
   }
 
     // Fetch messages for the specified chatroom
-    db.query('SELECT * FROM messages WHERE chatroom_id = $1 ORDER BY id ASC;', [chatroomId])
+    db.query(
+      `SELECT messages.*, username as author FROM messages
+      JOIN users ON users.id = messages.sender_id
+      WHERE chatroom_id = $1 ORDER BY id ASC;`, 
+      [chatroomId]
+    )
       .then(response => {
         const data = response.rows;
         if (data.length === 0) {
@@ -76,6 +81,7 @@ router.get('/:user_id', (req, res) => {
     db.query('INSERT INTO messages (chatroom_id, content, author) VALUES ($1, $2, $3) RETURNING *;', [chatroomId, content, author])
       .then(response => {
         const newMessage = response.rows[0];
+        console.log(newMessage);
         
         // Emit the new message to the chatroom using Socket.io
         io.to(chatroomId).emit('receive_message', newMessage);

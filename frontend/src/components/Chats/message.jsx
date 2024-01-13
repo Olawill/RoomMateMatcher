@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
-// import axios from "axios";
-import ScrollToBottom from "react-scroll-to-bottom";
+import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./Message.css";
 import { BsFillSendFill } from 'react-icons/bs';
 import { BsEmojiSmile } from 'react-icons/bs';
+import { IoPersonSharp } from "react-icons/io5";
 import EmojiPicker from 'emoji-picker-react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import moment from 'moment';
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Dropdown, DropdownButton, Stack } from "react-bootstrap";
 
 function Message({ sendMessage, username, messageList }) {
+  const { user, isAuthenticated } = useAuth0();
+
   const [currentMessage, setCurrentMessage] = useState("");
 
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -20,7 +22,19 @@ function Message({ sendMessage, username, messageList }) {
     setCurrentMessage("");
     setSelectedEmoji(null);
     setShowEmojiPicker(false);
+  };
+
+  const handleEmojiClick = (res) => {
+    setSelectedEmoji(res);
+    setCurrentMessage((prev) => prev + res.emoji);
+  };
+
+  const selectProfileImage = () => {
+    if (!isAuthenticated || !user?.picture) return;
+    return user?.picture;
   }
+
+  const currentTheme = window.sessionStorage.getItem('appTheme');
   
   return (
     <div className="chat-window">
@@ -28,25 +42,45 @@ function Message({ sendMessage, username, messageList }) {
         <p>Live Chat</p>
       </div>
       <div className="chat-body">
-        <ScrollToBottom className="message-container">
+        <Stack className="message-container">
           {messageList.map((messageContent) => (
             <div
               className="message"
               key={messageContent.id}
               id={username === messageContent.author ? "you" : "other"}
             >
-              <div>
-                <div className="message-content">
-                  <p>{messageContent.content}</p>
+              <div className="message-image">
+                <div></div>
+                <div className="image-item">
+                  {
+                    username === messageContent.author
+
+                    ? <img
+                        src={selectProfileImage()}
+                        style={{
+                          width: '30px', height: '30px'
+                        }}
+                        alt="user-image" />
+                    : <IoPersonSharp
+                        style={{
+                          width: '20px', height: '20px',
+                          borderRadius: '50%',
+                          border: '1px solid green'
+                        }}
+                      />
+                  }
                 </div>
+              </div>
+              <div className="message-content">
+                <p>{messageContent.content}</p>
                 <div className="message-meta">
-                  <p id="author">{messageContent.sender_id}</p>
+                  <p id="author">{messageContent.author}</p>
                   <p id="time">{moment(messageContent.created_at).fromNow()}</p>
                 </div>
               </div>
             </div>
           ))}
-        </ScrollToBottom>
+        </Stack>
       </div>
       <div className="chat-footer">
         <input
@@ -67,24 +101,23 @@ function Message({ sendMessage, username, messageList }) {
           style={{marginInline: '0.2rem'}}
           id="dropdown-emoji"
           drop='start-centered'
-          variant="light"
+          variant={currentTheme === 'Dark' ? 'dark' : 'Light'}
           title={<BsEmojiSmile />}
           onClick={() => setShowEmojiPicker(!showEmojiPicker)}
         >
-          <Dropdown.Item onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-          {
-            showEmojiPicker && (
-              <EmojiPicker
-                theme="dark"
-                lazyLoadEmojis
-                onEmojiClick={(res) => {
-                  setSelectedEmoji(res);
-                  setCurrentMessage(currentMessage + res.emoji);br
-                }}
-              />
-            )
-          }
-          </Dropdown.Item>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+            {
+              showEmojiPicker && (
+                <EmojiPicker
+                  theme={currentTheme === 'Dark' ? 'dark' : 'Light'}
+                  onEmojiClick={handleEmojiClick}
+                />
+              )
+            }
+            </Dropdown.Item>
+
+          </Dropdown.Menu>
         </DropdownButton>
         <button
           id="message-button"

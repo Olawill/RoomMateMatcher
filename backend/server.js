@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
   socket.on("send_message", (data) => {
     io.emit("receive_message", data, () => console.log('server receive message') );
     savedMessage(data);
-    console.log('send message',data)
+    // console.log('send message',data)
  
   });
 

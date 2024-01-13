@@ -36,7 +36,6 @@ function ChatroomList() {
 
     // Listen for new messages and update the message list
     function onReceiveMessage(data) {
-      console.log('received message', data)
       setMessages((list) => [...list, data]);
     }
 
@@ -157,7 +156,11 @@ function ChatroomList() {
 
           <div className={`chat-messages ${!selectedChatroom ? "chat-none" : ""}`}>
             {selectedChatroom && (
-              <Message sendMessage={sendMessage} username={username} room={selectedChatroom.id} messageList ={messages} />
+              <Message
+                sendMessage={sendMessage}
+                username={username}
+                room={selectedChatroom.id}
+                messageList ={messages} />
             )}
             {!selectedChatroom && (
                 <p className="no-room">Please select a chat room to start sending messages.</p>
