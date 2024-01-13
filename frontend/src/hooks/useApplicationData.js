@@ -41,7 +41,7 @@ const useApplicationData = () => {
     })
     .catch(error => console.error(error));
   };
-  
+
   return {
     likedListings,
     onFavButtonClick,

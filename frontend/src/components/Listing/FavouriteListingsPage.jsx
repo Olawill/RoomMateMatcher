@@ -19,7 +19,7 @@ const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
         })
         .catch((error) => console.error(error));
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, likedListings]);
 
 
   return (
