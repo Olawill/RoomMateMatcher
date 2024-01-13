@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,14 +11,19 @@ import PageLayout from "../PageLayout/PageLayout";
 
 const Listings = ({ likedListings, onFavButtonClick }) => {
   const [listings, setListings] = useState([]);
+  const { user, isAuthenticated } = useAuth0();
 
   useEffect(() => {
     const fetchListings = () => {
       axios
         .get("/api/listings")
         .then((response) => {
-          // console.log(response);
-          setListings(response.data.data);
+          if (isAuthenticated && user) {
+            const userId = JSON.parse(window.sessionStorage.getItem('userData')).userId;
+            setListings(response.data.data.filter(listing => listing.user_id !== userId));
+          } else {
+            setListings(response.data.data);
+          }
         })
         .catch((error) => {
           console.error("Error fetching listings:", error);
@@ -25,13 +31,13 @@ const Listings = ({ likedListings, onFavButtonClick }) => {
     };
 
     fetchListings();
-  }, []);
+  }, [isAuthenticated, user]);
 
   return (
     <PageLayout>
       {({ getThemeAuto, theme }) => (
         <Container data-theme={theme === 'Auto' ? getThemeAuto() : theme}>
-          <Row>
+          <Row xs={1} md={2} lg={3} xl={4}>
             {listings.map((listing) => (
               <Col md key={listing.id}>
                 <Link to={`/${listing.id}`}>
