@@ -39,18 +39,19 @@ const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
                     >
 
                     </Stack>
-                    <MdOutlineMapsHomeWork style={{
-                      fontSize: '8rem', position: 'relative'}}/>
-                    <MdOutlineFavorite
-                      style={{
-                        fontSize: '2rem',
-                        color: '#c54141',
-                        position: 'absolute',
-                        left: '53.5%',
-                        zIndex: '1',
-                        marginTop: '0.5rem'
-                      }}
-                    />
+                    <div className="fav-listing-house">
+                      <MdOutlineMapsHomeWork style={{
+                        fontSize: '8rem'}}/>
+                      <div className="fav-listing">
+                        <MdOutlineFavorite
+                          style={{
+                            fontSize: '2rem',
+                            color: '#c54141',
+                          }}
+                        />
+                    </div>
+
+                    </div>
                     <br/>
                     <h4>Did something grab your interest?</h4>
                     <small>{`View your favourite listings here`}</small>
@@ -61,6 +62,8 @@ const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
                   </Container>
                 )
               }
+              </Row>
+              <Row xs={1} md={2} lg={3} xl={4}>
               {
                 favouriteListings.length > 0 && (
                   favouriteListings.map((listing) => (

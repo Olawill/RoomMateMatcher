@@ -79,3 +79,39 @@
   background-color: rgb(41, 40, 40);
   color: white;
 }
+
+.fav-listing-house {
+  position: relative;
+}
+
+.fav-listing {
+  position: absolute;
+  top: 7%;
+  left: 53%;
+  z-index: 1;
+  /* margin-top: 0.5rem; */
+}
+
+@media (max-width: 1024px) {
+  .fav-listing {
+    left: 54%;
+  }
+}
+
+@media (max-width: 768px) {
+  .fav-listing {
+    left: 55.5%;
+  }
+}
+
+@media (max-width: 425px) {
+  .fav-listing {
+    left: 59.5%;
+  }
+}
+
+@media (max-width: 375px) {
+  .fav-listing {
+    left: 61.5%;
+  }
+}
