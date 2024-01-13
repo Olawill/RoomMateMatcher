@@ -3,6 +3,7 @@ import NavigationBar from "../Navigation/NavigationBar";
 import Header from "../Navigation/Header";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Spinner } from "react-bootstrap";
 
 const PageLayout = ({ children, requireAuthentication = false }) => {
   const { isLoading } = useAuth0();
@@ -41,7 +42,12 @@ const PageLayout = ({ children, requireAuthentication = false }) => {
       <NavigationBar handleTheme={handleTheme} theme={theme} />
       <Header darkModeEnabled={theme === "Dark"} />
       {requireAuthentication && isLoading
-        ? "Loading the page..."
+        // ? "Loading the page..."
+        ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )
         : children({ getThemeAuto, theme })}
     </>
   );

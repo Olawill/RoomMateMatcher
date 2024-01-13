@@ -56,7 +56,6 @@ function ChatroomList() {
     if (userId) {
       axios.get(`/api/chatrooms/${userId}`)
         .then(response => {
-          console.log('charoom response', response)
           const chatroomsArray = response.data?.data || [];
           setChatrooms(chatroomsArray);
         })
