@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
-import FavButton from "../Favourites/FavButton";
+import ListingItem from "./ListingItem";
 
 const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
   const [favouriteListings, setFavouriteListings] = useState([]);
@@ -21,7 +21,6 @@ const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
     }
   }, [isAuthenticated, user]);
 
-
   return (
     <PageLayout requireAuthentication={true}>
       {({ theme, getThemeAuto }) => (
@@ -31,20 +30,12 @@ const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
               {favouriteListings.map((listing) => (
                 <Col md key={listing.id}>
                   <Link to={`/${listing.id}`}>
-                    <Card className="mb-3" style={{ color: "#000" }}>
-                      <FavButton
-                        onFavButtonClick={() => onFavButtonClick(listing.id)}
-                        isFavIconActive={likedListings.includes(listing.id)}
-                      />
-                      <Card.Img variant="top" src={listing.image_url} />
-                      <Card.Body>
-                        <Card.Title>{listing.title}</Card.Title>
-                        <Card.Text>
-                          {listing.city} {listing.country}
-                        </Card.Text>
-                        <Card.Text>${listing.price} CAD per month</Card.Text>
-                      </Card.Body>
-                    </Card>
+                    <ListingItem
+                      listing={listing}
+                      isFavIconActive={likedListings.includes(listing.id)}
+                      onFavButtonClick={onFavButtonClick}
+                      theme={theme}
+                    />
                   </Link>
                 </Col>
               ))}
