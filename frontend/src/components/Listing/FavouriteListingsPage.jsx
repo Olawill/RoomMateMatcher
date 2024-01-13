@@ -5,8 +5,11 @@ import { Container, Row, Col, Card, Stack, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PageLayout from "../PageLayout/PageLayout";
 import ListingItem from "./ListingItem";
+<<<<<<< HEAD
 import { MdOutlineFavorite } from "react-icons/md";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
+=======
+>>>>>>> 921c7688478b13a8b287aec3862215c673b89617
 
 const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
   const [favouriteListings, setFavouriteListings] = useState([]);
@@ -21,7 +24,7 @@ const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
         })
         .catch((error) => console.error(error));
     }
-  }, [isAuthenticated, user, likedListings]);
+  }, [isAuthenticated, user]);
 
   return (
     <PageLayout requireAuthentication={true}>
@@ -31,55 +34,18 @@ const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
             <h3 style={{textAlign: 'left'}}>Favourites</h3>
             <hr/>
             <Row>
-              {
-                favouriteListings.length === 0 && (
-                  <Container style={{paddingBlock: '3rem'}}>
-                    <Stack
-                      style={{ marginLeft: '2rem', width: '100%' }}
-                    >
-
-                    </Stack>
-                    <div className="fav-listing-house">
-                      <MdOutlineMapsHomeWork style={{
-                        fontSize: '8rem'}}/>
-                      <div className="fav-listing">
-                        <MdOutlineFavorite
-                          style={{
-                            fontSize: '2rem',
-                            color: '#c54141',
-                          }}
-                        />
-                    </div>
-
-                    </div>
-                    <br/>
-                    <h4>Did something grab your interest?</h4>
-                    <small>{`View your favourite listings here`}</small>
-                    <br/><br/>
-                    <Button as={Link} to="/">
-                      Browse our Listings
-                    </Button>
-                  </Container>
-                )
-              }
-              </Row>
-              <Row xs={1} md={2} lg={3} xl={4}>
-              {
-                favouriteListings.length > 0 && (
-                  favouriteListings.map((listing) => (
-                    <Col md key={listing.id}>
-                      <Link to={`/${listing.id}`}>
-                        <ListingItem
-                          listing={listing}
-                          isFavIconActive={likedListings.includes(listing.id)}
-                          onFavButtonClick={onFavButtonClick}
-                          theme={theme}
-                        />
-                      </Link>
-                    </Col>
-                  ))
-                )
-              }
+              {favouriteListings.map((listing) => (
+                <Col md key={listing.id}>
+                  <Link to={`/${listing.id}`}>
+                    <ListingItem
+                      listing={listing}
+                      isFavIconActive={likedListings.includes(listing.id)}
+                      onFavButtonClick={onFavButtonClick}
+                      theme={theme}
+                    />
+                  </Link>
+                </Col>
+              ))}
             </Row>
           </Container>
         </>
