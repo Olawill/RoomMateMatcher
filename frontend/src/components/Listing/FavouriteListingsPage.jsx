@@ -15,19 +15,15 @@ const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
       axios
         .get(`/api/user/${user.sub}/favourites`)
         .then((response) => {
-          console.log("Favourite listings:", response.data);
           setFavouriteListings(response.data);
         })
         .catch((error) => console.error(error));
     }
   }, [isAuthenticated, user]);
 
-  if (!isAuthenticated) {
-    return <div>Please log in to view your favourite listings.</div>;
-  }
 
   return (
-    <PageLayout>
+    <PageLayout requireAuthentication={true}>
       {({ theme, getThemeAuto }) => (
         <>
           <Container data-theme={theme === "Auto" ? getThemeAuto() : theme}>
