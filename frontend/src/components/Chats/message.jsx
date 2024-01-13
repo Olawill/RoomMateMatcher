@@ -35,7 +35,7 @@ function Message({ sendMessage, username, messageList }) {
   }
 
   const currentTheme = window.sessionStorage.getItem('appTheme');
-  
+
   return (
     <div className="chat-window">
       <div className="chat-header">
@@ -53,10 +53,9 @@ function Message({ sendMessage, username, messageList }) {
                 <div></div>
                 <div className="image-item">
                   {
-                    username === messageContent.author
-
+                    messageContent.picture
                     ? <img
-                        src={selectProfileImage()}
+                        src={messageContent.picture}
                         style={{
                           width: '30px', height: '30px'
                         }}

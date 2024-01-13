@@ -54,7 +54,7 @@ router.get('/:user_id', (req, res) => {
 
     // Fetch messages for the specified chatroom
     db.query(
-      `SELECT messages.*, username as author FROM messages
+      `SELECT messages.*, username as author, image_url as picture FROM messages
       JOIN users ON users.id = messages.sender_id
       WHERE chatroom_id = $1 ORDER BY id ASC;`, 
       [chatroomId]
