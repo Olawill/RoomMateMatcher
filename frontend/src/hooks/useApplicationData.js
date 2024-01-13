@@ -19,6 +19,7 @@ const useApplicationData = () => {
     }
   }, [isAuthenticated, user]);
 
+
   const onFavButtonClick = (listingId) => {
     if (!isAuthenticated) {
       alert("Please login first");
