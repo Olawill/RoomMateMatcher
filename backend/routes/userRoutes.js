@@ -130,5 +130,49 @@ module.exports = db => {
     }
   });
 
+  // GET /api/user/:userSub/newListingForm
+  // This route renders the form to create a new listing
+  router.get('/:userSub/newListing', (req, res) => {
+  // You can render your new listing form here
+    res.render('newListingForm'); // Replace with your rendering logic (e.g., using a template engine)
+  });
+
+  // POST /api/user/:userSub/newListing
+  // This route handles the creation of a new listing for a user
+  router.post('/:userSub/newListing', async (req, res) => {
+    const userSub = req.params.userSub;
+    const { title, description, numberOfRooms, numberOfRoommates, preference, status, price, postalCode, city, country, imageUrl } = req.body;
+
+    try {
+    // Retrieve the user ID from the users table based on the user's sub
+      const userResult = await db.query('SELECT id FROM users WHERE sub = $1', [userSub]);
+      if (userResult.rows.length === 0) {
+        return res.status(404).send('User not found');
+      }
+      const userId = userResult.rows[0].id;
+
+      // Insert the new listing into the listings table
+      const newListingResult = await db.query(
+        'INSERT INTO listings ' +
+        '(title, description, number_of_rooms, number_of_roommates, preference, status, price, postal_code, city, country, image_url, user_id) ' +
+        'VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
+        [title, description, numberOfRooms, numberOfRoommates, preference, status, price, postalCode, city, country, imageUrl, userId]
+      );
+
+      res.status(201).json(newListingResult.rows[0]);
+    } catch (err) {
+      console.error('Error in /api/user/:userSub/newListing route:', err);
+      res.status(500).send('Server error');
+    }
+  });
+
+  // Add the new route to the existing routes
+  //router.use('/:userSub/newListing', newListingRouter(db));
+
+
+
+
+
+
   return router;
 }

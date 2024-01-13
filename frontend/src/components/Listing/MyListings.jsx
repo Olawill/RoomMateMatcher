@@ -27,7 +27,7 @@ const MyListings = () => {
               >
                 <h3 style={{textAlign: 'left'}}>Your Listings</h3>
                 <hr/>
-                <Button
+                <Button as={Link} to="/newListing"
                   variant="outline-primary"
                   size="sm"
                   style={{
