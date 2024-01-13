@@ -29,8 +29,8 @@ module.exports = db => {
       } else {
         // User not exist, add user to db
         const insertResult = await db.query(
-          'INSERT INTO users (username, sub, email, isDeleted) VALUES ($1, $2, $3, $4) RETURNING *',
-          [user.nickname, user.sub, user.email, false]
+          'INSERT INTO users (username, sub, email, image_url, isDeleted) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+          [user.nickname, user.sub, user.email, user.picture, false]
         );
 
         // Send newly added user back to frontend
