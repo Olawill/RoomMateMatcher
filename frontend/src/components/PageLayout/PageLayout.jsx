@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import NavigationBar from "../Navigation/NavigationBar";
 import Header from "../Navigation/Header";
 import { useState } from "react";
@@ -10,6 +11,15 @@ const PageLayout = ({ children, requireAuthentication = false }) => {
   const [theme, setTheme] = useState(
     window.sessionStorage.getItem("appTheme") || "Light"
   );
+
+  useEffect(() => {
+    const root = document.getElementById('root');
+    if (theme === 'Dark') {
+      root.style.backgroundColor = 'rgb(41, 40, 40)';
+    } else {
+      root.style.backgroundColor = '#FFF';
+    }
+  }, [theme]);
 
   const getThemeAuto = () => {
     const option = ["Light", "Dark"];

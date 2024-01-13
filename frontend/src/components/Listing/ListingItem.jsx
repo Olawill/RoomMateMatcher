@@ -4,10 +4,11 @@ import { Card } from "react-bootstrap";
 import FavButton from "../Favourites/FavButton";
 
 const ListingItem = (props) => {
-  const { listing, isFavIconActive, onFavButtonClick } = props;
-
+  const { listing, isFavIconActive, onFavButtonClick, theme } = props;
+  const cardStyle = theme === "Dark" ? { backgroundColor: "#2b7bad", color: "#FFF" } : { backgroundColor: "#FFF", color: "#000" };
+  
   return (
-    <Card className="mb-3" style={{ color: "#000" }}>
+    <Card className="mb-3" style={cardStyle}>
       <FavButton onFavButtonClick={() => onFavButtonClick(listing.id)} isFavIconActive={isFavIconActive} />
       <Card.Img variant="top" src={listing.image_url} />
       <Card.Body>

@@ -5,6 +5,7 @@
 }
 
 .card {
+  margin-top: 2rem;
   padding: 1em;
 }
 
@@ -33,7 +34,7 @@
 
 [data-theme="Dark"].container {
   color: #eee;
-  background-color: #181818;
+  background-color: rgb(41, 40, 40);
 }
 
 .user-info {

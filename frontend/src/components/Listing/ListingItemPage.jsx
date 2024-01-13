@@ -132,12 +132,18 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
         <>
           <Container
             data-theme={theme === "Auto" ? getThemeAuto() : theme}
-            style={{ width: "60%" }}
+            style={{ width: "80%" }}
           >
             {listingDetails && (
               <Row style={{ margin: "5.65rem auto 0" }}>
                 <Col>
-                  <Card>
+                  <Card
+                    style={
+                      theme === "Dark"
+                      ? { backgroundColor: "#2b7bad", color: "#FFF" }
+                      : { backgroundColor: "#FFF", color: "#000" }
+                    }
+                  >
                     <FavButton
                       isFavIconActive={likedListings.includes(
                         listingDetails.id
@@ -167,14 +173,28 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                     </Card.Body>
                     {
                       !roomExists && (
-                      <Button type="submit" onClick={handleInterestedButtonClick}>
+                      <Button
+                        type="submit"
+                        variant={
+                          theme === "Dark"
+                          ? 'success'
+                          : 'primary'
+                        }
+                        onClick={handleInterestedButtonClick}>
                         Interested
                       </Button>
                       )
                     }
                     {
                       roomExists && (
-                      <Button type="submit" onClick={handleChatButtonClick}>
+                      <Button
+                        type="submit"
+                        variant={
+                          theme === "Dark"
+                          ? 'success'
+                          : 'primary'
+                        }
+                        onClick={handleChatButtonClick}>
                         Messages
                       </Button>
                       )

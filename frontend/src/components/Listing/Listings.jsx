@@ -38,7 +38,8 @@ const Listings = ({ likedListings, onFavButtonClick }) => {
                   <ListingItem 
                     listing={listing}
                     isFavIconActive={likedListings.includes(listing.id)}
-                    onFavButtonClick={onFavButtonClick}      
+                    onFavButtonClick={onFavButtonClick} 
+                    theme={theme}     
                   />
                 </Link>
               </Col>
