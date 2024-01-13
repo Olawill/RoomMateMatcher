@@ -11,7 +11,7 @@ const useApplicationData = () => {
       axios
         .get(`/api/user/${user.sub}/favourites`)
         .then((response) => {
-          console.log("Favourite listings:", response.data);
+
           const idList = response.data.map(item => item.id);
           setLikedListings(idList);
         })
