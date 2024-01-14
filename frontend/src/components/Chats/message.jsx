@@ -24,23 +24,34 @@ function Message({ sendMessage, username, messageList }) {
 
 
   // SCROLL TO THE LAST MESSAGE FOR EACH ROOM
-  // useEffect(() => {
-  //   const scrollToBottom = () => {
+  useEffect(() => {
+    const scrollToBottom = () => {
   
-  //     if (messagesContainerRef.current) {
-  //       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-  //       // messagesContainerRef.current.scrollIntoView({behaviour: 'smooth'});
-  //     }
-  //   };
-  //   scrollToBottom();
-  // }, [messageList])
+      if (messagesContainerRef.current && messageList.length > 0) {
+      
+        const lastMessage = messagesContainerRef.current.lastChild;
 
-  // // PUT CURSOR IN THE INPUT FIELD
-  // const focusInput = () => {
-  //   if (inputRef.current) {
-  //     inputRef?.current.focus();
-  //   }
-  // };
+        lastMessage.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+    scrollToBottom();
+
+    // focusInput()
+  }, [messageList]);
+
+  const hanleEnterkey = (event) => {
+    event.preventDefault();
+
+    submitMessage(currentMessage);
+  };
+
+
+  // PUT CURSOR IN THE INPUT FIELD
+  const focusInput = () => {
+    if (inputRef.current) {
+      inputRef?.current.focus();
+    }
+  };
 
 
   return (
@@ -49,11 +60,11 @@ function Message({ sendMessage, username, messageList }) {
         <p>Live Chat</p>
       </div>
       <div className="chat-body">
-        <Stack className="message-container" ref={messagesContainerRef}>
+      <Stack className="message-container" ref={messagesContainerRef}>
           {messageList.map((messageContent) => (
             <div
-              className="message"
               key={messageContent.id}
+              className="message"
               id={username === messageContent.author ? "you" : "other"}
             >
               <div className="message-image">
@@ -86,6 +97,7 @@ function Message({ sendMessage, username, messageList }) {
               </div>
             </div>
           ))}
+
         </Stack>
       </div>
       <div className="chat-footer">
@@ -93,23 +105,12 @@ function Message({ sendMessage, username, messageList }) {
             ref={inputRef}
             onChange={setCurrentMessage}
             borderColor='rgb(36,32,32)'
+            fontSize={16}
             value={currentMessage}
             theme={currentTheme === 'Dark' ? 'dark' : 'Light'}
             cleanOnEnter
-            onEnter={()=>submitMessage(currentMessage)}
+            onEnter={hanleEnterkey}
           />
-        {/* <input
-          type="text"
-          ref={inputRef}
-          value={currentMessage}
-          placeholder="Hey..."
-          onChange={(event) => {
-            setCurrentMessage(event.target.value);
-          }}
-          onKeyDown={(event) => {
-            event.key === "Enter" && submitMessage(currentMessage);
-          }}
-        /> */}
         <button
           id="message-button"
           style={{width: '6rem'}}
