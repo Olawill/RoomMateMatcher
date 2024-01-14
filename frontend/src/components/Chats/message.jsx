@@ -1,50 +1,47 @@
 import { useEffect, useRef, useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import InputEmoji from 'react-input-emoji';
 import "./Message.css";
 import { BsFillSendFill } from 'react-icons/bs';
-import { BsEmojiSmile } from 'react-icons/bs';
 import { IoPersonSharp } from "react-icons/io5";
-import EmojiPicker from 'emoji-picker-react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import moment from 'moment';
-import { Dropdown, DropdownButton, Stack } from "react-bootstrap";
+import { Stack } from "react-bootstrap";
 
 function Message({ sendMessage, username, messageList }) {
 
   const messagesContainerRef = useRef(null);
 
-  const [currentMessage, setCurrentMessage] = useState("");
+  const inputRef = useRef(null);
 
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [selectedEmoji, setSelectedEmoji] = useState(null);
+  const [currentMessage, setCurrentMessage] = useState("");
   
   const currentTheme = window.sessionStorage.getItem('appTheme');
 
   const submitMessage = (input) => {
     sendMessage(input);
     setCurrentMessage("");
-    setSelectedEmoji(null);
-    setShowEmojiPicker(false);
   };
 
-  const handleEmojiClick = (res) => {
-    setSelectedEmoji(res);
-    setCurrentMessage((prev) => prev + res.emoji);
-  };
 
   // SCROLL TO THE LAST MESSAGE FOR EACH ROOM
-  useEffect(() => {
-    scrollToBottom();
-  }, [messageList])
+  // useEffect(() => {
+  //   const scrollToBottom = () => {
+  
+  //     if (messagesContainerRef.current) {
+  //       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+  //       // messagesContainerRef.current.scrollIntoView({behaviour: 'smooth'});
+  //     }
+  //   };
+  //   scrollToBottom();
+  // }, [messageList])
 
+  // // PUT CURSOR IN THE INPUT FIELD
+  // const focusInput = () => {
+  //   if (inputRef.current) {
+  //     inputRef?.current.focus();
+  //   }
+  // };
 
-  const scrollToBottom = () => {
-
-    if (messagesContainerRef.current) {
-      // messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-      messagesContainerRef.current.scrollIntoView({behaviour: 'smooth'});
-    }
-  };
 
   return (
     <div className="chat-window">
@@ -52,7 +49,7 @@ function Message({ sendMessage, username, messageList }) {
         <p>Live Chat</p>
       </div>
       <div className="chat-body">
-        <Stack className="message-container">
+        <Stack className="message-container" ref={messagesContainerRef}>
           {messageList.map((messageContent) => (
             <div
               className="message"
@@ -80,7 +77,7 @@ function Message({ sendMessage, username, messageList }) {
                   }
                 </div>
               </div>
-              <div ref={messagesContainerRef} className="message-content">
+              <div className="message-content">
                 <p>{messageContent.content}</p>
                 <div className="message-meta">
                   <p id="author">{messageContent.author}</p>
@@ -92,8 +89,18 @@ function Message({ sendMessage, username, messageList }) {
         </Stack>
       </div>
       <div className="chat-footer">
-        <input
+          <InputEmoji
+            ref={inputRef}
+            onChange={setCurrentMessage}
+            borderColor='rgb(36,32,32)'
+            value={currentMessage}
+            theme={currentTheme === 'Dark' ? 'dark' : 'Light'}
+            cleanOnEnter
+            onEnter={()=>submitMessage(currentMessage)}
+          />
+        {/* <input
           type="text"
+          ref={inputRef}
           value={currentMessage}
           placeholder="Hey..."
           onChange={(event) => {
@@ -102,34 +109,10 @@ function Message({ sendMessage, username, messageList }) {
           onKeyDown={(event) => {
             event.key === "Enter" && submitMessage(currentMessage);
           }}
-        />
-        <DropdownButton
-          key='up-centered'
-          role="img"
-          aria-label="emoji-picker"
-          style={{marginInline: '0.2rem'}}
-          id="dropdown-emoji"
-          drop='start-centered'
-          variant={currentTheme === 'Dark' ? 'dark' : 'Light'}
-          title={<BsEmojiSmile />}
-          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-        >
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-            {
-              showEmojiPicker && (
-                <EmojiPicker
-                  theme={currentTheme === 'Dark' ? 'dark' : 'Light'}
-                  onEmojiClick={handleEmojiClick}
-                />
-              )
-            }
-            </Dropdown.Item>
-
-          </Dropdown.Menu>
-        </DropdownButton>
+        /> */}
         <button
           id="message-button"
+          style={{width: '6rem'}}
           onClick={ () => submitMessage(currentMessage)}>
             <BsFillSendFill /> Send
         </button>
