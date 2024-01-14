@@ -28,19 +28,15 @@ function Message({ sendMessage, username, messageList }) {
     const scrollToBottom = () => {
   
       if (messagesContainerRef.current && messageList.length > 0) {
-      
-        const lastMessage = messagesContainerRef.current.lastChild;
-
-        lastMessage.scrollIntoView({ behavior: "smooth" });
+        messagesContainerRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
       }
     };
     scrollToBottom();
 
-    // focusInput()
+    focusInput();
   }, [messageList]);
 
-  const hanleEnterkey = (event) => {
-    event.preventDefault();
+  const hanleEnterkey = () => {
 
     submitMessage(currentMessage);
   };
