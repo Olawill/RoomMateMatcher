@@ -12,9 +12,10 @@ import FavouriteListingsPage from "./components/Listing/FavouriteListingsPage.js
 
 import useApplicationData from "./hooks/useApplicationData";
 import { useAuth0 } from "@auth0/auth0-react";
+import MapComponent from "./components/ListingMap/ListingMap.jsx";
 
 function App() {
-  const { likedListings, onFavButtonClick } = useApplicationData();
+  const { likedListings, onFavButtonClick, listings } = useApplicationData();
   const { user } = useAuth0();
 
   return (
@@ -25,6 +26,7 @@ function App() {
           element={
             <Listings
               likedListings={likedListings}
+              listings={listings}
               onFavButtonClick={onFavButtonClick}
             />
           }
@@ -67,6 +69,11 @@ function App() {
               onFavButtonClick={onFavButtonClick}
             />
           }
+        />
+
+        <Route 
+          path="/map"
+          element={<MapComponent listings={listings}/>}
         />
       </Routes>
     </Router>

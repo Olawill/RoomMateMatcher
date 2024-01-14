@@ -22,8 +22,8 @@ const NavigationBar = ({ handleTheme, theme }) => {
           <Nav.Link as={Link} to="/">
             Home
           </Nav.Link>
-          <Nav.Link as={Link} to="#link">
-            About
+          <Nav.Link as={Link} to="/map">
+            Listing Map
           </Nav.Link>
         </Nav>
         {!isLoading && (

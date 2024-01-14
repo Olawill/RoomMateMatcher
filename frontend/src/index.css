@@ -28,8 +28,9 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
+  margin-bottom: 3rem;
   width: 100vw;
-  height: 5000px;
+  min-height: 100%;
 }
 
 h1 {
