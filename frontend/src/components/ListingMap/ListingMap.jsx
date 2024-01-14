@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import PageLayout from '../PageLayout/PageLayout';
+import { compileString } from 'sass';
 
 
 const MapComponent = ({ listings }) => {
 
   const [pins, setPins] = useState([]);
 
-  const [showPop, setShowPop] = useState(false);
+  const [activePin, setActivePin] = useState(null);
 
   const api_key = "AIzaSyBmYS3NAr4KZ4KPKTp5Y1B109bLHdrEaVU";
 
   useEffect(() => {
     const fetchData = async () => {
-      const pinsData = await Promise.all(
+      const pinsData = await Promise.allSettled(
         listings.map(async (listing) => {
           try {
             const response = await fetch(
@@ -24,19 +25,25 @@ const MapComponent = ({ listings }) => {
 
             if (data.results.length > 0) {
               const { lat, lng } = data.results[0].geometry.location;
-              return { ...listing, lat, lng };
+              return { ...listing, lat, lng, error: null };
             } else {
               console.error(`No results found for ${listing.postal_code}`);
-              return null;
+              return {...listing, error: `No results found for ${listing.postal_code}`};
             }
           } catch (error) {
             console.error(`Error geocoding ${listing.postal_code}:`, error);
-            return null;
+            return {...listing, error: `Error geocoding ${listing.postal_code}: ${error.message}`};
           }
         })
       );
 
-      setPins(pinsData.filter(pin => pin !== null));
+      // Extract all successful request
+      // console.log(pinsData);
+      const successfulPins = pinsData.filter(result => {
+        return result.status === "fulfilled" && !result.value.error;
+      }).map(result => result.value);
+
+      setPins(successfulPins);
     };
 
     fetchData();
@@ -48,7 +55,7 @@ const MapComponent = ({ listings }) => {
       <MapContainer
       center={[49.76773, -96.8097]}
       zoom={2}
-      style={{ width: '100%', height: '500px' }}
+      style={{ width: '100%', height: '90%' }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -60,15 +67,15 @@ const MapComponent = ({ listings }) => {
           position={[pin.lat, pin.lng]}
           eventHandlers={
             {
-              mouseover: () => setShowPop(true),
-              mouseout: () => setShowPop(false),
+              mouseover: () => setActivePin(pin),
+              mouseout: () => setActivePin(null),
               click: () => {
                 console.log('marker clicked')
               }
             }
           }
         >
-          {showPop && (
+          {activePin === pin && (
             <Popup>
               <b>{pin.title}</b> at <b>{pin.postal_code}</b> for ${pin.price}/month
             </Popup>
