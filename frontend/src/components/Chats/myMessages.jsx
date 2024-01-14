@@ -14,6 +14,7 @@ function MyMessage() {
       {({ theme, getThemeAuto }) => (
         <div
           className="container"
+          style={{ marginBottom: '2rem' }}
           data-theme={theme === "Auto" ? getThemeAuto() : theme}
         >
           <ChatroomList onSelectChatroom={handleChatroomSelect} />

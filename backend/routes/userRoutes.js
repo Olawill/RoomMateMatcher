@@ -65,13 +65,11 @@ module.exports = db => {
 
       // Update the favourite status if it exists, otherwise insert a new record
       if (favListingExists.rows.length > 0) {
-        console.log({ userId, listingId, isFavourite });
         await db.query(
           'UPDATE favourites SET isFavourite = $1 WHERE user_id = $2 AND listing_id = $3',
           [isFavourite, userId, listingId]
         );
       } else {
-        console.log({ userId, listingId, isFavourite });
         await db.query(
           'INSERT INTO favourites (user_id, listing_id, isFavourite) VALUES ($1, $2, $3)',
           [userId, listingId, isFavourite]

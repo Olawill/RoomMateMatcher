@@ -28,7 +28,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
   width: 100vw;
   min-height: 100%;
 }

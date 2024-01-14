@@ -42,9 +42,7 @@ const Profile = () => {
       {({ theme, getThemeAuto }) => (
         <Container
           data-theme={theme === "Auto" ? getThemeAuto() : theme}
-          style={{
-            paddingBottom: '2rem'
-          }}
+          style={{height: '100vh'}}
         >
           <h3 style={{textAlign: 'left', paddingBottom: '2rem'}}>Your Profile</h3>
           <Container

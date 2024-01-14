@@ -14,9 +14,7 @@ const MyListings = () => {
       {({ theme, getThemeAuto }) => (
         <Container
         data-theme={theme === "Auto" ? getThemeAuto() : theme}
-        style={{
-          paddingBottom: '2rem'
-        }}
+        style={{height: '100vh'}}
       >
         {
           !myListings && (
