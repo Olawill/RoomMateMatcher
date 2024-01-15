@@ -63,7 +63,7 @@ const NavigationBar = ({ handleTheme, theme }) => {
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     as={Link}
-                    to={`/${user?.nickname}-listings`}
+                    to={`/my-listings`}
                   >
                     My Listings
                   </NavDropdown.Item>

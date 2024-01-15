@@ -30,20 +30,9 @@ function App() {
           }
         />
 
-        <Route
-          path="/myMessages"
-          element={<MyMessage />}
-        />
+        <Route path="/myMessages" element={<MyMessage />} />
 
-        <Route
-          path={`/${user?.nickname}-listings`}
-          element={<MyListings />}
-        />
-        
-        <Route
-          path={`/newListing`}
-          element={<NewListingPage />}
-        />
+        <Route exact path={`/my-listings`} element={<MyListings />} />
 
         <Route
           path="/:listing_id"
@@ -54,11 +43,9 @@ function App() {
             />
           }
         />
-        <Route
-          path="/profile"
-          element={<Profile />}
-        />
-        
+
+        <Route path="/profile" element={<Profile />} />
+
         <Route
           path="/favourites"
           element={
