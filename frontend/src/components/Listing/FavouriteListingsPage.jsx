@@ -25,9 +25,9 @@ const FavouriteListingsPage = ({ likedListings, onFavButtonClick }) => {
 
   return (
     <PageLayout requireAuthentication={true}>
-      {({ theme, getThemeAuto }) => (
+      {({ theme }) => (
         <>
-          <Container style={{height: '100vh'}} data-theme={theme === "Auto" ? getThemeAuto() : theme}>
+          <Container style={{height: '100vh'}} data-theme={theme}>
             <h3 style={{textAlign: 'left', marginTop: '1rem'}}>Favourites</h3>
             <hr/>
             <Row>

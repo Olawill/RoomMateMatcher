@@ -33,8 +33,15 @@ const PageLayout = ({ children, requireAuthentication = false }) => {
   const handleTheme = (e) => {
     e.preventDefault();
 
-    setTheme(e.target.dataset.theme);
-    window.sessionStorage.setItem("appTheme", e.target.dataset.theme);
+    const themeOption = e.target.dataset.theme;
+    if (themeOption === 'Auto') {
+      const themeAuto = getThemeAuto();
+      setTheme(themeAuto);
+      window.sessionStorage.setItem("appTheme", themeAuto);
+    } else {
+      setTheme(themeOption);
+      window.sessionStorage.setItem("appTheme", themeOption);
+    }
   };
 
   return (
@@ -48,7 +55,7 @@ const PageLayout = ({ children, requireAuthentication = false }) => {
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         )
-        : children({ getThemeAuto, theme })}
+        : children({ theme })}
     </>
   );
 };
