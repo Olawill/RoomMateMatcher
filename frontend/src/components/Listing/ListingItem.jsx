@@ -5,7 +5,7 @@ import FavButton from "../Favourites/FavButton";
 
 const ListingItem = (props) => {
   const { listing, isFavIconActive, onFavButtonClick, theme } = props;
-  const cardStyle = theme === "Dark" ? { backgroundColor: "#2b7bad", color: "#FFF" } : { backgroundColor: "#FFF", color: "#000" };
+  const cardStyle = theme === "Dark" ? { backgroundColor: "#32599d", color: "#FFF" } : { backgroundColor: "#FFF", color: "#000" };
   
   return (
     <Card className="mb-3" style={cardStyle}>

@@ -1,5 +1,6 @@
-import React from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import React from "react";
+import { Row, Col, Card } from "react-bootstrap";
+import RatingStars from "react-rating-stars-component";
 
 // const userData = JSON.parse(window.sessionStorage.getItem('userData'));
 // const username = userData.username;
@@ -17,15 +18,20 @@ const Reviews = ({ reviews }) => {
 
   return (
     <Row>
-      <Col> 
+      <Col>
         <h2>Reviews</h2>
         <Row>
           <Col>
             {leftColumn.map((review) => (
               <Card key={review.id}>
                 <Card.Body>
-                  <Card.Text>Rating: {review.rating}</Card.Text>
-                  {/* <Card.Text>Written by: {username}</Card.Text> */}
+                  <RatingStars
+                    count={5}
+                    value={review.rating}
+                    size={24}
+                    activeColor="#FFA500"
+                    edit={false}
+                  />
                   <Card.Text>{review.review}</Card.Text>
                 </Card.Body>
               </Card>
@@ -35,8 +41,13 @@ const Reviews = ({ reviews }) => {
             {rightColumn.map((review) => (
               <Card key={review.id}>
                 <Card.Body>
-                  <Card.Text>Rating: {review.rating}</Card.Text>
-                  {/* <Card.Text>Written by: {username}</Card.Text> */}
+                  <RatingStars
+                    count={5}
+                    value={review.rating}
+                    size={24}
+                    activeColor="#FFA500"
+                    edit={false}
+                  />
                   <Card.Text>{review.review}</Card.Text>
                 </Card.Body>
               </Card>
