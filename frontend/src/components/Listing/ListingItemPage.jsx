@@ -25,7 +25,7 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   useEffect(() => {
     const fetchListingDetails = async () => {
       try {
-        const response = await axios.get(`/api/listings/${listing_id}`);
+        const response = await axios.get(`/api/listings/3`);
         setListingDetails(response.data.listing);
         setReviews(response.data.reviews);
       } catch (error) {
