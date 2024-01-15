@@ -79,26 +79,45 @@ module.exports = db => {
     res.status(200).json({ status: 'Ok', message: notificationMessage, meta: `message from ${req.body.user_id} to ${listingUserId}` });
   });
 
+  
+    // Get listing by a specific user
+    router.get('/my-listings/:user_id', async (req, res) => {
+   
+      const userId = req.params.user_id;
+    
+      try {
+        // Query the database to get all listings by the user
+        const queryResult = await db.query('SELECT * FROM listings WHERE user_id = $1', [userId]);
+        console.log('query', queryResult.rows)
+    
+        // Send the listings back to the frontend
+        res.status(200).json(queryResult.rows);
+      } catch (error) {
+        console.error('Error getting user listings:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    });
+
 
   // Detail page for one specific listing item
   // GET /api/listings/:listing_id
-  router.get('/:listing_id', async (req, res) => {
+  router.get('/view/:listing_id', async (req, res) => {
     try {
       const listingId = req.params.listing_id;
 
       // Fetch listing item details
       const listing = await db.query('SELECT * FROM listings WHERE id = $1', [listingId]);
-      console.log("This is a listing:", listing.rows);
+   
       // Fetch reviews for the listing
       const reviews = await db.query('SELECT * FROM reviews WHERE listing_id = $1', [listingId]);
-      console.log("This is the reviews:", reviews.rows);
+
       // Combine listing details and reviews in the response
       const result = {
         listing: listing.rows[0],
         reviews: reviews.rows
       };
 
-      console.log(result);
+
       res.json(result);
     } catch (error) {
       console.error('Error fetching listing and reviews:', error);
@@ -126,6 +145,56 @@ module.exports = db => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+  // POST route to create a new listing
+  router.post("/new", async (req, res) => {
+    try {
+      const {
+        user_id,
+        title,
+        description,
+        number_of_rooms,
+        number_of_roommates,
+        preference,
+        price,
+        postal_code,
+        city,
+        country,
+        image_url,
+        created_at,
+        updated_at,
+      } = req.body;
+
+
+      // Insert the new listing into the database
+      const newListing = await db.query(
+        "INSERT INTO listings (user_id, title, description, number_of_rooms, number_of_roommates, preference, price, postal_code, city, country, image_url, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
+        [
+          user_id,
+          title,
+          description,
+          number_of_rooms,
+          number_of_roommates,
+          preference,
+          price,
+          postal_code,
+          city,
+          country,
+          image_url,
+          created_at,
+          updated_at,
+        ]
+      );
+      res
+        .status(201)
+        .json({ message: "Listing created!", listing: newListing.rows[0] });
+    } catch (error) {
+      console.error("Error creating listing:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+
 
 
   return router;

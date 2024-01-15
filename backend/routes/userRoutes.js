@@ -166,13 +166,6 @@ module.exports = db => {
     }
   });
 
-  // Add the new route to the existing routes
-  //router.use('/:userSub/newListing', newListingRouter(db));
-
-
-
-
-
 
   return router;
 }
