@@ -127,11 +127,11 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   };
 
   return (
-    <PageLayout>
-      {({ theme, getThemeAuto }) => (
+    <PageLayout requireAuthentication={true}>
+      {({ theme }) => (
         <>
           <Container
-            data-theme={theme === "Auto" ? getThemeAuto() : theme}
+            data-theme={theme}
             style={{ width: "80%" }}
           >
             {listingDetails && (

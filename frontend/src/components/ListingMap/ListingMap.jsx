@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import PageLayout from '../PageLayout/PageLayout';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { Button, Card, ListGroup, Spinner } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const libraries = ['places'];
   const mapContainerStyle = {
@@ -15,6 +16,7 @@ const libraries = ['places'];
   };
 
 const MapComponent = ({ listings }) => {
+  const navigate = useNavigate();
 
   const [pins, setPins] = useState([]);
 
@@ -133,10 +135,11 @@ const MapComponent = ({ listings }) => {
             <Marker
               key={`${pin.lat}-${pin.long}`}
               position={{lat: pin.lat, lng: pin.lng}}
-              // onClick={() => onSelectPin(pin)}
+              onClick={() => navigate(`/${pin.id}`)}
               onMouseOver={() => {
                 setActivePin(pin);
               }}
+              onTouchStart={()=> setActivePin(pin)}
               onMouseOut={() => {
                 setActivePin(null)
               }}
