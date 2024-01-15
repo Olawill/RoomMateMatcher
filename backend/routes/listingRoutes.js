@@ -88,7 +88,6 @@ module.exports = db => {
       try {
         // Query the database to get all listings by the user
         const queryResult = await db.query('SELECT * FROM listings WHERE user_id = $1', [userId]);
-        console.log('query', queryResult.rows)
     
         // Send the listings back to the frontend
         res.status(200).json(queryResult.rows);
@@ -101,7 +100,7 @@ module.exports = db => {
 
   // Detail page for one specific listing item
   // GET /api/listings/:listing_id
-  router.get('/view/:listing_id', async (req, res) => {
+  router.get('/:listing_id', async (req, res) => {
     try {
       const listingId = req.params.listing_id;
 
