@@ -195,7 +195,7 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                           : 'primary'
                         }
                         onClick={handleChatButtonClick}>
-``                        Messages
+                        Messages
                       </Button>
                       )
                     }
