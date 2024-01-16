@@ -77,29 +77,6 @@ const MyListings = () => {
   return (
     <PageLayout>
       {({ theme, getThemeAuto }) => (
-<<<<<<< HEAD
-        <>
-          <Container style={{ paddingBlock: "3rem" }}>
-            <Stack style={{ marginLeft: "2rem", width: "100%" }}>
-              <h3 style={{ textAlign: "left" }}>Your Listings</h3>
-              <hr />
-              <Button
-                variant="outline-primary"
-                size="sm"
-                style={{ width: "10rem" }}
-                onClick={() => setShowNewListingForm(true)}
-              >
-                <GoPlus />
-                Add a New Listing
-              </Button>
-              <Button
-                variant="outline-secondary"
-                size="sm"
-                style={{
-                  width: "10rem",
-                }}
-                onClick={handleCancelClick}
-=======
         <Container
         data-theme={theme === "Auto" ? getThemeAuto() : theme}
         style={{height: '100vh'}}
@@ -110,7 +87,6 @@ const MyListings = () => {
               <Stack
                 // gap={3}
                 style={{ marginLeft: '2rem', width: '100%' }}
->>>>>>> feat/maps
               >
                 Cancel
               </Button>
