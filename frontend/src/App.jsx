@@ -6,12 +6,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Listings from "./components/Listing/Listings";
 import ListingItemPage from "./components/Listing/ListingItemPage";
 import MyListings from "./components/Listing/MyListings.jsx";
-import NewListingPage from "./components/Listing/NewListingPage.jsx";
 import Profile from "./components/Profile/Profile";
 import MyMessage from "./components/Chats/myMessages";
 import FavouriteListingsPage from "./components/Listing/FavouriteListingsPage.jsx";
 import Footer from "./components/Footer/Footer.jsx";
-import PageLayout from "./components/PageLayout/PageLayout.jsx";
 
 import useApplicationData from "./hooks/useApplicationData";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -21,58 +19,51 @@ function App() {
   const { likedListings, onFavButtonClick, listings } = useApplicationData();
   const { user } = useAuth0();
 
-  const { theme } = useState(
-    window.sessionStorage.getItem("appTheme") || "Light"
-  );
-
   return (
     <>
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Listings
-              likedListings={likedListings}
-              listings={listings}
-              onFavButtonClick={onFavButtonClick}
-            />
-          }
-        />
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Listings
+                likedListings={likedListings}
+                listings={listings}
+                onFavButtonClick={onFavButtonClick}
+              />
+            }
+          />
 
-        <Route path="/myMessages" element={<MyMessage />} />
+          <Route path="/myMessages" element={<MyMessage />} />
 
-        <Route exact path={`/my-listings`} element={<MyListings />} />
+          <Route exact path={`/my-listings`} element={<MyListings />} />
 
-        <Route
-          path="/:listing_id"
-          element={
-            <ListingItemPage
-              likedListings={likedListings}
-              onFavButtonClick={onFavButtonClick}
-            />
-          }
-        />
+          <Route
+            path="/:listing_id"
+            element={
+              <ListingItemPage
+                likedListings={likedListings}
+                onFavButtonClick={onFavButtonClick}
+              />
+            }
+          />
 
-        <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
 
-        <Route
-          path="/favourites"
-          element={
-            <FavouriteListingsPage
-              likedListings={likedListings}
-              onFavButtonClick={onFavButtonClick}
-            />
-          }
-        />
+          <Route
+            path="/favourites"
+            element={
+              <FavouriteListingsPage
+                likedListings={likedListings}
+                onFavButtonClick={onFavButtonClick}
+              />
+            }
+          />
 
-        <Route 
-          path="/map"
-          element={<MapComponent listings={listings}/>}
-        />
-      </Routes>
-    </Router>
-    <Footer theme={theme} />
+          <Route path="/map" element={<MapComponent listings={listings} />} />
+        </Routes>
+      </Router>
+      <Footer />
     </>
   );
 }

@@ -28,14 +28,13 @@ const Listings = ({ likedListings, onFavButtonClick }) => {
     fetchListings();
   }, [isAuthenticated, user]);
 
-
   return (
     <PageLayout>
       {({ theme }) => (
         <Container style={{height: '100%'}} data-theme={theme}>
           <Row xs={1} md={2} lg={3} xl={3} xxl={3}>
             {listings.map((listing) => (
-              <Col md key={listing.id}>
+              <Col md key={listing.id} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <Link to={`/${listing.id}`}>
                   <ListingItem 
                     listing={listing}

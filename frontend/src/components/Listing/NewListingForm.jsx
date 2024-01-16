@@ -9,7 +9,7 @@ import PageLayout from "../PageLayout/PageLayout";
 const userData = sessionStorage.getItem("userData");
 const userInfo = JSON.parse(userData);
 
-const NewListingPage = () => {
+const NewListingForm = () => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   const initialListingData = {
@@ -171,4 +171,4 @@ const NewListingPage = () => {
   );
 };
 
-export default NewListingPage;
+export default NewListingForm;

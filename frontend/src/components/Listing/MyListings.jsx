@@ -6,7 +6,7 @@ import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { IoPinSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import NewListingForm from "./NewListingPage";
+import NewListingForm from "./NewListingForm";
 import EditListingModal from "./EditListing";
 
 const MyListings = () => {
