@@ -139,7 +139,7 @@ const MapComponent = ({ listings }) => {
               onMouseOver={() => {
                 setActivePin(pin);
               }}
-              onTouchStart={()=> setActivePin(pin)}
+              // onTouchStart={()=> setActivePin(pin)}
               onMouseOut={() => {
                 setActivePin(null)
               }}
