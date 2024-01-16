@@ -132,7 +132,7 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
         <>
           <Container
             data-theme={theme}
-            style={{ width: "80%" }}
+            style={{ width: "80%", paddingBottom: '2rem' }}
           >
             {listingDetails && (
               <Row style={{ margin: "5.65rem auto 0" }}>
