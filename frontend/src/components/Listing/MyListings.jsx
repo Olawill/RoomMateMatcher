@@ -89,7 +89,7 @@ const MyListings = () => {
             //     style={{ marginLeft: '2rem', width: '100%' }}
             //   > */}
           <Container style={{ paddingBlock: "3rem" }}>
-            <Stack style={{ marginLeft: "2rem", width: "100%" }}>
+            <Stack style={{ width: "100%" }}>
               <h3 style={{ textAlign: "left" }}>Your Listings</h3>
               <hr />
               <Button
@@ -97,6 +97,7 @@ const MyListings = () => {
                 size="sm"
                 style={{
                   width: "10rem",
+                  marginBottom: "0.5rem",
                 }}
                 onClick={handleAddListingClick}
               >
@@ -125,37 +126,48 @@ const MyListings = () => {
             )}
             {myListings ? (
               <>
-              <Stack direction="horizontal" gap={3}>
-                {myListings.map((listing) => (
-                  <Card
-                    style={
-                      theme === "Dark"
-                        ? { backgroundColor: "#2167ac", color: "#FFF", width: '25rem'}
-                        : { backgroundColor: "#FFF", color: "#000", width: '25rem' }
-                        
-                        
-                    }
-                    key={listing.id}
-                  >
-                    <Card.Img variant="top" src={listing.image_url} />
-                    <Card.Body>
-                      <Card.Title>{listing.title}</Card.Title>
-                      <Card.Text>
-                        {listing.postal_code} {listing.city} {listing.country}
-                      </Card.Text>
-                      <Card.Text>${listing.price} CAD per month</Card.Text>
-                      <Card.Text>{listing.description}</Card.Text>
-                      <Card.Text>
-                        We have {listing.number_of_rooms} bedrooms.
-                      </Card.Text>
-                      <Card.Text>
-                        We are looking for {listing.number_of_roommates}{" "}
-                        roommates.
-                      </Card.Text>
-                      <Card.Text>Status: {listing.status}</Card.Text>
-                    </Card.Body>
+                <Stack direction="horizontal" gap={3}>
+                  {myListings.map((listing) => (
+                    <Card
+                      style={
+                        theme === "Dark"
+                          ? {
+                              backgroundColor: "#2167ac",
+                              color: "#FFF",
+                              width: "25rem",
+                              height: "45rem",
+                            }
+                          : {
+                              backgroundColor: "#FFF",
+                              color: "#000",
+                              width: "25rem",
+                              height: "45rem",
+                            }
+                      }
+                      key={listing.id}
+                    >
+                      <Card.Img variant="top" src={listing.image_url} />
+                      <Card.Body>
+                        <Card.Title>{listing.title}</Card.Title>
+                        <Card.Text>
+                          {listing.postal_code} {listing.city} {listing.country}
+                        </Card.Text>
+                        <Card.Text>${listing.price} CAD per month</Card.Text>
+                        <Card.Text>{listing.description}</Card.Text>
+                        <Card.Text>
+                          We have {listing.number_of_rooms} bedrooms.
+                        </Card.Text>
+                        <Card.Text>
+                          We are looking for {listing.number_of_roommates}{" "}
+                          roommates.
+                        </Card.Text>
+                        <Card.Text>Status: {listing.status}</Card.Text>
+                      </Card.Body>
                       <Button
                         variant="outline-warning"
+                        style={{
+                          marginBottom: "0.5rem",
+                        }}
                         onClick={() => handleEditClick(listing)}
                       >
                         Edit
@@ -163,8 +175,8 @@ const MyListings = () => {
                       <Button onClick={() => handleDeleteListing(listing.id)}>
                         Delete
                       </Button>
-                  </Card>
-                ))}
+                    </Card>
+                  ))}
                 </Stack>
               </>
             ) : (
