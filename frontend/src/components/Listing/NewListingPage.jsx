@@ -13,7 +13,7 @@ const NewListingPage = () => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   const initialListingData = {
-    user_id: userInfo.userId,
+    user_id: userInfo?.userId,
     title: "",
     city: "",
     country: "",
