@@ -38,13 +38,11 @@ const Profile = () => {
   const handleClose = () =>  setDeleteUser(false);
 
   return (
-    <PageLayout>
-      {({ theme, getThemeAuto }) => (
+    <PageLayout requireAuthentication={true}>
+      {({ theme }) => (
         <Container
-          data-theme={theme === "Auto" ? getThemeAuto() : theme}
-          style={{
-            paddingBottom: '2rem'
-          }}
+          data-theme={theme}
+          style={{height: '100vh'}}
         >
           <h3 style={{textAlign: 'left', paddingBottom: '2rem'}}>Your Profile</h3>
           <Container
@@ -223,7 +221,7 @@ const Profile = () => {
                   <Modal
                     show={deleteUser}
                     onHide={handleClose}
-                    data-theme={theme === "Auto" ? getThemeAuto() : theme}
+                    data-theme={theme}
                     centered
                     animation={false}>
                     <Modal.Header closeButton>

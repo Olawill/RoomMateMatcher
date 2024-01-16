@@ -18,12 +18,7 @@ const Listings = ({ likedListings, onFavButtonClick }) => {
       axios
         .get("/api/listings")
         .then((response) => {
-          if (isAuthenticated && user) {
-            const userId = JSON.parse(window.sessionStorage.getItem('userData')).userId;
-            setListings(response.data.data.filter(listing => listing.user_id !== userId));
-          } else {
-            setListings(response.data.data);
-          }
+            setListings(response.data.data.reverse());
         })
         .catch((error) => {
           console.error("Error fetching listings:", error);
@@ -33,11 +28,12 @@ const Listings = ({ likedListings, onFavButtonClick }) => {
     fetchListings();
   }, [isAuthenticated, user]);
 
+
   return (
     <PageLayout>
-      {({ getThemeAuto, theme }) => (
-        <Container data-theme={theme === 'Auto' ? getThemeAuto() : theme}>
-          <Row xs={1} md={2} lg={3} xl={4}>
+      {({ theme }) => (
+        <Container style={{height: '100%'}} data-theme={theme}>
+          <Row xs={1} md={2} lg={3} xl={3} xxl={3}>
             {listings.map((listing) => (
               <Col md key={listing.id}>
                 <Link to={`/${listing.id}`}>

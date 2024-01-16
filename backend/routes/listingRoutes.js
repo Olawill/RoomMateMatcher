@@ -71,9 +71,6 @@ module.exports = (db) => {
 
     const notificationMessage = `Someone viewed your listing and wants to match with you.`;
 
-    // Emit the notification event to the specified user
-    // socket.emit('notification', { to: listingUserId, from: req.body.user_id, message: notificationMessage });
-
     res
       .status(200)
       .json({
@@ -81,6 +78,7 @@ module.exports = (db) => {
         message: notificationMessage,
         meta: `message from ${req.body.user_id} to ${listingUserId}`,
       });
+    res.status(200).json({ status: 'Ok', message: notificationMessage, meta: `message from ${req.body.user_id} to ${listingUserId}` });
   });
 
   // Get listing by a specific user
@@ -108,17 +106,10 @@ module.exports = (db) => {
     try {
       const listingId = req.params.listing_id;
 
-      // Fetch listing item details
-      const listing = await db.query("SELECT * FROM listings WHERE id = $1", [
-        listingId,
-      ]);
+      const listing = await db.query('SELECT * FROM listings WHERE id = $1', [listingId]);
 
       // Fetch reviews for the listing
-      const reviews = await db.query(
-        "SELECT * FROM reviews WHERE listing_id = $1",
-        [listingId]
-      );
-
+      const reviews = await db.query('SELECT * FROM reviews WHERE listing_id = $1', [listingId]);
       // Combine listing details and reviews in the response
       const result = {
         listing: listing.rows[0],

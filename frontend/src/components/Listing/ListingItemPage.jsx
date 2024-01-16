@@ -127,12 +127,12 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
   };
 
   return (
-    <PageLayout>
-      {({ theme, getThemeAuto }) => (
+    <PageLayout requireAuthentication={true}>
+      {({ theme }) => (
         <>
           <Container
-            data-theme={theme === "Auto" ? getThemeAuto() : theme}
-            style={{ width: "80%" }}
+            data-theme={theme}
+            style={{ width: "80%", paddingBottom: '2rem' }}
           >
             {listingDetails && (
               <Row style={{ margin: "5.65rem auto 0" }}>
@@ -140,7 +140,7 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                   <Card
                     style={
                       theme === "Dark"
-                      ? { backgroundColor: "#2b7bad", color: "#FFF" }
+                      ? { backgroundColor: "#2167ac", color: "#FFF" }
                       : { backgroundColor: "#FFF", color: "#000" }
                     }
                   >

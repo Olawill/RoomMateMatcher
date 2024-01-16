@@ -4,8 +4,10 @@ import axios from "axios";
 
 const useApplicationData = () => {
   const [likedListings, setLikedListings] = useState([]);
+  const [listings, setListings] = useState([]);
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
 
+  // FAVOURITE LISTINGS
   useEffect(() => {
     if (isAuthenticated && user) {
       axios
@@ -19,7 +21,28 @@ const useApplicationData = () => {
     }
   }, [isAuthenticated, user]);
 
+  // ALL LISTINGS
+  useEffect(() => {
+    const fetchListings = () => {
+      axios
+        .get("/api/listings")
+        .then((response) => {
+          if (isAuthenticated && user) {
+            const userId = JSON.parse(window.sessionStorage.getItem('userData')).userId;
+            setListings(response.data.data.filter(listing => listing.user_id !== userId));
+          } else {
+            setListings(response.data.data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching listings:", error);
+        });
+    };
 
+    fetchListings();
+  }, [isAuthenticated, user]);
+
+  // CLICKING FAVOURITE BUTTON
   const onFavButtonClick = (listingId) => {
     if (!isAuthenticated) {
       alert("Please login first");
@@ -44,6 +67,7 @@ const useApplicationData = () => {
 
   return {
     likedListings,
+    listings,
     onFavButtonClick,
   };
 };

@@ -28,8 +28,12 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
+  /* margin-bottom: 3rem; */
   width: 100vw;
-  height: 5000px;
+<<<<<<< HEAD
+=======
+  min-height: 100%;
+>>>>>>> feat/maps
 }
 
 h1 {
