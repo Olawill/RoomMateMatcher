@@ -140,7 +140,7 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                   <Card
                     style={
                       theme === "Dark"
-                      ? { backgroundColor: "#2b7bad", color: "#FFF" }
+                      ? { backgroundColor: "#2167ac", color: "#FFF" }
                       : { backgroundColor: "#FFF", color: "#000" }
                     }
                   >
