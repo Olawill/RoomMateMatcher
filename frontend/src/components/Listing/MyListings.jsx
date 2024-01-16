@@ -35,8 +35,7 @@ const MyListings = () => {
   const handleEditModalSave = async (editedListing) => {
     try {
       const response = await axios.put(
-        `/api/listings/${editedListing.id}`,
-        editedListing
+        `/api/listings/${editedListing.id}`,editedListing
       );
 
       console.log("Save edited listing:", editedListing);
