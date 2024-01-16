@@ -155,36 +155,32 @@ module.exports = (db) => {
       const {
         user_id,
         title,
-        description,
-        number_of_rooms,
-        number_of_roommates,
-        preference,
-        price,
         postal_code,
         city,
         country,
+        price,
+        description,
+        number_of_rooms,
+        number_of_roommates,
+        status,
         image_url,
-        created_at,
-        updated_at,
       } = req.body;
 
       // Insert the new listing into the database
       const newListing = await db.query(
-        "INSERT INTO listings (user_id, title, description, number_of_rooms, number_of_roommates, preference, price, postal_code, city, country, image_url, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
+        "INSERT INTO listings (user_id, title, postal_code, city, country, price, description, number_of_rooms, number_of_roommates, status, image_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)",
         [
           user_id,
           title,
-          description,
-          number_of_rooms,
-          number_of_roommates,
-          preference,
-          price,
           postal_code,
           city,
           country,
+          price,
+          description,
+          number_of_rooms,
+          number_of_roommates,
+          status,
           image_url,
-          created_at,
-          updated_at,
         ]
       );
       res

@@ -9,8 +9,9 @@ import PageLayout from "../PageLayout/PageLayout";
 const userData = sessionStorage.getItem("userData");
 const userInfo = JSON.parse(userData);
 
-const NewListingForm = () => {
+const NewListingForm = (props) => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const {setMyListings} = props
 
   const initialListingData = {
     user_id: userInfo?.userId,
@@ -42,11 +43,9 @@ const NewListingForm = () => {
       return;
     }
     try {
-      console.log("data", newListingData);
       const response = await axios.post("/api/listings/new", newListingData);
-      console.log("New Listing Response:", response.data);
-
       setNewListingData(initialListingData);
+      setMyListings(prev => [...prev, newListingData])
       setFormDisabled(false);
     } catch (error) {
       console.error("Error creating a new listing:", error);

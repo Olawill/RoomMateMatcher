@@ -35,9 +35,9 @@ const MyListings = () => {
   const handleEditModalSave = async (editedListing) => {
     try {
       const response = await axios.put(
-        `/api/listings/${editedListing.id}`,
-        editedListing
-      );
+        `/api/listings/${editedListing.id}`,editedListing);
+
+        setMyListings(prev => [...prev, editedListing])
 
       console.log("Save edited listing:", editedListing);
     } catch (error) {
@@ -122,7 +122,7 @@ const MyListings = () => {
                 fontSize: '1rem', 
                 transform: 'rotate(75deg)' */}
             {showNewListingForm && (
-              <NewListingForm onCancel={handleCancelClick} />
+              <NewListingForm onCancel={handleCancelClick} setMyListings={setMyListings}/>
             )}
             {myListings ? (
               <>

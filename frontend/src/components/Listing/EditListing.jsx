@@ -1,4 +1,3 @@
-// EditListingModal.js
 import React, { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 
@@ -28,6 +27,16 @@ const EditListingModal = ({ listing, onSave, onCancel }) => {
               name="title"
               value={editedListing.title}
               onChange={handleInputChange}
+            />
+              </Form.Group>
+            <Form.Group controlId="postal_code">
+            <Form.Label>Postal Code</Form.Label>
+            <Form.Control
+              type="text"
+              name="postal_code"
+              value={editedListing.postal_code}
+              onChange={handleInputChange}
+              required
             />
           </Form.Group>
           <Form.Group controlId="city">
