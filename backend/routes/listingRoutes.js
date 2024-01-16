@@ -193,6 +193,58 @@ module.exports = db => {
     }
   });
 
+  // PUT /api/listings/:listing_id
+router.put('/:listing_id', async (req, res) => {
+  try {
+    const listingId = req.params.listing_id;
+    const { title,
+      description,
+      number_of_rooms,
+      number_of_roommates,
+      preference,
+      price,
+      postal_code,
+      city,
+      country,
+      image_url, } = req.body;
+
+ 
+    await db.query(
+      'UPDATE listings SET title = $1, description = $2, price = $3, image_url = $4 WHERE id = $5',
+      [title,
+        description,
+        number_of_rooms,
+        number_of_roommates,
+        preference,
+        price,
+        postal_code,
+        city,
+        country,
+        image_url, listingId]
+    );
+
+    res.json({ message: 'Listing updated successfully' });
+  } catch (error) {
+    console.error('Error updating listing:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// DELETE /api/listings/:listing_id
+router.delete('/:listing_id', async (req, res) => {
+  try {
+    const listingId = req.params.listing_id;
+
+    await db.query('DELETE FROM listings WHERE id = $1', [listingId]);
+
+    res.json({ message: 'Listing deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting listing:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
 
 
