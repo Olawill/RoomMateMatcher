@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import ListingItem from "./ListingItem";
 import PageLayout from "../PageLayout/PageLayout";
 
+<<<<<<< HEAD
 const Listings = ({ likedListings, onFavButtonClick }) => {
   const [listings, setListings] = useState([]);
   const { user, isAuthenticated } = useAuth0();
@@ -27,12 +28,15 @@ const Listings = ({ likedListings, onFavButtonClick }) => {
 
     fetchListings();
   }, [isAuthenticated, user]);
+=======
+const Listings = ({ likedListings, onFavButtonClick, listings }) => {
+>>>>>>> feat/maps
 
   return (
     <PageLayout>
-      {({ getThemeAuto, theme }) => (
-        <Container data-theme={theme === 'Auto' ? getThemeAuto() : theme}>
-          <Row xs={1} md={2} lg={3} xl={4}>
+      {({ theme }) => (
+        <Container style={{height: '100%'}} data-theme={theme}>
+          <Row xs={1} md={2} lg={3} xl={3} xxl={3}>
             {listings.map((listing) => (
               <Col md key={listing.id}>
                 <Link to={`/${listing.id}`}>

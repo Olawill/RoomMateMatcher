@@ -10,11 +10,12 @@ function MyMessage() {
   };
 
   return (
-    <PageLayout>
-      {({ theme, getThemeAuto }) => (
+    <PageLayout requireAuthentication={true}>
+      {({ theme }) => (
         <div
           className="container"
-          data-theme={theme === "Auto" ? getThemeAuto() : theme}
+          style={{ marginBottom: '2rem' }}
+          data-theme={theme}
         >
           <ChatroomList onSelectChatroom={handleChatroomSelect} />
         </div>
