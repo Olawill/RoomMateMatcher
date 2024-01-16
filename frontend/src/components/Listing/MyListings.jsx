@@ -6,7 +6,7 @@ import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { IoPinSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import NewListingForm from "./NewListingPage";
+import NewListingForm from "./NewListingForm";
 import EditListingModal from "./EditListing";
 
 const MyListings = () => {
@@ -35,7 +35,8 @@ const MyListings = () => {
   const handleEditModalSave = async (editedListing) => {
     try {
       const response = await axios.put(
-        `/api/listings/${editedListing.id}`,editedListing
+        `/api/listings/${editedListing.id}`,
+        editedListing
       );
 
       console.log("Save edited listing:", editedListing);
@@ -77,49 +78,51 @@ const MyListings = () => {
     <PageLayout>
       {({ theme, getThemeAuto }) => (
         <Container
-        data-theme={theme === "Auto" ? getThemeAuto() : theme}
-        style={{height: '100vh', paddingBottom: "2rem"}}
+          data-theme={theme === "Auto" ? getThemeAuto() : theme}
+          style={{ paddingBottom: "2rem" }}
         >
-        {/* //   { */}
-        {/* //   !myListings && (
+          {/* //   { */}
+          {/* //   !myListings && (
             // <Container style={{paddingBlock: '3rem'}}>
             //   <Stack
             //     // gap={3}
             //     style={{ marginLeft: '2rem', width: '100%' }}
             //   > */}
-               <Container style={{ paddingBlock: "3rem" }}>
-                <Stack style={{ marginLeft: "2rem", width: "100%" }}>
-                  <h3 style={{ textAlign: "left" }}>Your Listings</h3>
-                  <hr />
-                  <Button
-                    variant="outline-primary"
-                    size="sm"
-                    style={{
-                        width: '10rem'
-                      }}
-                    onClick={handleAddListingClick}
-                  >
-                    <GoPlus />
-                    Add a New Listing
-                  </Button>
+          <Container style={{ paddingBlock: "3rem" }}>
+            <Stack style={{ marginLeft: "2rem", width: "100%" }}>
+              <h3 style={{ textAlign: "left" }}>Your Listings</h3>
+              <hr />
+              <Button
+                variant="outline-primary"
+                size="sm"
+                style={{
+                  width: "10rem",
+                }}
+                onClick={handleAddListingClick}
+              >
+                <GoPlus />
+                Add a New Listing
+              </Button>
 
-                  <Button
-                    variant="outline-secondary"
-                    size="sm"
-                    style={{
-                      width: "10rem",
-                    }}
-                    onClick={handleCancelClick}
-                  >
-                    Cancel
-                  </Button>
-                </Stack>
-              {/* <MdOutlineMapsHomeWork style={{
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                style={{
+                  width: "10rem",
+                }}
+                onClick={handleCancelClick}
+              >
+                Cancel
+              </Button>
+            </Stack>
+            {/* <MdOutlineMapsHomeWork style={{
                 fontSize: '6rem'}}/>
               <IoPinSharp style={{
                 fontSize: '1rem', 
                 transform: 'rotate(75deg)' */}
-                {showNewListingForm && <NewListingForm onCancel={handleCancelClick} />}
+            {showNewListingForm && (
+              <NewListingForm onCancel={handleCancelClick} />
+            )}
             {myListings ? (
               <>
                 {myListings.map((listing) => (
@@ -127,7 +130,10 @@ const MyListings = () => {
                     <h4>{listing.title}</h4>
                     <p>{listing.description}</p>
                     <p>Price: ${listing.price}</p>
-                    <img src={listing.image_url} alt={`Image for ${listing.title}`} />
+                    <img
+                      src={listing.image_url}
+                      alt={`Image for ${listing.title}`}
+                    />
                   </div>
                 ))}
               </>
@@ -156,7 +162,6 @@ const MyListings = () => {
           </Container>
         </Container>
       )}
-
     </PageLayout>
   );
 };
