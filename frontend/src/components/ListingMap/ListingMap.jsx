@@ -125,7 +125,7 @@ const MapComponent = ({ listings }) => {
     <div>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={2}
+        zoom={4}
         center={center}
         onLoad={onLoad}
         onUnmount={onUnmount}
