@@ -62,13 +62,14 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
       loginWithRedirect();
       return;
     }
-    const senderUserId = userInfo.userId;
-    const recipientUserId = listingDetails.user_id;
+    const senderUserId = userInfo?.userId;
+    const recipientUserId = listingDetails?.user_id;
 
-    axios.post('/api/chatrooms/create', { senderId: senderUserId, recipientId: recipientUserId, name :listingDetails.title })
+    axios.post('/api/chatrooms/create', { senderId: senderUserId, recipientId: recipientUserId, name :listingDetails?.title })
   .then(response => {
+    console.log(response);
     const chatRoomId = response.data.id;
-    navigate(`/myMessages`);
+    chatredirect(listingDetails?.title);
   })
   .catch(error => {
     // Handle errors
