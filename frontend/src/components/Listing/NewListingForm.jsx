@@ -15,6 +15,7 @@ const NewListingForm = () => {
   const initialListingData = {
     user_id: userInfo?.userId,
     title: "",
+    postal_code: "",
     city: "",
     country: "",
     price: "",
@@ -62,6 +63,16 @@ const NewListingForm = () => {
               type="text"
               name="title"
               value={newListingData.title}
+              onChange={handleInputChange}
+              required
+            />
+              </Form.Group>
+            <Form.Group controlId="postal_code">
+            <Form.Label>Postal Code</Form.Label>
+            <Form.Control
+              type="text"
+              name="postal_code"
+              value={newListingData.postal_code}
               onChange={handleInputChange}
               required
             />

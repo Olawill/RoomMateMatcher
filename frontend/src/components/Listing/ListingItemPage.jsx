@@ -156,7 +156,7 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                     <Card.Body>
                       <Card.Title>{listingDetails.title}</Card.Title>
                       <Card.Text>
-                        {listingDetails.city} {listingDetails.country}
+                      {listingDetails.postal_code} {listingDetails.city} {listingDetails.country}
                       </Card.Text>
                       <Card.Text>
                         ${listingDetails.price} CAD per month

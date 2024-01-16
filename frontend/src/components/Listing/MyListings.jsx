@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PageLayout from "../PageLayout/PageLayout";
-import { Button, Container, Stack } from "react-bootstrap";
+import { Button, Container, Stack, Card } from "react-bootstrap";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { IoPinSharp } from "react-icons/io5";
@@ -125,17 +125,47 @@ const MyListings = () => {
             )}
             {myListings ? (
               <>
+              <Stack direction="horizontal" gap={3}>
                 {myListings.map((listing) => (
-                  <div key={listing.id}>
-                    <h4>{listing.title}</h4>
-                    <p>{listing.description}</p>
-                    <p>Price: ${listing.price}</p>
-                    <img
-                      src={listing.image_url}
-                      alt={`Image for ${listing.title}`}
-                    />
-                  </div>
+                  <Card
+                    style={
+                      theme === "Dark"
+                        ? { backgroundColor: "#2167ac", color: "#FFF", width: '25rem'}
+                        : { backgroundColor: "#FFF", color: "#000", width: '25rem' }
+                        
+                        
+                    }
+                    key={listing.id}
+                  >
+                    <Card.Img variant="top" src={listing.image_url} />
+                    <Card.Body>
+                      <Card.Title>{listing.title}</Card.Title>
+                      <Card.Text>
+                        {listing.postal_code} {listing.city} {listing.country}
+                      </Card.Text>
+                      <Card.Text>${listing.price} CAD per month</Card.Text>
+                      <Card.Text>{listing.description}</Card.Text>
+                      <Card.Text>
+                        We have {listing.number_of_rooms} bedrooms.
+                      </Card.Text>
+                      <Card.Text>
+                        We are looking for {listing.number_of_roommates}{" "}
+                        roommates.
+                      </Card.Text>
+                      <Card.Text>Status: {listing.status}</Card.Text>
+                    </Card.Body>
+                      <Button
+                        variant="outline-warning"
+                        onClick={() => handleEditClick(listing)}
+                      >
+                        Edit
+                      </Button>
+                      <Button onClick={() => handleDeleteListing(listing.id)}>
+                        Delete
+                      </Button>
+                  </Card>
                 ))}
+                </Stack>
               </>
             ) : (
               <>
@@ -158,6 +188,14 @@ const MyListings = () => {
                   Browse our Listings
                 </Button>
               </>
+            )}
+            {/* Render the EditListingModal */}
+            {showEditModal && (
+              <EditListingModal
+                listing={selectedListing}
+                onSave={handleEditModalSave}
+                onCancel={() => setShowEditModal(false)}
+              />
             )}
           </Container>
         </Container>
