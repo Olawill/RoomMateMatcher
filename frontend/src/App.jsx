@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "../src/App.css";
 import "./components/Navigation/NavigationBar.css";
 import "./components/Navigation/Header.css";
@@ -9,6 +10,8 @@ import NewListingPage from "./components/Listing/NewListingPage.jsx";
 import Profile from "./components/Profile/Profile";
 import MyMessage from "./components/Chats/myMessages";
 import FavouriteListingsPage from "./components/Listing/FavouriteListingsPage.jsx";
+import Footer from "./components/Footer/Footer.jsx";
+import PageLayout from "./components/PageLayout/PageLayout.jsx";
 
 import useApplicationData from "./hooks/useApplicationData";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -17,7 +20,12 @@ function App() {
   const { likedListings, onFavButtonClick } = useApplicationData();
   const { user } = useAuth0();
 
+  const { theme } = useState(
+    window.sessionStorage.getItem("appTheme") || "Light"
+  );
+
   return (
+    <>
     <Router>
       <Routes>
         <Route
@@ -57,6 +65,8 @@ function App() {
         />
       </Routes>
     </Router>
+    <Footer theme={theme} />
+    </>
   );
 }
 
