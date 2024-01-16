@@ -63,7 +63,7 @@ function App() {
           <Route path="/map" element={<MapComponent listings={listings} />} />
         </Routes>
       </Router>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

@@ -42,7 +42,6 @@ const Profile = () => {
       {({ theme }) => (
         <Container
           data-theme={theme}
-          style={{height: '100vh'}}
         >
           <h3 style={{textAlign: 'left', paddingBottom: '2rem'}}>Your Profile</h3>
           <Container

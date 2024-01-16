@@ -2,7 +2,6 @@ import React from "react";
 
 const Footer = ({ theme }) => {
   const footerStyle = {
-    position: "relative",
     bottom: 0,
     left: 0,
     width: "100%",

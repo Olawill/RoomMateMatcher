@@ -4,6 +4,7 @@ import Header from "../Navigation/Header";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Spinner } from "react-bootstrap";
+import Footer from "../Footer/Footer";
 
 const PageLayout = ({ children, requireAuthentication = false }) => {
   const { isLoading } = useAuth0();
@@ -45,7 +46,7 @@ const PageLayout = ({ children, requireAuthentication = false }) => {
   };
 
   return (
-    <>
+    <div style={{position: 'relative'}}>
       <NavigationBar handleTheme={handleTheme} theme={theme} />
       <Header darkModeEnabled={theme === "Dark"} />
       {requireAuthentication && isLoading
@@ -56,7 +57,8 @@ const PageLayout = ({ children, requireAuthentication = false }) => {
           </Spinner>
         )
         : children({ theme })}
-    </>
+          <Footer />
+    </div>
   );
 };
 
