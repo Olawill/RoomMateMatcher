@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PageLayout from "../PageLayout/PageLayout";
-import { Button, Container, Stack } from "react-bootstrap";
+import { Button, Container, Stack, Card } from "react-bootstrap";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { IoPinSharp } from "react-icons/io5";
@@ -35,7 +35,8 @@ const MyListings = () => {
   const handleEditModalSave = async (editedListing) => {
     try {
       const response = await axios.put(
-        `/api/listings/${editedListing.id}`,editedListing
+        `/api/listings/${editedListing.id}`,
+        editedListing
       );
 
       console.log("Save edited listing:", editedListing);
@@ -77,59 +78,94 @@ const MyListings = () => {
     <PageLayout>
       {({ theme, getThemeAuto }) => (
         <Container
-        data-theme={theme === "Auto" ? getThemeAuto() : theme}
-        style={{height: '100vh', paddingBottom: "2rem"}}
+          data-theme={theme === "Auto" ? getThemeAuto() : theme}
+          style={{ paddingBottom: "2rem" }}
         >
-        {/* //   { */}
-        {/* //   !myListings && (
+          {/* //   { */}
+          {/* //   !myListings && (
             // <Container style={{paddingBlock: '3rem'}}>
             //   <Stack
             //     // gap={3}
             //     style={{ marginLeft: '2rem', width: '100%' }}
             //   > */}
-               <Container style={{ paddingBlock: "3rem" }}>
-                <Stack style={{ marginLeft: "2rem", width: "100%" }}>
-                  <h3 style={{ textAlign: "left" }}>Your Listings</h3>
-                  <hr />
-                  <Button
-                    variant="outline-primary"
-                    size="sm"
-                    style={{
-                        width: '10rem'
-                      }}
-                    onClick={handleAddListingClick}
-                  >
-                    <GoPlus />
-                    Add a New Listing
-                  </Button>
+          <Container style={{ paddingBlock: "3rem" }}>
+            <Stack style={{ marginLeft: "2rem", width: "100%" }}>
+              <h3 style={{ textAlign: "left" }}>Your Listings</h3>
+              <hr />
+              <Button
+                variant="outline-primary"
+                size="sm"
+                style={{
+                  width: "10rem",
+                }}
+                onClick={handleAddListingClick}
+              >
+                <GoPlus />
+                Add a New Listing
+              </Button>
 
-                  <Button
-                    variant="outline-secondary"
-                    size="sm"
-                    style={{
-                      width: "10rem",
-                    }}
-                    onClick={handleCancelClick}
-                  >
-                    Cancel
-                  </Button>
-                </Stack>
-              {/* <MdOutlineMapsHomeWork style={{
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                style={{
+                  width: "10rem",
+                }}
+                onClick={handleCancelClick}
+              >
+                Cancel
+              </Button>
+            </Stack>
+            {/* <MdOutlineMapsHomeWork style={{
                 fontSize: '6rem'}}/>
               <IoPinSharp style={{
                 fontSize: '1rem', 
                 transform: 'rotate(75deg)' */}
-                {showNewListingForm && <NewListingForm onCancel={handleCancelClick} />}
+            {showNewListingForm && (
+              <NewListingForm onCancel={handleCancelClick} />
+            )}
             {myListings ? (
               <>
+              <Stack direction="horizontal" gap={3}>
                 {myListings.map((listing) => (
-                  <div key={listing.id}>
-                    <h4>{listing.title}</h4>
-                    <p>{listing.description}</p>
-                    <p>Price: ${listing.price}</p>
-                    <img src={listing.image_url} alt={`Image for ${listing.title}`} />
-                  </div>
+                  <Card
+                    style={
+                      theme === "Dark"
+                        ? { backgroundColor: "#2167ac", color: "#FFF", width: '25rem'}
+                        : { backgroundColor: "#FFF", color: "#000", width: '25rem' }
+                        
+                        
+                    }
+                    key={listing.id}
+                  >
+                    <Card.Img variant="top" src={listing.image_url} />
+                    <Card.Body>
+                      <Card.Title>{listing.title}</Card.Title>
+                      <Card.Text>
+                        {listing.postal_code} {listing.city} {listing.country}
+                      </Card.Text>
+                      <Card.Text>${listing.price} CAD per month</Card.Text>
+                      <Card.Text>{listing.description}</Card.Text>
+                      <Card.Text>
+                        We have {listing.number_of_rooms} bedrooms.
+                      </Card.Text>
+                      <Card.Text>
+                        We are looking for {listing.number_of_roommates}{" "}
+                        roommates.
+                      </Card.Text>
+                      <Card.Text>Status: {listing.status}</Card.Text>
+                    </Card.Body>
+                      <Button
+                        variant="outline-warning"
+                        onClick={() => handleEditClick(listing)}
+                      >
+                        Edit
+                      </Button>
+                      <Button onClick={() => handleDeleteListing(listing.id)}>
+                        Delete
+                      </Button>
+                  </Card>
                 ))}
+                </Stack>
               </>
             ) : (
               <>
@@ -153,10 +189,17 @@ const MyListings = () => {
                 </Button>
               </>
             )}
+            {/* Render the EditListingModal */}
+            {showEditModal && (
+              <EditListingModal
+                listing={selectedListing}
+                onSave={handleEditModalSave}
+                onCancel={() => setShowEditModal(false)}
+              />
+            )}
           </Container>
         </Container>
       )}
-
     </PageLayout>
   );
 };
