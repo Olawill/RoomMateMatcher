@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import ListingItem from "./ListingItem";
 import PageLayout from "../PageLayout/PageLayout";
 
-<<<<<<< HEAD
 const Listings = ({ likedListings, onFavButtonClick }) => {
   const [listings, setListings] = useState([]);
   const { user, isAuthenticated } = useAuth0();
@@ -28,9 +27,6 @@ const Listings = ({ likedListings, onFavButtonClick }) => {
 
     fetchListings();
   }, [isAuthenticated, user]);
-=======
-const Listings = ({ likedListings, onFavButtonClick, listings }) => {
->>>>>>> feat/maps
 
   return (
     <PageLayout>
