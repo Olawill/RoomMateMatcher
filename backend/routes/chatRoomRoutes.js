@@ -102,7 +102,7 @@ router.get('/:user_id', (req, res) => {
       // Check if a chat room already exists for these users
       const existingChatRoom = await db.query(
         'SELECT * FROM chatrooms WHERE ((user1_id = $1 AND user2_id = $2) OR (user1_id = $2 AND user2_id = $1)) AND name = $3;',
-        [senderId, recipientId,name]
+        [senderId, recipientId, name]
       );
 
       if (existingChatRoom.rows.length > 0) {

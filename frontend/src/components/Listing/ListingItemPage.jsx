@@ -38,22 +38,21 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
 
   // CHANGE INTERESTED TO REDIRECT TO MESSAGES IF ALREADY CLICKED
   useEffect(() => {
-
     const listingClicked = async () => {
-      
-    const roomInfo = await axios.get(`/api/chatrooms/${userInfo?.userId}`);
+      const roomInfo = await axios.get(`/api/chatrooms/${userInfo?.userId}`);
 
-    const rooms = roomInfo.data.data;
-    const roomExists = rooms.some(room => room.name === listingDetails?.title);
+      const rooms = roomInfo.data.data;
+      const roomExists = rooms.some(
+        (room) => room.name === listingDetails?.title
+      );
 
-    setRoomExists(roomExists);
+      setRoomExists(roomExists);
     };
 
     if (isAuthenticated) {
       listingClicked();
     }
-
-  }, [listingDetails, userInfo, isAuthenticated])
+  }, [listingDetails, userInfo, isAuthenticated]);
 
   const handleInterestedButtonClick = async () => {
     // Ensure the user is logged in
@@ -62,19 +61,25 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
       loginWithRedirect();
       return;
     }
-    const senderUserId = userInfo.userId;
-    const recipientUserId = listingDetails.user_id;
+    const senderUserId = userInfo?.userId;
+    const recipientUserId = listingDetails?.user_id;
 
-    axios.post('/api/chatrooms/create', { senderId: senderUserId, recipientId: recipientUserId, name :listingDetails.title })
-  .then(response => {
-    const chatRoomId = response.data.id;
-    navigate(`/myMessages`);
-  })
-  .catch(error => {
-    // Handle errors
-    console.error('Error creating private chat room:', error);
-  });
-  }
+    axios
+      .post("/api/chatrooms/create", {
+        senderId: senderUserId,
+        recipientId: recipientUserId,
+        name: listingDetails?.title,
+      })
+      .then((response) => {
+        console.log(response);
+        const chatRoomId = response.data.id;
+        chatredirect(listingDetails?.title);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error("Error creating private chat room:", error);
+      });
+  };
 
   // WHEN CHATROOM ALREADY EXIST
   const handleChatButtonClick = () => {
@@ -83,7 +88,6 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
 
   // FUNCTION TO REDIRECT TO CHATS
   const chatredirect = (roomName) => {
-
     // Navigate to all chats
     // navigate(`/chats/${listing_id}/chatroom-messages`);
     navigate(`/myMessages`);
@@ -92,15 +96,15 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
     // Wait for a short time before attempting to click on the room name
     setTimeout(() => {
       // Trigger click on the room name (assuming you have a specific selector for the room name)
-      const roomNameElement = document.querySelector(`[data-chatroomname="${roomName}"]`);
+      const roomNameElement = document.querySelector(
+        `[data-chatroomname="${roomName}"]`
+      );
 
       if (roomNameElement) {
         roomNameElement.click();
       }
     }, 500);
   };
-
-
 
   const handleReviewFormSubmit = async (reviewData) => {
     if (!isAuthenticated) {
@@ -126,13 +130,16 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
     }
   };
 
+  const isCreatedByCurrentUser =
+    listingDetails && listingDetails.user_id === userInfo?.userId;
+
   return (
     <PageLayout requireAuthentication={true}>
       {({ theme }) => (
         <>
           <Container
             data-theme={theme}
-            style={{ width: "80%", paddingBottom: '2rem' }}
+            style={{ width: "80%", paddingBottom: "2rem" }}
           >
             {listingDetails && (
               <Row style={{ margin: "5.65rem auto 0" }}>
@@ -140,8 +147,8 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                   <Card
                     style={
                       theme === "Dark"
-                      ? { backgroundColor: "#2167ac", color: "#FFF" }
-                      : { backgroundColor: "#FFF", color: "#000" }
+                        ? { backgroundColor: "#2167ac", color: "#FFF" }
+                        : { backgroundColor: "#FFF", color: "#000" }
                     }
                   >
                     <FavButton
@@ -156,7 +163,8 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                     <Card.Body>
                       <Card.Title>{listingDetails.title}</Card.Title>
                       <Card.Text>
-                        {listingDetails.city} {listingDetails.country}
+                        {listingDetails.postal_code} {listingDetails.city}{" "}
+                        {listingDetails.country}
                       </Card.Text>
                       <Card.Text>
                         ${listingDetails.price} CAD per month
@@ -171,34 +179,24 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                       </Card.Text>
                       <Card.Text>Status: {listingDetails.status}</Card.Text>
                     </Card.Body>
-                    {
-                      !roomExists && (
+                    {!isCreatedByCurrentUser && !roomExists && (
                       <Button
                         type="submit"
-                        variant={
-                          theme === "Dark"
-                          ? 'success'
-                          : 'primary'
-                        }
-                        onClick={handleInterestedButtonClick}>
+                        variant={theme === "Dark" ? "success" : "primary"}
+                        onClick={handleInterestedButtonClick}
+                      >
                         Interested
                       </Button>
-                      )
-                    }
-                    {
-                      roomExists && (
+                    )}
+                    {!isCreatedByCurrentUser && roomExists && (
                       <Button
                         type="submit"
-                        variant={
-                          theme === "Dark"
-                          ? 'success'
-                          : 'primary'
-                        }
-                        onClick={handleChatButtonClick}>
+                        variant={theme === "Dark" ? "success" : "primary"}
+                        onClick={handleChatButtonClick}
+                      >
                         Messages
                       </Button>
-                      )
-                    }
+                    )}
                   </Card>
                 </Col>
               </Row>
@@ -215,11 +213,15 @@ const ListingItemPage = ({ likedListings, onFavButtonClick }) => {
                 </Row>
               )}
 
-              <Row>
-                <Col>
-                  <ReviewForm handleReviewFormSubmit={handleReviewFormSubmit} />
-                </Col>
-              </Row>
+              {!isCreatedByCurrentUser && (
+                <Row>
+                  <Col>
+                    <ReviewForm
+                      handleReviewFormSubmit={handleReviewFormSubmit}
+                    />
+                  </Col>
+                </Row>
+              )}
             </Container>
           </Container>
         </>

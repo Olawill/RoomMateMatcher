@@ -202,6 +202,7 @@ router.put("/:listing_id", async (req, res) => {
     const listingId = req.params.listing_id;
     const {
       title,
+      postal_code,
       city,
       country,
       price,
@@ -213,9 +214,10 @@ router.put("/:listing_id", async (req, res) => {
     } = req.body;
 
     await db.query(
-      "UPDATE listings SET title = $1, city = $2, country = $3, price = $4, description = $5, number_of_rooms = $6, number_of_roommates = $7, status = $8, image_url = $9 WHERE id = $10",
+      "UPDATE listings SET title = $1,postal_code =$2, city = $3, country = $4, price = $5, description = $6, number_of_rooms = $7, number_of_roommates = $8, status = $9, image_url = $10 WHERE id = $11",
       [
         title,
+        postal_code,
         city,
         country,
         price,
