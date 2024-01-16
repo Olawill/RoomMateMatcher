@@ -79,21 +79,48 @@ const MyListings = () => {
       {({ theme, getThemeAuto }) => (
         <Container
         data-theme={theme === "Auto" ? getThemeAuto() : theme}
-        style={{height: '100vh'}}
-      >
-        {
-          !myListings && (
-            <Container style={{paddingBlock: '3rem'}}>
-              <Stack
-                // gap={3}
-                style={{ marginLeft: '2rem', width: '100%' }}
-              >
-                Cancel
-              </Button>
-            </Stack>
-            {showNewListingForm && (
-              <NewListingForm onCancel={() => setShowNewListingForm(false)} />
-            )}
+        style={{height: '100vh', paddingBottom: "2rem"}}
+        >
+        {/* //   { */}
+        {/* //   !myListings && (
+            // <Container style={{paddingBlock: '3rem'}}>
+            //   <Stack
+            //     // gap={3}
+            //     style={{ marginLeft: '2rem', width: '100%' }}
+            //   > */}
+               <Container style={{ paddingBlock: "3rem" }}>
+                <Stack style={{ marginLeft: "2rem", width: "100%" }}>
+                  <h3 style={{ textAlign: "left" }}>Your Listings</h3>
+                  <hr />
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    style={{
+                        width: '10rem'
+                      }}
+                    onClick={handleAddListingClick}
+                  >
+                    <GoPlus />
+                    Add a New Listing
+                  </Button>
+
+                  <Button
+                    variant="outline-secondary"
+                    size="sm"
+                    style={{
+                      width: "10rem",
+                    }}
+                    onClick={handleCancelClick}
+                  >
+                    Cancel
+                  </Button>
+                </Stack>
+              {/* <MdOutlineMapsHomeWork style={{
+                fontSize: '6rem'}}/>
+              <IoPinSharp style={{
+                fontSize: '1rem', 
+                transform: 'rotate(75deg)' */}
+                {showNewListingForm && <NewListingForm onCancel={handleCancelClick} />}
             {myListings ? (
               <>
                 {myListings.map((listing) => (
@@ -101,30 +128,25 @@ const MyListings = () => {
                     <h4>{listing.title}</h4>
                     <p>{listing.description}</p>
                     <p>Price: ${listing.price}</p>
-                    <img
-                      src={listing.image_url}
-                      alt={`Image for ${listing.title}`}
-                    />
-                    <Button
-                      variant="outline-warning"
-                      onClick={() => handleEditClick(listing)}
-                    >
-                      Edit
-                    </Button>
-                    <Button onClick={() => handleDeleteListing(listing.id)}>
-                      Delete
-                    </Button>
+                    <img src={listing.image_url} alt={`Image for ${listing.title}`} />
                   </div>
                 ))}
               </>
             ) : (
               <>
-                <MdOutlineMapsHomeWork style={{ fontSize: "6rem" }} />
+                <MdOutlineMapsHomeWork
+                  style={{
+                    fontSize: "6rem",
+                  }}
+                />
                 <IoPinSharp
-                  style={{ fontSize: "1rem", transform: "rotate(75deg)" }}
+                  style={{
+                    fontSize: "1rem",
+                    transform: "rotate(75deg)",
+                  }}
                 />
                 <br />
-                <small>Your Listings will live here</small>
+                <small>{`Your Listings will live here`}</small>
                 <br />
                 <br />
                 <Button as={Link} to="/">
@@ -132,17 +154,10 @@ const MyListings = () => {
                 </Button>
               </>
             )}
-            {/* Render the EditListingModal */}
-            {showEditModal && (
-              <EditListingModal
-                listing={selectedListing}
-                onSave={handleEditModalSave}
-                onCancel={() => setShowEditModal(false)}
-              />
-            )}
           </Container>
-        </>
+        </Container>
       )}
+
     </PageLayout>
   );
 };
