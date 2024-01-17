@@ -27,10 +27,6 @@ const useApplicationData = () => {
       axios
         .get("/api/listings")
         .then((response) => {
-          if (isAuthenticated && user) {
-            const userId = JSON.parse(window.sessionStorage.getItem('userData')).userId;
-            setListings(response.data.data.filter(listing => listing.user_id !== userId));
-          } else {
             setListings(response.data.data);
           }
         })
