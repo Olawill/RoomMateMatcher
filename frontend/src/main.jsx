@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { Auth0Provider } from '@auth0/auth0-react';
+import axios from "axios";
+
+axios.defaults.baseURL = import.meta.env.VITE_REACT_APP_PRODUCTION_API_URL || 'http://localhost:8003'
 
 const domain = 'dev-h1kihg426xuqx2n0.us.auth0.com';
 const clientId = 'P1ZQJGQ05k2euytM30fOyEDV3pzJlhYS';

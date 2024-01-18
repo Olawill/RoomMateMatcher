@@ -3,6 +3,7 @@ import PageLayout from '../PageLayout/PageLayout';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { Button, Card, ListGroup, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const libraries = ['places'];
   const mapContainerStyle = {
@@ -62,10 +63,10 @@ const MapComponent = ({ listings }) => {
       const pinsData = await Promise.allSettled(
         listings.map(async (listing) => {
           try {
-            const response = await fetch(
+            const response = await axios.get(
               `https://maps.googleapis.com/maps/api/geocode/json?address=${listing.postal_code}&key=${api_key}`
             );
-            const data = await response.json();
+            const data = await response.data;
 
             if (data.results.length > 0) {
               const { lat, lng } = data.results[0].geometry.location;

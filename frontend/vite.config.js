@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8003',
+        target: import.meta.env.VITE_REACT_APP_PRODUCTION_API_URL || 'http://localhost:8003',
         secure: false,
         configure: (proxy, _options) => {
           proxy.on('error', (err, _req, _res) => {
