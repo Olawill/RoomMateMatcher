@@ -37,7 +37,7 @@ const MyListings = () => {
       const response = await axios.put(
         `/api/listings/${editedListing.id}`,editedListing);
 
-        setMyListings(prev => [...prev, editedListing])
+        setMyListings(prev => [...prev.filter(listing => (listing.id !== editedListing.id )), editedListing])
 
       console.log("Save edited listing:", editedListing);
     } catch (error) {
