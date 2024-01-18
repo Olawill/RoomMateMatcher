@@ -28,7 +28,6 @@ const useApplicationData = () => {
         .get("/api/listings")
         .then((response) => {
             setListings(response.data.data);
-          }
         })
         .catch((error) => {
           console.error("Error fetching listings:", error);
