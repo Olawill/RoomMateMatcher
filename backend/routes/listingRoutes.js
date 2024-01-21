@@ -1,7 +1,5 @@
 const router = require("express").Router();
-// const io = require('socket.io');
 
-// const socket = io('http://localhost:8003');
 
 module.exports = (db) => {
   // GET /api/listings

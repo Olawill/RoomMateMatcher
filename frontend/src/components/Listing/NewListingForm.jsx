@@ -11,7 +11,7 @@ const userInfo = JSON.parse(userData);
 
 const NewListingForm = (props) => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
-  const {setMyListings} = props
+  const {setMyListings, setShowNewListingForm} = props
 
   const initialListingData = {
     user_id: userInfo?.userId,
@@ -28,7 +28,6 @@ const NewListingForm = (props) => {
   };
 
   const [newListingData, setNewListingData] = useState(initialListingData);
-  const [formDisabled, setFormDisabled] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -46,7 +45,7 @@ const NewListingForm = (props) => {
       const response = await axios.post("/api/listings/new", newListingData);
       setNewListingData(initialListingData);
       setMyListings(prev => [...prev, newListingData])
-      setFormDisabled(false);
+      setShowNewListingForm(false);
     } catch (error) {
       console.error("Error creating a new listing:", error);
     }
@@ -161,7 +160,7 @@ const NewListingForm = (props) => {
               required
             />
           </Form.Group>
-          <Button disabled={formDisabled} onClick={handleNewListingSubmit}>
+          <Button onClick={handleNewListingSubmit}>
             Create Listing
           </Button>
         </Form>

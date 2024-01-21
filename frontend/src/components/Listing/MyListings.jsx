@@ -37,9 +37,8 @@ const MyListings = () => {
       const response = await axios.put(
         `/api/listings/${editedListing.id}`,editedListing);
 
-        setMyListings(prev => [...prev.filter(listing => (listing.id !== editedListing.id )), editedListing])
+        setMyListings(prev => [...prev.filter(listing => (listing.id !== editedListing?.id )), editedListing])
 
-      console.log("Save edited listing:", editedListing);
     } catch (error) {
       console.error("Error updating listing:", error);
     }
@@ -122,7 +121,7 @@ const MyListings = () => {
                 fontSize: '1rem', 
                 transform: 'rotate(75deg)' */}
             {showNewListingForm && (
-              <NewListingForm onCancel={handleCancelClick} setMyListings={setMyListings}/>
+              <NewListingForm onCancel={handleCancelClick} setMyListings={setMyListings} setShowNewListingForm={setShowNewListingForm}/>
             )}
             {myListings ? (
               <>
